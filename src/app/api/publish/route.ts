@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   }
 
   const date = new Date().toISOString().split("T")[0]
-  const tagsArray = Array.isArray(tags) ? tags : [tags]
+  const tagsArray = Array.isArray(tags) ? tags.filter(Boolean) : []
   const tagsStr = JSON.stringify(tagsArray)
 
   const mdxContent = `---
@@ -48,14 +48,15 @@ draft: false
 ${content}
 `
 
+  // GitHub API 不接受全路径编码，只编码文件名部分
   const filePath = `content/${folder}/${slug}.mdx`
-  const apiUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${encodeURIComponent(filePath)}`
+  const apiUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${filePath}`
   const headers: Record<string, string> = {
     Authorization: `token ${GITHUB_TOKEN}`,
     Accept: "application/vnd.github.v3+json",
   }
 
-  // 检查文件是否已存在，获取 SHA
+  // 检查文件是否存在，获取 SHA
   let sha: string | undefined
   const getRes = await fetch(apiUrl, { headers })
   if (getRes.ok) {
@@ -74,14 +75,22 @@ ${content}
     }),
   })
 
+  const commitData = await commitRes.json()
+
   if (!commitRes.ok) {
-    const err = await commitRes.json()
-    return NextResponse.json({ error: "GitHub API failed", details: err }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: "GitHub API failed",
+        message: commitData.message || "unknown error",
+      },
+      { status: 500 },
+    )
   }
 
   return NextResponse.json({
     success: true,
     message: sha ? "文章已更新" : "文章已发布",
     url: `https://fz-s-garden.vercel.app/${folder}/${slug}`,
+    commit: commitData.commit?.sha,
   })
 }
