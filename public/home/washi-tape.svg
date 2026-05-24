@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- 纸胶带（wasabi tape） -->
+  <rect x="28" y="18" width="152" height="24" rx="3" fill="#ead5a8" opacity="0.55" transform="rotate(-8, 104, 30)" />
+  <rect x="30" y="20" width="148" height="20" rx="2" fill="#efe0be" opacity="0.7" transform="rotate(-8, 104, 30)" />
+  <!-- 虚线装饰 -->
+  <line x1="38" y1="32" x2="166" y2="20" stroke="#d4bc8a" stroke-width="0.8" stroke-dasharray="3 5" opacity="0.5" transform="rotate(-8, 104, 30)" />
+  
+  <!-- 小植物枝 -->
+  <path d="M88 100 Q78 86 90 74 Q98 82 88 100Z" fill="#8fa389" opacity="0.6" />
+  <path d="M88 100 Q100 84 112 78 Q106 90 88 100Z" fill="#a6b8a0" opacity="0.5" />
+  <path d="M88 100 Q72 96 62 106 Q76 104 88 100Z" fill="#c6d7b6" opacity="0.45" />
+  
+  <!-- 小浆果 -->
+  <circle cx="88" cy="80" r="3.5" fill="#c9987a" opacity="0.7" />
+  <circle cx="102" cy="82" r="3" fill="#daa49e" opacity="0.6" />
+  
+  <!-- 星芒点缀 -->
+  <text x="30" y="140" font-size="10" fill="#b6cdd9" opacity="0.5">✦</text>
+  <text x="160" y="150" font-size="7" fill="#daa49e" opacity="0.4">✦</text>
+  <text x="50" y="170" font-size="6" fill="#8fa389" opacity="0.35">✦</text>
+</svg>

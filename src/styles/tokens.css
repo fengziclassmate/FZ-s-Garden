@@ -1,0 +1,33 @@
+:root {
+  /* ── 底色：从深橄榄绿 → 清爽薄荷白（Florica 手账感） ── */
+  --color-paper: #f3f0e8;       /* 暖白牛皮纸 */
+  --color-paper-deep: #e3e9da;  /* 浅薄荷绿 */
+  --color-surface: #fcfaf5;     /* 卡片面-暖白 */
+  --color-surface-soft: #eef3e7; /* 浅绿柔面 */
+
+  /* ── 文字：深灰绿为主，保持可读性 ── */
+  --color-ink: #2b2f26;         /* 深苔绿（原来 #252922，微暖） */
+  --color-muted-ink: #7a8475;   /* 柔和绿灰（原来 #657069，更透气） */
+
+  /* ── 线条 ── */
+  --color-line: #d8d8cb;        /* 米灰线 */
+
+  /* ── 主色系：饱和度降低，更干净 ── */
+  --color-sage: #8fa389;        /* 鼠尾草绿（原来 #748c6e，更清亮） */
+  --color-clay: #c9987a;        /* 陶土（原来 #b86f4f，更柔） */
+  --color-tea: #a68968;         /* 茶褐（原来 #8f683d，更淡） */
+
+  /* ── 点缀色 ── */
+  --color-mist-blue: #8fb5c7;   /* 雾蓝（更清透） */
+  --color-soft-rose: #daa49e;   /* 玫瑰粉（更柔和） */
+
+  /* ── 新增：纸胶带色系，用于装饰 ── */
+  --color-washi-yellow: #ead5a8;
+  --color-washi-blue: #b6cdd9;
+  --color-washi-pink: #e7c4c0;
+  --color-washi-green: #c6d7b6;
+
+  /* ── 阴影 ── */
+  --shadow-paper: 0 20px 55px rgba(100, 115, 90, 0.1);
+  --shadow-note: 0 12px 30px rgba(100, 115, 90, 0.08);
+}
