@@ -67,8 +67,7 @@ export default function BlogsClient({ sections }: Props) {
       const params = new URLSearchParams();
       if (type) params.set("type", type);
       if (slug) params.set("slug", slug);
-      const qs = params.toString();
-      router.push(qs ? `/blogs?${qs}` : "/blogs");
+      router.push(`/blogs?${params.toString()}`);
     },
     [router],
   );
@@ -102,7 +101,7 @@ export default function BlogsClient({ sections }: Props) {
               className="rounded-md px-2 py-1 text-xs text-[#7a756c] transition hover:bg-[#f0ede6]"
               aria-label="收起"
             >
-              ✕
+              ◀
             </button>
           </div>
           <div className="space-y-0.5">
@@ -263,7 +262,7 @@ export default function BlogsClient({ sections }: Props) {
               <p>从左侧选择分类和文章开始阅读吧。</p>
             </div>
             <div className="mt-8 border-t border-[#ece9e1] pt-6 text-center text-xs text-[#a6a097]">
-              ✦ 选择左侧分类开始探索 ✦
+              ✨ 选择左侧分类开始探索 ✨
             </div>
           </div>
         </div>
@@ -292,32 +291,24 @@ function DraggableToc({
   tocOpen: boolean;
   setTocOpen: (v: boolean) => void;
 }) {
-  // 未拖拽时使用 right 定位（服务端+客户端一致），拖拽后切 left/top
-  const [mounted, setMounted] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [dragging, setDragging] = useState(false);
   const dragStart = useRef({ clientX: 0, clientY: 0, posX: 0, posY: 0 });
 
-  // mount 后计算初始像素位置（right 定位的值已经正确，这里只给拖拽做预备）
-  useEffect(() => {
-    const el = document.querySelector(".draggable-toc-inner") as HTMLElement | null;
-    if (!el) return;
-    const w = el.offsetWidth;
-    const rect = el.getBoundingClientRect();
-    setPos({ x: rect.left, y: rect.top });
-    setMounted(true);
-  }, []);
-
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    setDragging(true);
-    dragStart.current = {
-      clientX: e.clientX,
-      clientY: e.clientY,
-      posX: pos?.x ?? 0,
-      posY: pos?.y ?? 0,
-    };
-  }, [pos]);
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      setDragging(true);
+      const rect = (e.currentTarget.closest(".draggable-toc-inner") as HTMLElement).getBoundingClientRect();
+      dragStart.current = {
+        clientX: e.clientX,
+        clientY: e.clientY,
+        posX: rect.left,
+        posY: rect.top,
+      };
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!dragging) return;
@@ -339,22 +330,18 @@ function DraggableToc({
     };
   }, [dragging]);
 
-  // 未 mount 时用 right 定位（服务端+客户端一致，避免水合失败）
-  // mount 后且拖拽过就用 left/top 像素值
-  const hasDragged = pos !== null;
-
   return (
     <div
       className="fixed z-30 select-none"
       style={{
-        top: hasDragged ? pos!.y : "20vh",
-        left: hasDragged ? pos!.x : undefined,
-        right: hasDragged ? undefined : "4rem",
+        top: pos ? pos.y : "20vh",
+        left: pos ? pos.x : undefined,
+        right: pos ? undefined : "4rem",
       }}
     >
-      <div className={`draggable-toc-inner rounded-xl border border-[#ece9e1] bg-white shadow-sm ${dragging ? "shadow-lg" : ""}`}>
+      <div className={`draggable-toc-inner rounded-xl border border-[#ece9e1] bg-white shadow-sm ${dragging ? "cursor-grabbing shadow-lg" : "cursor-grab"}`}>
         <div
-          className={`flex items-center gap-2 px-4 py-2.5 ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
+          className="flex items-center gap-2 px-4 py-2.5"
           onMouseDown={handleMouseDown}
         >
           <button
@@ -383,11 +370,7 @@ function DraggableToc({
                   }
                 }}
                 className={`block w-full rounded-md px-3 py-1.5 text-left text-xs leading-relaxed text-[#7a756c] transition hover:bg-[#f0ede6] hover:text-[#2d2a24] ${
-                  item.level === 1
-                    ? "font-medium"
-                    : item.level === 2
-                      ? "pl-6"
-                      : "pl-8"
+                  item.level === 1 ? "font-medium" : item.level === 2 ? "pl-6" : "pl-8"
                 }`}
               >
                 {item.text}
