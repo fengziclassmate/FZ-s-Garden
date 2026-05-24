@@ -2,7 +2,6 @@ import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
 import type { NextAuthConfig } from "next-auth"
 
-// 单独导出配置，方便 middleware 复用
 export const authConfig: NextAuthConfig = {
   providers: [
     GitHub({
@@ -19,7 +18,6 @@ export const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/behind",
   },
-  secret: process.env.AUTH_SECRET,
   trustHost: true,
 }
 
