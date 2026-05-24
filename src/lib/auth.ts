@@ -32,7 +32,7 @@ export async function clearSession() {
 }
 
 export function getAuthUrl(state: string): string {
-  const redirectUri = "https://fz-s-garden.vercel.app/api/auth/github/callback"
+  const redirectUri = "https://fz-s-garden.vercel.app/api/auth/callback/github"
   const clientId = process.env.AUTH_GITHUB_ID ?? ""
   return `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}&scope=read:user`
 }

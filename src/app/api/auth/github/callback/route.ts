@@ -25,7 +25,7 @@ export async function GET(request: Request) {
         client_id: process.env.AUTH_GITHUB_ID ?? "",
         client_secret: process.env.AUTH_GITHUB_SECRET ?? "",
         code,
-        redirect_uri: `${SITE_URL}/api/auth/github/callback`,
+        redirect_uri: `${SITE_URL}/api/auth/callback/github`,
       }),
     },
   )
