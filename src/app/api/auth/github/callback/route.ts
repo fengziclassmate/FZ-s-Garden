@@ -3,18 +3,15 @@ export const runtime = "nodejs"
 import { NextResponse } from "next/server"
 import { setSessionCookie } from "@/lib/auth"
 
+const SITE_URL = "https://fz-s-garden.vercel.app"
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const code = searchParams.get("code")
 
   if (!code) {
-    return NextResponse.redirect(new URL("/behind?error=no_code", request.url))
+    return NextResponse.redirect(`${SITE_URL}/behind?error=no_code`)
   }
-
-  // 用 code 换 access_token
-  const base = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3001"
 
   const tokenRes = await fetch(
     "https://github.com/login/oauth/access_token",
@@ -28,7 +25,7 @@ export async function GET(request: Request) {
         client_id: process.env.AUTH_GITHUB_ID ?? "",
         client_secret: process.env.AUTH_GITHUB_SECRET ?? "",
         code,
-        redirect_uri: `${base}/api/auth/github/callback`,
+        redirect_uri: `${SITE_URL}/api/auth/github/callback`,
       }),
     },
   )
@@ -37,12 +34,9 @@ export async function GET(request: Request) {
   const accessToken = tokenData.access_token
 
   if (!accessToken) {
-    return NextResponse.redirect(
-      new URL("/behind?error=token_failed", request.url),
-    )
+    return NextResponse.redirect(`${SITE_URL}/behind?error=token_failed`)
   }
 
-  // 用 access_token 拿用户信息
   const userRes = await fetch("https://api.github.com/user", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -50,14 +44,11 @@ export async function GET(request: Request) {
   })
   const userData = await userRes.json()
 
-  // 只允许 fengziclassmate
   if (userData.login !== "fengziclassmate") {
-    return NextResponse.redirect(
-      new URL("/behind?error=not_allowed", request.url),
-    )
+    return NextResponse.redirect(`${SITE_URL}/behind?error=not_allowed`)
   }
 
-  const res = NextResponse.redirect(new URL("/behind/write", request.url))
+  const res = NextResponse.redirect(`${SITE_URL}/behind/write`)
   await setSessionCookie()
 
   return res
