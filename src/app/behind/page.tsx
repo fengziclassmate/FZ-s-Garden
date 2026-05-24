@@ -1,3 +1,5 @@
+export const runtime = "nodejs"
+
 import { ArticleCard } from "@/components/content/article-card";
 import { PageShell } from "@/components/layout/page-shell";
 import { getContentByType } from "@/lib/content";
