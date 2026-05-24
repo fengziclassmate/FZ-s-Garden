@@ -3,12 +3,12 @@ export const runtime = "nodejs"
 import { ArticleCard } from "@/components/content/article-card";
 import { PageShell } from "@/components/layout/page-shell";
 import { getContentByType } from "@/lib/content";
-import { auth } from "@/auth/auth";
+import { getSession } from "@/lib/auth";
 import Link from "next/link";
 
 export default async function BehindPage() {
   const items = await getContentByType("behind");
-  const session = await auth();
+  const session = await getSession();
 
   return (
     <PageShell eyebrow="Behind" title="幕后" description="记录这个网站的设计理念、技术栈、内容系统和更新日志。">
@@ -25,21 +25,18 @@ export default async function BehindPage() {
               type="submit"
               className="text-sm text-[#7a756c] hover:text-[#2d2a24] transition-colors"
             >
-              退出 ({session.user?.name})
+              退出 ({session.name})
             </button>
           </form>
         </div>
       ) : (
         <div className="mb-6">
-          <form action="/api/auth/signin/github" method="GET">
-            <input type="hidden" name="callbackUrl" value="/behind/write" />
-            <button
-              type="submit"
-              className="rounded-lg bg-[#2d2a24] px-4 py-2 text-sm text-white hover:bg-[#4a453c] transition-colors"
-            >
-              GitHub 登录 → 写文章
-            </button>
-          </form>
+          <a
+            href="/api/auth/github"
+            className="inline-block rounded-lg bg-[#2d2a24] px-4 py-2 text-sm text-white hover:bg-[#4a453c] transition-colors"
+          >
+            GitHub 登录 → 写文章
+          </a>
         </div>
       )}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
