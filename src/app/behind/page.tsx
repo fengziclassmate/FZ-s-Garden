@@ -29,12 +29,15 @@ export default async function BehindPage() {
         </div>
       ) : (
         <div className="mb-6">
-          <Link
-            href="/behind/write"
-            className="rounded-lg bg-[#2d2a24] px-4 py-2 text-sm text-white hover:bg-[#4a453c] transition-colors"
-          >
-            登录后写文章
-          </Link>
+          <form action="/api/auth/signin/github" method="GET">
+            <input type="hidden" name="callbackUrl" value="/behind/write" />
+            <button
+              type="submit"
+              className="rounded-lg bg-[#2d2a24] px-4 py-2 text-sm text-white hover:bg-[#4a453c] transition-colors"
+            >
+              GitHub 登录 → 写文章
+            </button>
+          </form>
         </div>
       )}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

@@ -1,12 +1,17 @@
 import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
+import type { NextAuthConfig } from "next-auth"
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub],
+// 单独导出配置，方便 middleware 复用
+export const authConfig: NextAuthConfig = {
+  providers: [
+    GitHub({
+      clientId: process.env.AUTH_GITHUB_ID ?? "",
+      clientSecret: process.env.AUTH_GITHUB_SECRET ?? "",
+    }),
+  ],
   callbacks: {
-    // 只允许你的 GitHub 账号登录
     async signIn({ user }) {
-      // 替换成你的 GitHub 用户 ID 或邮箱
       const allowedUsers = ["fengziclassmate"]
       return allowedUsers.includes(user.name ?? "")
     },
@@ -14,4 +19,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/behind",
   },
-})
+  secret: process.env.AUTH_SECRET,
+  trustHost: true,
+}
+
+export const { handlers, signIn, signOut, auth } = NextAuth(authConfig)

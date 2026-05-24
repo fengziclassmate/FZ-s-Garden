@@ -2,7 +2,14 @@ import { auth } from "@/auth/auth";
 import { redirect } from "next/navigation";
 
 export default async function WritePage() {
-  const session = await auth();
+  let session;
+  try {
+    session = await auth();
+  } catch (e) {
+    // auth() 初始化失败时，也显示登录页面
+    console.error("Auth error:", e);
+    session = null;
+  }
 
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/behind/write");
