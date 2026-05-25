@@ -18,16 +18,7 @@ type Props = {
 
 // 模拟点赞数据（后续接入 API）
 const likeCounts: Record<string, number> = {
-  "journal/finding-rhythm": 17,
-  "journal/2026-05-week-3": 8,
-  "journal/2026-05-month-note": 12,
-  "research/research-question-reset": 23,
-  "research/meeting-2026-05-23": 5,
-  "research/experiment-note-001": 14,
-  "reading/smart-notes": 31,
-  "reading/writing-science": 19,
-  "reading/research-design-note": 9,
-  "reading/digital-garden-note": 6,
+  // 真实文章在此添加
 };
 
 export default function BlogsClient({ sections }: Props) {

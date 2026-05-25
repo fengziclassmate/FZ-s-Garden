@@ -158,7 +158,7 @@ export default function WriteEditor() {
         <button
           onClick={handlePublish}
           disabled={publishing}
-          className="rounded-lg bg-[#2d2a24] px-5 py-2 text-sm text-white hover:bg-[#4a453c] disabled:opacity-50 transition-colors"
+          className="rounded-lg bg-[#2d2a24] px-5 py-2 text-sm !text-white hover:bg-[#4a453c] disabled:opacity-50 transition-colors"
         >
           {publishing ? "发布中..." : "发布"}
         </button>
