@@ -1,17 +1,23 @@
-export const runtime = "nodejs"
+export const runtime = "nodejs";
 
 import { ArticleCard } from "@/components/content/article-card";
 import { PageShell } from "@/components/layout/page-shell";
 import { getContentByType } from "@/lib/content";
 import { getSession } from "@/lib/auth";
 import Link from "next/link";
+import { BehindCardActions } from "./behind-card-actions";
+import type { GardenContent } from "@/lib/types";
 
 export default async function BehindPage() {
   const items = await getContentByType("behind");
   const session = await getSession();
 
   return (
-    <PageShell eyebrow="Behind" title="幕后" description="记录这个网站的设计理念、技术栈、内容系统和更新日志。">
+    <PageShell
+      eyebrow="Behind"
+      title="幕后"
+      description="记录这个网站的设计理念、技术栈、内容系统和更新日志。"
+    >
       {session ? (
         <div className="mb-6 flex items-center gap-4">
           <Link
@@ -25,7 +31,7 @@ export default async function BehindPage() {
               type="submit"
               className="text-sm text-[#7a756c] hover:text-[#2d2a24] transition-colors"
             >
-              退出 ({session.name})
+              退出({session.name})
             </button>
           </form>
         </div>
@@ -39,11 +45,41 @@ export default async function BehindPage() {
           </a>
         </div>
       )}
+
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item) => (
-          <ArticleCard key={item.slug} item={item} />
+          <BehindCardWrapper
+            key={item.slug}
+            item={item}
+            isLoggedIn={!!session}
+          />
         ))}
       </div>
     </PageShell>
+  );
+}
+
+function BehindCardWrapper({
+  item,
+  isLoggedIn,
+}: {
+  item: GardenContent;
+  isLoggedIn: boolean;
+}) {
+  return (
+    <div className="group relative">
+      <ArticleCard item={item} />
+      {isLoggedIn && (
+        <div className="absolute right-3 top-3 z-10 flex gap-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+          <Link
+            href={`/behind/write?type=${item.type}&slug=${item.slug}`}
+            className="rounded-md bg-[#e9e6df] px-2.5 py-1 text-xs text-[#2d2a24] hover:bg-[#ddd9d0] transition-colors"
+          >
+            编辑
+          </Link>
+          <BehindCardActions type={item.type} slug={item.slug} title={item.title} />
+        </div>
+      )}
+    </div>
   );
 }
