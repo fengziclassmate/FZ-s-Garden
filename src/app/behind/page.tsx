@@ -6,7 +6,7 @@ import { PageShell } from "@/components/layout/page-shell";
 import { getContentByType } from "@/lib/content";
 import { getSession } from "@/lib/auth";
 import Link from "next/link";
-import { BehindCardWithActions } from "./behind-card-actions";
+import { ArticleManager } from "./article-manager";
 
 export default async function BehindPage() {
   const items = await getContentByType("behind");
@@ -46,16 +46,13 @@ export default async function BehindPage() {
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {session && items.length > 0 && (
+        <ArticleManager items={items} />
+      )}
+
+      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item) => (
-          <div key={item.slug} className="group relative">
-            <ArticleCard item={item} />
-            <BehindCardWithActions
-              type={item.type}
-              slug={item.slug}
-              title={item.title}
-            />
-          </div>
+          <ArticleCard key={item.slug} item={item} />
         ))}
       </div>
     </PageShell>
