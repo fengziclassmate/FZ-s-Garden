@@ -1,12 +1,29 @@
 "use client"
 
-import { useState, useCallback, useRef, useEffect } from "react"
+import { useState, useCallback, useEffect } from "react"
 
 const ALLOWED_TYPES = [
   { value: "journal", label: "手账 (Journal)" },
   { value: "research", label: "科研日志 (Research)" },
   { value: "reading", label: "阅读 (Reading)" },
+  { value: "project", label: "作品集 (Project)" },
   { value: "behind", label: "幕后 (Behind)" },
+]
+
+const PROJECT_STATUS = [
+  { value: "idea", label: "想法中" },
+  { value: "building", label: "建设中" },
+  { value: "paused", label: "暂停中" },
+  { value: "finished", label: "已完成" },
+  { value: "archived", label: "已归档" },
+]
+
+const PROJECT_TYPES = [
+  { value: "research", label: "科研项目" },
+  { value: "code", label: "代码项目" },
+  { value: "personal-tool", label: "个人工具" },
+  { value: "writing", label: "写作" },
+  { value: "website", label: "网站" },
 ]
 
 export default function WriteEditor() {
@@ -19,7 +36,12 @@ export default function WriteEditor() {
   const [preview, setPreview] = useState("")
   const [publishing, setPublishing] = useState(false)
   const [result, setResult] = useState<{ ok: boolean; msg: string } | null>(null)
-  const previewRef = useRef<HTMLDivElement>(null)
+
+  // Project 专用字段
+  const [projectType, setProjectType] = useState("personal-tool")
+  const [projectStatus, setProjectStatus] = useState("building")
+  const [linkDemo, setLinkDemo] = useState("")
+  const [linkGithub, setLinkGithub] = useState("")
 
   // 根据标题自动生成 slug
   const updateTitle = useCallback((val: string) => {
@@ -41,33 +63,22 @@ export default function WriteEditor() {
       return
     }
 
-    // 简单的 Markdown 到 HTML 转换（内联，不用额外依赖）
     let html = content
-      // 标题
       .replace(/^### (.+)$/gm, "<h3>$1</h3>")
       .replace(/^## (.+)$/gm, "<h2>$1</h2>")
       .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-      // 粗体/斜体
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
       .replace(/\*(.+?)\*/g, "<em>$1</em>")
-      // 行内代码
       .replace(/`(.+?)`/g, "<code>$1</code>")
-      // 链接
       .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="underline">$1</a>')
-      // 无序列表
       .replace(/^- (.+)$/gm, "<li>$1</li>")
-      // 有序列表
       .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
-      // 图片
       .replace(/!\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1" class="my-2 max-w-full rounded" />')
-      // 段落（非空行，不是标题、列表、图片、代码块、HTML）
       .replace(/^(?!<[hHlLiIiIcC]|<img|```)(.+)$/gm, (match) => {
         if (match.trim()) return `<p>${match}</p>`
         return match
       })
-      // 合并连续的 <li>
       .replace(/((?:<li>.*?<\/li>\n?)+)/g, '<ul class="list-disc pl-5 my-2">$1</ul>')
-      // 空行
       .replace(/\n{2,}/g, "\n")
 
     setPreview(html)
@@ -83,6 +94,14 @@ export default function WriteEditor() {
     setPublishing(true)
     setResult(null)
 
+    const extra: Record<string, string> = {}
+    if (type === "project") {
+      extra.projectType = projectType
+      extra.status = projectStatus
+      if (linkDemo.trim()) extra.linkDemo = linkDemo.trim()
+      if (linkGithub.trim()) extra.linkGithub = linkGithub.trim()
+    }
+
     try {
       const res = await fetch("/api/publish", {
         method: "POST",
@@ -97,12 +116,19 @@ export default function WriteEditor() {
             .map((t) => t.trim())
             .filter(Boolean),
           content,
+          extra,
         }),
       })
 
       const data = await res.json()
       if (data.success) {
         setResult({ ok: true, msg: `${data.message}！${data.url ? ` 查看: ${data.url}` : ""}` })
+        // 清空表单
+        setTitle("")
+        setSlug("")
+        setSummary("")
+        setTags("")
+        setContent("")
       } else {
         setResult({ ok: false, msg: data.error || "发布失败" })
       }
@@ -180,6 +206,46 @@ export default function WriteEditor() {
             className="w-full rounded-lg border border-[#ece9e1] bg-white px-4 py-2 text-sm text-[#2d2a24] outline-none focus:border-[#c4b999]"
           />
 
+          {/* Project 专用字段 */}
+          {type === "project" && (
+            <div className="space-y-3 rounded-lg border border-[#ece9e1] bg-[#f8f6f2] p-4">
+              <div className="flex gap-3">
+                <select
+                  value={projectType}
+                  onChange={(e) => setProjectType(e.target.value)}
+                  className="flex-1 rounded-lg border border-[#ece9e1] bg-white px-3 py-2 text-sm text-[#2d2a24]"
+                >
+                  {PROJECT_TYPES.map((t) => (
+                    <option key={t.value} value={t.value}>{t.label}</option>
+                  ))}
+                </select>
+                <select
+                  value={projectStatus}
+                  onChange={(e) => setProjectStatus(e.target.value)}
+                  className="flex-1 rounded-lg border border-[#ece9e1] bg-white px-3 py-2 text-sm text-[#2d2a24]"
+                >
+                  {PROJECT_STATUS.map((s) => (
+                    <option key={s.value} value={s.value}>{s.label}</option>
+                  ))}
+                </select>
+              </div>
+              <input
+                type="text"
+                placeholder="Demo 链接 (可选)"
+                value={linkDemo}
+                onChange={(e) => setLinkDemo(e.target.value)}
+                className="w-full rounded-lg border border-[#ece9e1] bg-white px-4 py-2 text-sm text-[#2d2a24] outline-none focus:border-[#c4b999]"
+              />
+              <input
+                type="text"
+                placeholder="GitHub 链接 (可选)"
+                value={linkGithub}
+                onChange={(e) => setLinkGithub(e.target.value)}
+                className="w-full rounded-lg border border-[#ece9e1] bg-white px-4 py-2 text-sm text-[#2d2a24] outline-none focus:border-[#c4b999]"
+              />
+            </div>
+          )}
+
           <textarea
             placeholder="用 Markdown 写文章..."
             value={content}
@@ -192,7 +258,6 @@ export default function WriteEditor() {
         <div className="flex-1">
           <div className="mb-2 text-xs text-[#aba69c] font-medium">预览</div>
           <div
-            ref={previewRef}
             className="min-h-[400px] w-full overflow-auto rounded-lg border border-[#ece9e1] bg-white px-6 py-5 text-sm leading-relaxed text-[#2d2a24] [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-3 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mb-2 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mb-1 [&_p]:mb-2 [&_code]:rounded [&_code]:bg-[#f0ede6] [&_code]:px-1 [&_code]:text-xs [&_li]:text-sm [&_li]:mb-1"
             dangerouslySetInnerHTML={{ __html: preview }}
           />

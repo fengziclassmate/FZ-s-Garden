@@ -89,7 +89,7 @@ export default function BlogsClient({ sections }: Props) {
       {/* ===== 左侧侧边栏 ===== */}
       <aside
         className={`shrink-0 overflow-hidden rounded-xl border border-[#ece9e1] bg-white/60 py-6 transition-all duration-300 ease-in-out ${
-          sidebarOpen ? "w-80" : "w-0 border-0"
+          sidebarOpen ? "w-96" : "w-0 border-0"
         }`}
       >
         <div className="px-5">
@@ -139,7 +139,10 @@ export default function BlogsClient({ sections }: Props) {
                                 : "text-[#7a756c] hover:bg-[#f5f2ec] hover:text-[#2d2a24]"
                             }`}
                           >
-                            {post.title}
+                            <span className="flex items-start gap-2">
+                              <span className="min-w-0 flex-1">{post.title}</span>
+                              <span className="shrink-0 whitespace-nowrap text-[11px] text-[#b0aba0] mt-0.5">{fmtCompactDate(post.date)}</span>
+                            </span>
                           </button>
                         );
                       })}
@@ -277,6 +280,13 @@ function fmtDate(date: string) {
     month: "2-digit",
     day: "2-digit",
   }).format(new Date(date));
+}
+
+function fmtCompactDate(date: string) {
+  const d = new Date(date);
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${month}/${day}`;
 }
 
 /* ===== 可拖拽浮动目录组件 ===== */
