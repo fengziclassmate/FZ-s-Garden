@@ -12,9 +12,9 @@ export function SiteFooter() {
             <p className="site-footer__description">{site.description}</p>
           </div>
           <div className="site-footer__links">
-            <Link href="/archive">Archive</Link>
+            <Link href="/me">About</Link>
+            <Link href="/blogs">Blogs</Link>
             <Link href="/behind">Behind</Link>
-            <Link href="/about">About</Link>
           </div>
         </div>
         {/* 脚注 */}

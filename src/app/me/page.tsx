@@ -1,17 +1,11 @@
 import { PageShell } from "@/components/layout/page-shell";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { NowBoard } from "@/components/now/now-board";
-import { ArchiveByDate } from "@/components/archive/archive-by-date";
-import { ArchiveByTag } from "@/components/archive/archive-by-tag";
-import { ArchiveByType } from "@/components/archive/archive-by-type";
 import { site } from "@/data/site";
-import { getAllContent } from "@/lib/content";
 
 export default async function MePage() {
-  const items = await getAllContent();
-
   return (
-    <PageShell eyebrow="Me" title="关于我" description="自我介绍、当前状态和所有内容归档。">
+    <PageShell eyebrow="Me" title="关于我" description="自我介绍和当前状态。">
       {/* 自我介绍 */}
       <section className="mb-12 grid gap-5 lg:grid-cols-[1fr_320px]">
         <article className="rounded-[2rem] border border-line bg-surface/88 p-7 shadow-[var(--shadow-paper)]">
@@ -42,25 +36,6 @@ export default async function MePage() {
       <section className="mb-14">
         <SectionHeading title="当前状态" />
         <NowBoard />
-      </section>
-
-      {/* 全部归档 */}
-      <section>
-        <SectionHeading title="全部归档" />
-        <div className="space-y-14">
-          <section>
-            <SectionHeading title="按时间" />
-            <ArchiveByDate items={items} />
-          </section>
-          <section>
-            <SectionHeading title="按类型" />
-            <ArchiveByType items={items} />
-          </section>
-          <section>
-            <SectionHeading title="按标签" />
-            <ArchiveByTag items={items} />
-          </section>
-        </div>
       </section>
     </PageShell>
   );

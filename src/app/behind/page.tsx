@@ -16,7 +16,7 @@ export default async function BehindPage() {
         <div className="mb-6 flex items-center gap-4">
           <Link
             href="/behind/write"
-            className="rounded-lg bg-[#2d2a24] px-4 py-2 text-sm text-white hover:bg-[#4a453c] transition-colors"
+            className="rounded-lg bg-[#e9e6df] px-4 py-2 text-sm text-[#2d2a24] hover:bg-[#ddd9d0] transition-colors"
           >
             + 写文章
           </Link>
@@ -33,7 +33,7 @@ export default async function BehindPage() {
         <div className="mb-6">
           <a
             href="/api/auth/github"
-            className="inline-block rounded-lg bg-[#2d2a24] px-4 py-2 text-sm text-white hover:bg-[#4a453c] transition-colors"
+            className="inline-block rounded-lg bg-[#e9e6df] px-4 py-2 text-sm text-[#2d2a24] hover:bg-[#ddd9d0] transition-colors"
           >
             GitHub 登录 → 写文章
           </a>
