@@ -1,4 +1,5 @@
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 import { ArticleCard } from "@/components/content/article-card";
 import { PageShell } from "@/components/layout/page-shell";
@@ -70,7 +71,7 @@ function BehindCardWrapper({
     <div className="group relative">
       <ArticleCard item={item} />
       {isLoggedIn && (
-        <div className="absolute right-3 top-3 z-10 flex gap-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+        <div className="absolute right-3 top-3 z-10 flex gap-1.5 transition-opacity">
           <Link
             href={`/behind/write?type=${item.type}&slug=${item.slug}`}
             className="rounded-md bg-[#e9e6df] px-2.5 py-1 text-xs text-[#2d2a24] hover:bg-[#ddd9d0] transition-colors"
