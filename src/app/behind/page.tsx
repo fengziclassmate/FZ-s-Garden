@@ -5,7 +5,7 @@ import { PageShell } from "@/components/layout/page-shell";
 import { getAllContent } from "@/lib/content";
 import { getSession } from "@/lib/auth";
 import Link from "next/link";
-import { ArticleManager } from "./article-manager";
+import { ArticleManagerClient } from "./article-manager";
 
 export default async function BehindPage() {
   const allItems = await getAllContent();
@@ -18,22 +18,25 @@ export default async function BehindPage() {
       description="管理所有文章：编辑、删除、撰写。"
     >
       {session ? (
-        <div className="mb-6 flex items-center gap-4">
-          <Link
-            href="/behind/write"
-            className="rounded-lg bg-[#e9e6df] px-4 py-2 text-sm text-[#2d2a24] hover:bg-[#ddd9d0] transition-colors"
-          >
-            + 写文章
-          </Link>
-          <form action="/api/auth/signout" method="POST">
-            <button
-              type="submit"
-              className="text-sm text-[#7a756c] hover:text-[#2d2a24] transition-colors"
+        <>
+          <div className="mb-6 flex items-center gap-4">
+            <Link
+              href="/behind/write"
+              className="rounded-lg bg-[#e9e6df] px-4 py-2 text-sm text-[#2d2a24] hover:bg-[#ddd9d0] transition-colors"
             >
-              退出({session.name})
-            </button>
-          </form>
-        </div>
+              + 写文章
+            </Link>
+            <form action="/api/auth/signout" method="POST">
+              <button
+                type="submit"
+                className="text-sm text-[#7a756c] hover:text-[#2d2a24] transition-colors"
+              >
+                退出({session.name})
+              </button>
+            </form>
+          </div>
+          <ArticleManagerClient items={allItems} />
+        </>
       ) : (
         <div className="mb-6">
           <a
@@ -44,8 +47,6 @@ export default async function BehindPage() {
           </a>
         </div>
       )}
-
-      {session && <ArticleManager items={allItems} />}
     </PageShell>
   );
 }

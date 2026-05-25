@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { GardenContent } from "@/lib/types";
@@ -13,34 +13,21 @@ const typeLabels: Record<string, string> = {
   behind: "幕后",
 };
 
-type ArticleItem = {
-  slug: string;
-  title: string;
-  type: string;
-  date: string;
-};
-
-export function ArticleManager({ items }: { items: GardenContent[] }) {
-  const [authed, setAuthed] = useState(false);
+export function ArticleManagerClient({ items }: { items: GardenContent[] }) {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("all");
   const router = useRouter();
 
-  useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((data) => setAuthed(!!data?.user))
-      .catch(() => setAuthed(false));
-  }, []);
-
   const handleDelete = async (slug: string, type: string, title: string) => {
     if (!confirm(`确定删除「${title}」吗？此操作不可撤销。`)) return;
 
-    setDeleting(slug);
+    const key = `${type}/${slug}`;
+    setDeleting(key);
     try {
       const res = await fetch("/api/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ type, slug }),
       });
       const data = await res.json();
@@ -55,8 +42,6 @@ export function ArticleManager({ items }: { items: GardenContent[] }) {
       setDeleting(null);
     }
   };
-
-  if (!authed) return null;
 
   const types = ["all", ...new Set(items.map((i) => i.type))];
   const filtered =
