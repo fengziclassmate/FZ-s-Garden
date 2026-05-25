@@ -3,14 +3,14 @@ import { getContentByType } from "@/lib/content";
 import type { ProjectContent } from "@/lib/types";
 import Link from "next/link";
 
-const statusOrder = ["building", "finished", "paused", "idea", "archived"];
+const statusOrder = ["building", "finished", "paused", "idea"];
 
 const statusLabels: Record<string, string> = {
   building: "建设中",
   finished: "已完成",
   paused: "暂停",
   idea: "想法中",
-  archived: "已归档",
+
 };
 
 const projectTypeEmoji: Record<string, string> = {

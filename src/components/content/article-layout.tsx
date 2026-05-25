@@ -34,8 +34,8 @@ export function ArticleLayout({ item, children }: ArticleLayoutProps) {
             <dd className="mt-2"><TagList tags={item.tags} /></dd>
           </div>
         </dl>
-        <Link href="/archive" className="mt-6 inline-flex rounded-full border border-line px-4 py-2 text-sm text-muted-ink transition hover:bg-surface-soft hover:text-ink">
-          查看归档
+        <Link href="/blogs" className="mt-6 inline-flex rounded-full border border-line px-4 py-2 text-sm text-muted-ink transition hover:bg-surface-soft hover:text-ink">
+          浏览全部
         </Link>
       </aside>
     </main>
