@@ -6,8 +6,7 @@ import { PageShell } from "@/components/layout/page-shell";
 import { getContentByType } from "@/lib/content";
 import { getSession } from "@/lib/auth";
 import Link from "next/link";
-import { BehindCardActions } from "./behind-card-actions";
-import type { GardenContent } from "@/lib/types";
+import { BehindCardWithActions } from "./behind-card-actions";
 
 export default async function BehindPage() {
   const items = await getContentByType("behind");
@@ -49,38 +48,16 @@ export default async function BehindPage() {
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {items.map((item) => (
-          <BehindCardWrapper
-            key={item.slug}
-            item={item}
-            isLoggedIn={!!session}
-          />
+          <div key={item.slug} className="group relative">
+            <ArticleCard item={item} />
+            <BehindCardWithActions
+              type={item.type}
+              slug={item.slug}
+              title={item.title}
+            />
+          </div>
         ))}
       </div>
     </PageShell>
-  );
-}
-
-function BehindCardWrapper({
-  item,
-  isLoggedIn,
-}: {
-  item: GardenContent;
-  isLoggedIn: boolean;
-}) {
-  return (
-    <div className="group relative">
-      <ArticleCard item={item} />
-      {isLoggedIn && (
-        <div className="absolute right-3 top-3 z-10 flex gap-1.5 transition-opacity">
-          <Link
-            href={`/behind/write?type=${item.type}&slug=${item.slug}`}
-            className="rounded-md bg-[#e9e6df] px-2.5 py-1 text-xs text-[#2d2a24] hover:bg-[#ddd9d0] transition-colors"
-          >
-            编辑
-          </Link>
-          <BehindCardActions type={item.type} slug={item.slug} title={item.title} />
-        </div>
-      )}
-    </div>
   );
 }
