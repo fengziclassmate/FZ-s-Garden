@@ -120,7 +120,7 @@ export default async function PortfolioPage() {
                     )}
                     <Link
                       href={`/portfolio/${item.slug}`}
-                      className="relative z-10 ml-auto rounded-lg bg-[#2d2a24] px-3 py-1.5 text-xs text-white transition hover:bg-[#4a453c]"
+                      className="relative z-10 ml-auto rounded-lg bg-[#2d2a24] px-3 py-1.5 text-xs !text-white transition hover:bg-[#4a453c]"
                     >
                       详情 →
                     </Link>
