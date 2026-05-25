@@ -3,17 +3,27 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import type { GardenContent } from "@/lib/types";
 
-type Article = {
+const typeLabels: Record<string, string> = {
+  journal: "手账",
+  research: "科研日志",
+  reading: "阅读",
+  project: "作品集",
+  behind: "幕后",
+};
+
+type ArticleItem = {
   slug: string;
   title: string;
   type: string;
   date: string;
 };
 
-export function ArticleManager({ items }: { items: Article[] }) {
+export function ArticleManager({ items }: { items: GardenContent[] }) {
   const [authed, setAuthed] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string>("all");
   const router = useRouter();
 
   useEffect(() => {
@@ -48,15 +58,40 @@ export function ArticleManager({ items }: { items: Article[] }) {
 
   if (!authed) return null;
 
+  const types = ["all", ...new Set(items.map((i) => i.type))];
+  const filtered =
+    selectedType === "all" ? items : items.filter((i) => i.type === selectedType);
+
   return (
     <div className="mb-8 rounded-xl border border-[#ece9e1] bg-white/80 p-4 shadow-sm">
-      <p className="mb-3 text-sm font-semibold text-[#2d2a24]">📋 文章管理</p>
+      <div className="mb-3 flex items-center justify-between">
+        <p className="text-sm font-semibold text-[#2d2a24]">📋 文章管理（共 {items.length} 篇）</p>
+        <div className="flex flex-wrap gap-1.5">
+          {types.map((t) => (
+            <button
+              key={t}
+              onClick={() => setSelectedType(t)}
+              className={`rounded-md px-2 py-1 text-xs transition-colors ${
+                selectedType === t
+                  ? "bg-[#2d2a24] text-white"
+                  : "bg-[#f0ede6] text-[#7a756c] hover:bg-[#e9e6df]"
+              }`}
+            >
+              {t === "all" ? "全部" : typeLabels[t] || t}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="divide-y divide-[#ece9e1]">
-        {items.map((item) => (
+        {filtered.map((item) => (
           <div
-            key={item.slug}
+            key={`${item.type}/${item.slug}`}
             className="flex items-center gap-3 py-2.5 text-sm"
           >
+            <span className="shrink-0 rounded bg-[#f0ede6] px-1.5 py-0.5 text-[10px] text-[#7a756c] font-mono">
+              {typeLabels[item.type] || item.type}
+            </span>
             <span className="flex-1 min-w-0 truncate text-[#2d2a24]">
               {item.title}
             </span>
@@ -69,13 +104,18 @@ export function ArticleManager({ items }: { items: Article[] }) {
             </Link>
             <button
               onClick={() => handleDelete(item.slug, item.type, item.title)}
-              disabled={deleting === item.slug}
+              disabled={deleting === `${item.type}/${item.slug}`}
               className="shrink-0 rounded-md bg-red-100 px-2.5 py-1 text-xs text-red-600 hover:bg-red-200 disabled:opacity-50 transition-colors"
             >
-              {deleting === item.slug ? "删除中..." : "删除"}
+              {deleting === `${item.type}/${item.slug}` ? "删除中..." : "删除"}
             </button>
           </div>
         ))}
+        {filtered.length === 0 && (
+          <p className="py-4 text-center text-sm text-[#7a756c]">
+            这个分类暂无文章
+          </p>
+        )}
       </div>
     </div>
   );
