@@ -39,12 +39,13 @@ export default function BlogsClient({ sections }: Props) {
   const postKey = activeType && activeSlug ? `${activeType}/${activeSlug}` : null;
   const likeCount = postKey ? (likeCounts[postKey] ?? 0) : 0;
 
-  // 切换文章时重新加载点赞数
+  // 切换文章时重置点赞状态并重新加载点赞数
   useEffect(() => {
     if (!postKey) return;
     let cancelled = false;
 
     setLiked(window.localStorage.getItem(likedStoragePrefix + postKey) === "yes");
+    setLikeLoading(false);
 
     fetch(`/api/post-likes?slug=${encodeURIComponent(postKey)}`, { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
