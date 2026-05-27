@@ -3,87 +3,71 @@ title: "ArXiv 论文每日速递"
 date: "2026-05-27"
 type: "project"
 summary: "每天凌晨自动抓取城市遥感、GIS、地理空间智能领域的最新论文，经 DeepSeek 大模型智能筛选和摘要后，推送至微信公众号。已稳定运行 30 天。"
-tags: ["Python","ArXiv","DeepSeek","自动化","微信推送","科研工具"]
+tags: ["Python", "ArXiv", "DeepSeek", "自动化", "微信推送", "科研工具"]
 draft: false
 projectType: "personal-tool"
 status: "finished"
-startDate: "2026-05-27"
+startDate: "2026-04-27"
 linkGithub: "https://github.com/fengziclassmate/arxiv_daily_paper_push"
 ---
 
+## 痛点
 
-## 为什么要做这个
+读博每天刷论文，ArXiv 上新几百篇，挨个翻标题太费精力。
 
-读博期间每天要刷大量论文，但 ArXiv 每天上新几百篇，挨个看标题摘要太耗精力。我需要一个**自动筛选器**——把和我研究方向相关的论文挑出来，每篇配一句人话总结，每天早上推送到手机上。起床看一眼微信，就知道今天该读哪篇。
+市面工具要么不聚焦我的方向，要么只给英文邮件。我想要的很简单：
 
-市面上有 Paper Digest、Connected Papers 之类的工具，但它们要么不聚焦我的方向，要么只给英文邮件。我想要的很简单：**中文摘要 + 微信推送 + 关键词可定制**。那就自己写一个。
+> **中文摘要 + 微信推送 + 关键词可定制。** 那就自己写一个。
+
+---
 
 ## 做了什么
 
-一个全自动的论文监控与速递系统，每天从三个来源抓取最新论文：
+全自动论文监控速递系统，每天从三个来源抓取最新论文：
 
-- **ArXiv** — 按 cs.CV、cs.AI、cs.LG、stat.ML 等类别拉取当日更新
-- **Crossref** — 搜索城市遥感、GIS 相关期刊的最新文章
-- **Semantic Scholar** — 补充高影响力论文，补全跨库论文的缺失摘要
+**数据源**
+- **ArXiv** — cs.CV、cs.AI、cs.LG 等类别当日更新
+- **Crossref** — 城市遥感、GIS 相关期刊最新文章
+- **Semantic Scholar** — 补充高影响力论文，补全缺失摘要
 
-然后经过**四级筛选流水线**：
+**筛选流水线（四级）**
 
-1. **关键词打分** — 用 50+ 个自定义关键词（U-Net、Transformer、遥感、时空、地理空间…）给每篇论文打分
-2. **DeepSeek 精筛** — 候选论文过一遍大模型，判断和"城市遥感 + 时空智能"方向的真实相关度，再排序
-3. **摘要补充** — 缺摘要的论文从 Semantic Scholar/Crossref 拉取，确保每篇都有摘要可用
-4. **LLM 摘要** — 给最终选中的论文生成一句话白话中文总结
-
-最后渲染成三种格式推出去：
-- 📱 **微信公众号图文** — 起床第一眼看到
-- 📧 **QQ 邮箱** — 备选渠道，可以保留存档
-- 🤖 **飞书机器人** — 推送到项目协作群
-
-## 我每天怎么用
-
-不需要打开任何网页。每天醒来，微信订阅号里就有今天的日报：
-
-> **「城市遥感与 GIS 论文速递 | 05-10」**
->
-> 本期精选 3 篇论文，涵盖方向：城市遥感、时空智能、多源数据融合
->
-> 1️⃣ From Drops to Grid — 用神经过程融合稀疏站点与雷达数据做高分辨率降雨估计
-> 2️⃣ Exponential distance decay — 美国 20 大都市区的公园访问距离衰减规律
-> 3️⃣ ReTrEAT cities — 海平面上升背景下沿海社区韧性框架
-
-点击文章链接直达原文。看到感兴趣的，白天在电脑上细读。
-
-代码跑在本地 Windows 上，每天定时任务触发：
-
-```bash
-# 每天早上 8:00 自动执行，啥也不用管
-python main.py
+```
+① 关键词打分 ── 50+ 自定义关键词（U-Net、Transformer、时空融合…）
+② DeepSeek 精筛 ── 大模型判断与"城市遥感 + 时空智能"的真实相关度
+③ 摘要补充 ── 从多源拉取补全每篇论文摘要
+④ LLM 摘要 ── 每篇生成一句白话中文总结
 ```
 
-如果需要预览当天结果但不推送：
+**推送渠道**
 
-```bash
-python main.py --dry-run
 ```
+📱 微信公众号图文 ── 起床第一眼看到
+📧 QQ 邮箱 ── 备选存档
+🤖 飞书机器人 ── 推送到项目协作群
+```
+
+---
 
 ## 效果
 
-系统从 4 月底开始跑，到现在已经稳定运行了 30+ 天，每天生成一份日报，从未中断。
-
-以下是一份真实的日报样本片段：
+每天醒来，微信里就有这个：
 
 <div className="my-6 rounded-2xl border border-line bg-surface/50 p-6 text-sm leading-relaxed text-ink shadow-[var(--shadow-paper)]">
 
 **城市遥感与 GIS 论文速递 | 2026-05-10**
 
-📅 发布日期：2026-05-10 | 📄 论文数量：3 篇
+📅 发布日期：2026-05-10 📄 论文数量：3 篇
 
-**本期论文概览：**
+**本期概览：**
 
-【1】From Drops to Grid: Noise-Aware Spatio-Temporal Neural Process for Rainfall Estimation — 城市遥感、时空智能、多源数据融合研究
-【2】Exponential distance decay in urban park visitation — 美国 20 大都市区公园访问对比分析
+【1】From Drops to Grid — 融合稀疏站点与雷达遥感数据的高分辨率降雨估计  
+【2】Exponential distance decay — 美国 20 大都市区公园访问距离衰减规律  
 【3】ReTrEAT cities — 海平面上升下沿海社区韧性框架
 
 </div>
+
+---
 
 ## 技术栈
 
@@ -91,24 +75,53 @@ python main.py --dry-run
 |---|---|
 | **语言** | Python 3.13 |
 | **数据源** | ArXiv API / Crossref API / Semantic Scholar API |
-| **LLM** | DeepSeek（相关度判断 + 中文摘要生成） |
-| **数据存储** | SQLite（推送历史去重、论文状态管理） |
-| **推送渠道** | 微信公众号（图文素材接口）/ QQ 邮箱（SMTP）/ 飞书机器人（Webhook） |
-| **定时触发** | Windows 任务计划程序 |
+| **大模型** | DeepSeek（相关度判断 + 中文摘要生成） |
+| **存储** | SQLite（推送历史去重、论文状态管理） |
+| **推送** | 微信公众号图文素材 / QQ 邮箱 SMTP / 飞书 Webhook |
+| **定时** | Windows 任务计划程序 |
 
-## 别人怎么体验
+---
 
-这个工具本质上是**为我个人定制**的——筛选关键词、推送渠道、LLM 配置都写死在配置文件里，别人跑起来需要自己配 API Key 和关键词。这也是它作为"个人工具"项目类型的原因。
+## 日常使用
 
-如果你想看真实的日报长什么样：
+代码跑在本地 Windows 上，每天定时触发，零维护：
 
-- 🐙 **源代码** → [GitHub 仓库](https://github.com/fengziclassmate/ArXivDailyPush)
-- 📄 **日报样本** → 上面那段就是真实生成的
-- 📬 **想收到推送？** 跟我说一声，我可以把你的邮箱加进去（先给我个许可就行 😄）
+```bash
+# 每天早上 8:00 自动执行，不用管
+python main.py
+
+# 预览当天结果但不推送
+python main.py --dry-run
+
+# 跳过 DeepSeek 快速预览
+python main.py --skip-llm --dry-run
+```
+
+---
+
+## 立即体验
+
+<div className="my-6 flex flex-wrap items-center gap-3 not-prose">
+  <a
+    href="https://github.com/fengziclassmate/arxiv_daily_paper_push"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center gap-2 rounded-xl bg-[#2d2a24] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#4a453c]"
+  >
+    🐙 GitHub 源码 →
+  </a>
+</div>
+
+这个工具本质是**为我自己定制**的——筛选关键词、推送渠道、LLM 配置都写死在配置文件里。如果你想看真实日报长什么样，上面那段就是真实生成的。想收到推送？跟我说一声就行 😄
+
+---
 
 ## 一些感悟
 
-这个项目让我体会到一件事：**好的工具是为你省时间，不是让你花时间维护它。** 一开始我花了两天搭框架，后面每天零维护成本。每天早上微信弹出一条推送的体验，远比打开网页刷 ArXiv 或者收几十封邮件过滤来的舒服。
+> 好的工具是为你省时间，不是让你花时间维护它。
 
-下一步计划：把关键词配置做成前端页面，可以在线调整关注的论文方向；考虑迁移到服务器上跑，省得占着笔记本。
+一开始花了两天搭框架，后面每天零维护成本。每天早上微信弹出一条推送的体验，远比打开网页刷 ArXiv 来得舒服。
 
+**下一步计划：**
+- 把关键词配置做成前端页面，在线调整论文方向
+- 迁移到服务器跑，不占笔记本
