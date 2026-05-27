@@ -1,0 +1,95 @@
+---
+title: "GEHistoricalImagery GUI 汉化定制版"
+date: "2026-05-25"
+type: "project"
+summary: "基于 Mbucari/GEHistoricalImagery v0.5.0 的 GUI 汉化版本，添加了区域形状下载、本地缓存清理等实用功能，适配中文 GIS 研究工作流。"
+tags: ["C#", "WPF", ".NET", "GDAL", "Google Earth", "遥感", "桌面工具"]
+draft: false
+projectType: "personal-tool"
+status: "in-progress"
+startDate: "2026-04-28"
+linkGithub: "https://github.com/fengziclassmate/GEHistoricalImagery-GUI"
+---
+
+## 背景
+
+[GEHistoricalImagery](https://github.com/Mbucari/GEHistoricalImagery) 是一个开源的命令行工具，用于从 Google Earth 和 Esri Wayback 下载历史遥感影像，支持 GeoTiff 输出、坐标重投影、批量下载。
+
+但原始版本是纯 CLI，GUI 功能比较简陋（Windows Forms 版），配置参数靠手动敲命令行，对中文用户不友好。我需要一个能用鼠标点选就能用的版本。
+
+## 做了什么
+
+在原版 v0.5.0 release（包含 WPF GUI）基础上，做了以下改造：
+
+**界面汉化与本土化**
+- 完整中文本地化，菜单、提示、错误信息全部翻译
+- 适配中文路径、中文文件名编码，避免 GBK/UTF-8 乱码
+- 补充原始版本缺失的简要操作引导
+
+**功能增强**
+- 区域形状定制下载（支持 polygon/bbox 模式，不只是矩形裁剪）
+- 本地缓存清理工具（`GEHI_cache` 一键清理）
+- 下载进度实时显示
+- 输出文件自动拼接日期标记，避免同名覆盖
+
+**工程调整**
+- 直接从原始 release 的 `win-x64` 自包含发布版改造，无需 .NET SDK 即可运行
+- 保留 GDAL 全部依赖，支持 200+ 坐标参考系输出
+
+## 使用场景
+
+下载某区域多个时段的历史遥感影像，用于变化检测或时序分析：
+
+```
+① 打开 GUI → 定位坐标
+② 点击「查询可用影像」→ 看时间轴
+③ 勾选需要的日期 → 选择输出格式（GeoTiff / 瓦片）
+④ 开始下载
+```
+
+比起原版命令行需要写：
+
+```bash
+dotnet GEHistoricalImagery.dll download -l "lon,lat" -z 18 -d 2024-01-01 -o output.tif
+```
+
+现在 GUI 版半小时上手，做地学变化检测的同事也能直接用了。
+
+## 技术栈
+
+| 层级 | 技术 |
+|---|---|
+| **框架** | .NET 9 + WPF |
+| **核心引擎** | GEHistoricalImagery.dll + LibGoogleEarth |
+| **地理处理** | GDAL 3.10 (MaxRev.Gdal) |
+| **地图来源** | Google Earth / Esri Wayback |
+| **构建** | 修改自 v0.5.0 release 自包含发布 |
+
+## 当前状态
+
+- ✅ GUI 汉化完成
+- ✅ 区域形状下载功能可用
+- ✅ 缓存清理
+- ⚠️ 后续计划：
+  - 坐标搜索框增加地名反查
+  - 批量任务队列（多个区域依次下载）
+  - 与个人工作站对接，输出路径可配置
+
+## 立即体验
+
+<div className="my-6 flex flex-wrap items-center gap-3 not-prose">
+  <a
+    href="https://github.com/fengziclassmate/GEHistoricalImagery-GUI"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center gap-2 rounded-xl bg-[#2d2a24] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#4a453c]"
+  >
+    🐙 GitHub 源码 →
+  </a>
+</div>
+
+> 这是一个 Windows 桌面应用，需在 Windows x64 环境下运行。解压后直接运行 `GEHistoricalImagery.Gui.exe` 即可，无需额外安装依赖。
+
+## 一些记录
+
+这个项目让我意识到：**工具链里最后一步的"用户体验"往往比核心功能更花时间。** 原版 CLI 功能非常强大，但每次用都得翻文档查参数。花了两天把 GUI 搞顺手后，日常下载历史影像变成了一键操作，节约的时间远超改造投入。
