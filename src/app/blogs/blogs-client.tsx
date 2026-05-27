@@ -29,6 +29,8 @@ export default function BlogsClient({ sections }: Props) {
   const [likeCounts, setLikeCounts] = useState<Record<string, number>>({});
   const [liked, setLiked] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
+  // 多选展开的分类（key 的集合）
+  const [expandedTypes, setExpandedTypes] = useState<Set<string>>(new Set());
 
   let activePost: GardenContent | null = null;
   if (activeType && activeSlug) {
@@ -99,6 +101,15 @@ export default function BlogsClient({ sections }: Props) {
 
   const navigate = useCallback(
     (type?: string, slug?: string) => {
+      // 点击文章时自动展开该分类
+      if (type) {
+        setExpandedTypes((prev) => {
+          if (prev.has(type)) return prev;
+          const next = new Set(prev);
+          next.add(type);
+          return next;
+        });
+      }
       const params = new URLSearchParams();
       if (type) params.set("type", type);
       if (slug) params.set("slug", slug);
@@ -141,12 +152,22 @@ export default function BlogsClient({ sections }: Props) {
           </div>
           <div className="space-y-0.5">
             {sections.map((sec) => {
-              const isExpanded = activeType === sec.key;
+              const isExpanded = expandedTypes.has(sec.key);
               return (
                 <div key={sec.key}>
                   <button
                     type="button"
-                    onClick={() => navigate(isExpanded ? undefined : sec.key, undefined)}
+                    onClick={() => {
+                      setExpandedTypes((prev) => {
+                        const next = new Set(prev);
+                        if (next.has(sec.key)) {
+                          next.delete(sec.key);
+                        } else {
+                          next.add(sec.key);
+                        }
+                        return next;
+                      });
+                    }}
                     className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base transition ${
                       isExpanded
                         ? "bg-[#e9e6df] font-medium text-[#2d2a24]"
