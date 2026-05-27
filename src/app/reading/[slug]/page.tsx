@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleLayout } from "@/components/content/article-layout";
 import { getContentBySlug, getContentByType } from "@/lib/content";
+import CommentsSection from "@/components/content/comments-section";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -26,6 +27,7 @@ export default async function ReadingDetailPage({ params }: PageProps) {
   return (
     <ArticleLayout item={item}>
       <div className="prose-garden" dangerouslySetInnerHTML={{ __html: item.html }} />
+      <CommentsSection />
     </ArticleLayout>
   );
 }

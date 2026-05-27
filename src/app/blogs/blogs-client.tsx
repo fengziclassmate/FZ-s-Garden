@@ -3,6 +3,7 @@
 import type { ContentType, GardenContent } from "@/lib/types";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+import GiscusComments from "@/components/content/giscus-comments";
 
 const contentTypeLabels: Record<string, string> = {
   journal: "手账",
@@ -281,6 +282,17 @@ export default function BlogsClient({ sections }: Props) {
               <div
                 className="prose-garden mt-6 border-t border-[#ece9e1] pt-6"
                 dangerouslySetInnerHTML={{ __html: activePost.html }}
+              />
+
+              {/* 评论区 — Giscus */}
+              <GiscusComments
+                repo="fengziclassmate/FZ-s-Garden"
+                repoId="R_kgDOSmKp7Q"
+                category="Announcements"
+                categoryId="DIC_kwDOSmKp7c4C97yl"
+                mapping="pathname"
+                theme="preferred_color_scheme"
+                lang="zh-CN"
               />
             </article>
           </div>
