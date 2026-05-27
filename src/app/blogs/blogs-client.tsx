@@ -16,7 +16,6 @@ type Props = {
   sections: { key: string; label: string; emoji: string; posts: GardenContent[] }[];
 };
 
-// 点赞本地存储前缀
 const likedStoragePrefix = "phd-blog-liked-";
 
 export default function BlogsClient({ sections }: Props) {
@@ -29,6 +28,7 @@ export default function BlogsClient({ sections }: Props) {
   const [tocOpen, setTocOpen] = useState(true);
   const [likeCounts, setLikeCounts] = useState<Record<string, number>>({});
   const [liked, setLiked] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
 
   let activePost: GardenContent | null = null;
   if (activeType && activeSlug) {
@@ -39,23 +39,51 @@ export default function BlogsClient({ sections }: Props) {
   const postKey = activeType && activeSlug ? `${activeType}/${activeSlug}` : null;
   const likeCount = postKey ? (likeCounts[postKey] ?? 0) : 0;
 
-  // 切换文章时，更新 local 点赞状态和加载点赞数
+  // 切换文章时重新加载点赞数
   useEffect(() => {
-    if (postKey) {
-      setLiked(window.localStorage.getItem(likedStoragePrefix + postKey) === "yes");
-      // 加载该文章的点赞数
-      fetch(`/api/post-likes?slug=${encodeURIComponent(postKey)}`, { cache: "no-store" })
-        .then((r) => r.ok ? r.json() : null)
-        .then((data) => {
-          if (data && typeof data.count === "number") {
-            setLikeCounts((prev) => ({ ...prev, [postKey]: data.count }));
-          }
-        })
-        .catch(() => {});
-    }
+    if (!postKey) return;
+    let cancelled = false;
+
+    setLiked(window.localStorage.getItem(likedStoragePrefix + postKey) === "yes");
+
+    fetch(`/api/post-likes?slug=${encodeURIComponent(postKey)}`, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (cancelled) return;
+        if (data && typeof data.count === "number") {
+          setLikeCounts((prev) => ({ ...prev, [postKey!]: data.count }));
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
   }, [postKey]);
 
-  // 提取目录（仅在客户端执行）
+  const handleLike = useCallback(() => {
+    if (!postKey || liked || likeLoading) return;
+    setLiked(true);
+    setLikeLoading(true);
+    window.localStorage.setItem(likedStoragePrefix + postKey, "yes");
+    setLikeCounts((prev) => ({ ...prev, [postKey]: (prev[postKey] ?? 0) + 1 }));
+
+    fetch("/api/post-likes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug: postKey }),
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && typeof data.count === "number") {
+          setLikeCounts((prev) => ({ ...prev, [postKey!]: data.count }));
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLikeLoading(false));
+  }, [postKey, liked, likeLoading]);
+
+  // 提取目录
   const tocItems = useMemo(() => {
     if (!activePost || typeof window === "undefined") return [];
     const parser = new DOMParser();
@@ -193,31 +221,11 @@ export default function BlogsClient({ sections }: Props) {
               >
                 📄PDF
               </button>
+              {/* 点赞按钮（换成普通箭头函数，不返回 Promise） */}
               <button
                 type="button"
                 title="点赞"
-                onClick={async () => {
-                  if (!postKey || liked) return;
-                  setLiked(true);
-                  window.localStorage.setItem(likedStoragePrefix + postKey, "yes");
-                  // 乐观更新
-                  setLikeCounts((prev) => ({ ...prev, [postKey]: (prev[postKey] ?? 0) + 1 }));
-                  try {
-                    const res = await fetch("/api/post-likes", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ slug: postKey }),
-                    });
-                    if (res.ok) {
-                      const data = await res.json();
-                      if (typeof data.count === "number") {
-                        setLikeCounts((prev) => ({ ...prev, [postKey]: data.count }));
-                      }
-                    }
-                  } catch {
-                    // 乐观更新已生效
-                  }
-                }}
+                onClick={handleLike}
                 className={`flex items-center gap-1 rounded-md border px-2.5 py-1 text-xs transition ${
                   liked
                     ? "border-[#e8b4b4] bg-[#fdf0f0] text-[#c44a4a]"
@@ -255,7 +263,7 @@ export default function BlogsClient({ sections }: Props) {
             </article>
           </div>
 
-          {/* === 目录面板（浮动，可拖拽调节位置） === */}
+          {/* 目录面板 */}
           {tocItems.length > 0 && (
             <DraggableToc
               tocItems={tocItems}

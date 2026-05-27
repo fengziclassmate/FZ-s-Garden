@@ -1,5 +1,5 @@
 import { createPool } from "@vercel/postgres";
-import type { VercelPool, VercelPoolClient } from "@vercel/postgres";
+import type { VercelPool } from "@vercel/postgres";
 
 let pool: VercelPool | null = null;
 
@@ -12,12 +12,15 @@ function getPool(): VercelPool {
   return pool;
 }
 
-export async function getClient(): Promise<VercelPoolClient> {
+/**
+ * 获取数据库客户端
+ */
+async function getClient() {
   return await getPool().connect();
 }
 
 /**
- * 初始化数据库表（幂等，safe to run every time）
+ * 初始化数据库表（幂等）
  */
 export async function initDb(): Promise<void> {
   const client = await getClient();
@@ -36,7 +39,6 @@ export async function initDb(): Promise<void> {
         updated_at TIMESTAMP DEFAULT NOW()
       );
     `;
-    // 确保 site_likes 至少有一行
     await client.sql`
       INSERT INTO site_likes (id, count)
       VALUES (1, 0)
@@ -96,7 +98,7 @@ export async function getPostLikes(slug: string): Promise<number> {
 }
 
 /**
- * 文章点赞 +1（幂等，由前端控制每人限一次）
+ * 文章点赞 +1
  */
 export async function incrementPostLikes(slug: string): Promise<number> {
   const client = await getClient();
@@ -109,28 +111,6 @@ export async function incrementPostLikes(slug: string): Promise<number> {
       RETURNING count;
     `;
     return rows.length > 0 ? rows[0].count : 0;
-  } finally {
-    client.release();
-  }
-}
-
-/**
- * 获取多篇文章的点赞数（批量）
- */
-export async function getPostLikesMap(slugs: string[]): Promise<Record<string, number>> {
-  if (slugs.length === 0) return {};
-  const client = await getClient();
-  try {
-    const placeholders = slugs.map((_, i) => `$${i + 1}`).join(",");
-    const { rows } = await client.query(
-      `SELECT slug, count FROM post_likes WHERE slug IN (${placeholders})`,
-      slugs,
-    );
-    const map: Record<string, number> = {};
-    for (const row of rows) {
-      map[row.slug] = row.count;
-    }
-    return map;
   } finally {
     client.release();
   }

@@ -12,12 +12,21 @@ export function LikeButton() {
 
   const loadLikes = useCallback(async () => {
     try {
-      const res = await fetch("/api/likes", { cache: "no-store" });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000); // 5s 超时
+
+      const res = await fetch("/api/likes", {
+        cache: "no-store",
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeout);
+
       if (!res.ok) throw new Error("Failed to load likes");
       const data = (await res.json()) as { count: number };
       setCount(typeof data.count === "number" ? data.count : 0);
     } catch {
-      // silent fail
+      // 即使 DB 不可用，也把按钮放开
     } finally {
       setIsReady(true);
     }
@@ -35,11 +44,21 @@ export function LikeButton() {
     window.localStorage.setItem(likedStorageKey, "yes");
 
     try {
-      const res = await fetch("/api/likes", { method: "POST" });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+
+      const res = await fetch("/api/likes", {
+        method: "POST",
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeout);
+
       if (!res.ok) throw new Error("Failed to save like");
       const data = (await res.json()) as { count: number };
       setCount(typeof data.count === "number" ? data.count : count + 1);
     } catch {
+      // 乐观更新
       setCount((c) => c + 1);
     } finally {
       setIsSaving(false);
