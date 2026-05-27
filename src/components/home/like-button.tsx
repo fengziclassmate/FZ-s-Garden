@@ -1,99 +1,62 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const likedStorageKey = "phd-garden-liked";
-const fallbackCountKey = "phd-garden-like-count";
-
-type LikeResponse = {
-  count: number;
-};
-
-function normalizeCount(value: unknown) {
-  const count = Number(value);
-  return Number.isFinite(count) ? Math.max(0, Math.floor(count)) : 0;
-}
 
 export function LikeButton() {
   const [count, setCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [burstKey, setBurstKey] = useState(0);
+
+  const loadLikes = useCallback(async () => {
+    try {
+      const res = await fetch("/api/likes", { cache: "no-store" });
+      if (!res.ok) throw new Error("Failed to load likes");
+      const data = (await res.json()) as { count: number };
+      setCount(typeof data.count === "number" ? data.count : 0);
+    } catch {
+      // silent fail
+    } finally {
+      setIsReady(true);
+    }
+  }, []);
 
   useEffect(() => {
     setLiked(window.localStorage.getItem(likedStorageKey) === "yes");
-
-    let cancelled = false;
-
-    async function loadLikes() {
-      try {
-        const response = await fetch("/api/likes", { cache: "no-store" });
-        if (!response.ok) throw new Error("Unable to load likes");
-        const data = (await response.json()) as LikeResponse;
-        if (!cancelled) setCount(normalizeCount(data.count));
-      } catch {
-        if (!cancelled) {
-          setCount(normalizeCount(window.localStorage.getItem(fallbackCountKey)));
-        }
-      } finally {
-        if (!cancelled) setIsReady(true);
-      }
-    }
-
     void loadLikes();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  }, [loadLikes]);
 
   async function handleLike() {
     if (liked || isSaving) return;
-
-    const optimisticCount = count + 1;
-    setLiked(true);
-    setCount(optimisticCount);
     setIsSaving(true);
-    setBurstKey(Date.now());
+    setLiked(true);
     window.localStorage.setItem(likedStorageKey, "yes");
-    window.localStorage.setItem(fallbackCountKey, String(optimisticCount));
 
     try {
-      const response = await fetch("/api/likes", { method: "POST" });
-      if (!response.ok) throw new Error("Unable to save like");
-      const data = (await response.json()) as LikeResponse;
-      const savedCount = normalizeCount(data.count);
-      setCount(savedCount);
-      window.localStorage.setItem(fallbackCountKey, String(savedCount));
+      const res = await fetch("/api/likes", { method: "POST" });
+      if (!res.ok) throw new Error("Failed to save like");
+      const data = (await res.json()) as { count: number };
+      setCount(typeof data.count === "number" ? data.count : count + 1);
     } catch {
-      setCount(optimisticCount);
+      setCount((c) => c + 1);
     } finally {
       setIsSaving(false);
     }
   }
 
   return (
-    <div className="like-widget" aria-live="polite">
-      <button
-        type="button"
-        className="like-button"
-        onClick={handleLike}
-        disabled={!isReady || liked || isSaving}
-        aria-pressed={liked}
-        aria-label={`${count} liked`}
-      >
-        <span className="like-button__heart" aria-hidden="true" />
-        <strong>{count}</strong>
-        <span>liked</span>
-      </button>
-      {burstKey ? (
-        <span key={burstKey} className="like-burst" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </span>
-      ) : null}
-    </div>
+    <button
+      type="button"
+      onClick={handleLike}
+      disabled={!isReady || liked || isSaving}
+      aria-pressed={liked}
+      aria-label={`${count} liked`}
+      className="mt-4 flex items-center gap-1.5 rounded-full border border-[#e2dfd6] bg-white/60 px-4 py-1.5 text-sm text-[#7a756c] transition hover:border-[#d8b4b4] hover:bg-[#fdf0f0] hover:text-[#c44a4a] disabled:opacity-60"
+    >
+      <span>{liked ? "❤️" : "🤍"}</span>
+      <span className="font-medium">{count}</span>
+    </button>
   );
 }

@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@vercel/postgres": "^0.9.0",
     "gray-matter": "^4.0.3",
     "next": "16.2.3",
     "react": "19.2.0",
