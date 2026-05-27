@@ -1,7 +1,7 @@
 "use client";
 
 import type { ContentType, GardenContent } from "@/lib/types";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import GiscusComments from "@/components/content/giscus-comments";
 
@@ -20,10 +20,15 @@ type Props = {
 const likedStoragePrefix = "phd-blog-liked-";
 
 export default function BlogsClient({ sections }: Props) {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const activeType = (searchParams.get("type") as ContentType) || undefined;
-  const activeSlug = searchParams.get("slug") || undefined;
+  const _searchParams = useSearchParams();
+
+  // 初始化时从 URL 读取，后续靠本地 state 控制，不再依赖 router.push
+  const [activeType, setActiveType] = useState<ContentType | undefined>(
+    (_searchParams.get("type") as ContentType) || undefined
+  );
+  const [activeSlug, setActiveSlug] = useState<string | undefined>(
+    _searchParams.get("slug") || undefined
+  );
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [tocOpen, setTocOpen] = useState(true);
@@ -87,7 +92,7 @@ export default function BlogsClient({ sections }: Props) {
       .finally(() => setLikeLoading(false));
   }, [postKey, liked, likeLoading]);
 
-  // 提取目录
+  // 提取目录 — 用 postKey 作为 key，避免重复解析
   const tocItems = useMemo(() => {
     if (!activePost || typeof window === "undefined") return [];
     const parser = new DOMParser();
@@ -98,10 +103,14 @@ export default function BlogsClient({ sections }: Props) {
       text: h.textContent || "",
       level: parseInt(h.tagName[1], 10),
     }));
-  }, [activePost]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postKey]);
 
   const navigate = useCallback(
     (type?: string, slug?: string) => {
+      // 更新本地 state
+      if (type) setActiveType(type as ContentType);
+      if (slug) setActiveSlug(slug);
       // 点击文章时自动展开该分类
       if (type) {
         setExpandedTypes((prev) => {
@@ -111,12 +120,13 @@ export default function BlogsClient({ sections }: Props) {
           return next;
         });
       }
+      // 更新浏览器 URL（不触发路由）
       const params = new URLSearchParams();
       if (type) params.set("type", type);
       if (slug) params.set("slug", slug);
-      router.push(`/blogs?${params.toString()}`);
+      window.history.replaceState(null, "", `/blogs?${params.toString()}`);
     },
-    [router],
+    [],
   );
 
   return (
@@ -284,17 +294,19 @@ export default function BlogsClient({ sections }: Props) {
                 dangerouslySetInnerHTML={{ __html: activePost.html }}
               />
 
-              {/* 评论区 — Giscus */}
-              <GiscusComments
-                repo="fengziclassmate/FZ-s-Garden"
-                repoId="R_kgDOSmKp7Q"
-                category="Announcements"
-                categoryId="DIC_kwDOSmKp7c4C97yl"
-                mapping="pathname"
-                theme="preferred_color_scheme"
-                lang="zh-CN"
-              />
             </article>
+
+            {/* 评论区 — 用 key 强制重建，不影响文章内容 */}
+            <GiscusComments
+              key={postKey}
+              repo="fengziclassmate/FZ-s-Garden"
+              repoId="R_kgDOSmKp7Q"
+              category="Announcements"
+              categoryId="DIC_kwDOSmKp7c4C97yl"
+              mapping="pathname"
+              theme="preferred_color_scheme"
+              lang="zh-CN"
+            />
           </div>
 
           {/* 目录面板 */}

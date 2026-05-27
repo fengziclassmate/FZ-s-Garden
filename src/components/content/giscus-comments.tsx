@@ -29,17 +29,9 @@ export default function GiscusComments({
   lang = "zh-CN",
 }: GiscusCommentsProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const initialized = useRef(false);
-
-  // 每次 postKey（文章路径）变化时重建 Giscus
-  const postKey = ref.current?.closest("article")?.querySelector(".giscus-post-key")?.textContent;
 
   useEffect(() => {
-    // 清除旧容器内容
-    if (ref.current) {
-      ref.current.innerHTML = "";
-    }
-    initialized.current = false;
+    if (!ref.current) return;
 
     const script = document.createElement("script");
     script.src = "https://giscus.app/client.js";
@@ -57,8 +49,19 @@ export default function GiscusComments({
     script.setAttribute("crossorigin", "anonymous");
     script.async = true;
 
-    ref.current?.appendChild(script);
-  }, [repo, repoId, category, categoryId, mapping, theme, lang, postKey]);
+    ref.current.appendChild(script);
 
-  return <div ref={ref} className="giscus mt-12" />;
+    // 清理：卸载时移除旧 script 和 iframe
+    return () => {
+      if (ref.current) {
+        ref.current.innerHTML = "";
+      }
+    };
+  }, [repo, repoId, category, categoryId, mapping, theme, lang]);
+
+  return (
+    <div className="giscus mt-12">
+      <div ref={ref} />
+    </div>
+  );
 }
