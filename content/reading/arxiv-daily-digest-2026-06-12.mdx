@@ -1,0 +1,708 @@
+---
+title: "arXiv Daily Digest — 2026-06-12"
+date: "2026-06-12"
+type: "reading"
+summary: "学习学习学习..."
+tags: ["arxiv 推送"]
+draft: false
+---
+
+# arXiv Daily Digest — 2026-06-12
+
+> cs daily Subj-class mailing 5000a1 1
+
+> 共 711 篇 | 🔴 HIGH 20 | 🟡 MEDIUM 163 | 🟢 LOW 393 | ⚪ NONE 135 | 显示 576 篇
+
+## 📊 个性化总览
+
+好的，作为一位资深的科研领域分析师，我将从您——一位专注于城市更新与时空数据挖掘的GIS博士研究生的视角，对本期arXiv论文进行深入分析。
+
+### 1. 整体趋势
+
+本期论文呈现出几个与您研究方向紧密相关的新进展：
+*   **地理空间AI基础模型与智能体评估走向成熟**：出现了多个专门针对地理空间/地球系统数据的智能体基准（如 `TerraBench`, `GeoNatureAgent Benchmark`）和基础模型综述（`Emerging Flexible Designs for Geospatial Multimodal Foundation Models`），标志着该领域从概念验证转向标准化评估和系统化构建。
+*   **多智能体系统的“冷思考”与安全设计**：一方面，有论文（`The Illusion of Multi-Agent Advantage`）对多智能体系统的有效性提出了实证挑战，这要求您在设计系统时需更严谨地论证其必要性。另一方面，大量研究聚焦于多智能体系统的安全、鲁棒性和协调机制（如 `SAIGuard`, `Smarter Saboteurs, Better Fixers`, `Reward Modeling for Multi-Agent Orchestration`），这为您构建可靠的城市更新智能体提供了关键的设计原则和工具。
+*   **时空数据挖掘与LLM的深度融合**：研究不再局限于简单的LLM应用，而是深入到时空数据的核心挑战。例如，`MP3` 针对时空预测中的“时间幻象”问题提出了预训练方法，`Optimal Spatio-Temporal Decoupling` 为时空预测提供了严谨的不确定性量化框架，而 `PlaceRep` 则从轨迹数据中学习场所表示，这些方法都能直接提升您在城市更新区域检测和模式挖掘中的模型性能。
+
+### 2. 最值得关注的论文（HIGH关联度）
+
+以下5篇论文与您的研究方向高度相关，并具有直接的应用或启发价值：
+
+1.  **`[HIGH] PlaceRep: Geospatial Place Representation Learning from Large-Scale Trajectory Data`**
+    *   **为什么相关**：您的研究涉及城市更新区域检测和时空数据挖掘，核心是理解“场所”的功能和动态。这篇论文直接从大规模轨迹数据中学习地理空间场所的表示，这与您利用多源数据（如手机信令、GPS）进行城市功能区识别和低效用地分析的目标高度一致。
+    *   **如何结合**：您可以将 `PlaceRep` 学习到的场所嵌入作为您模型中重要的特征输入，用于区分不同城市区域（如商业区、老旧工业区）的功能和活力。它也可以作为多智能体系统中智能体对城市空间认知的基础，辅助其进行更智能的决策。
+
+2.  **`[HIGH] Optimal Spatio-Temporal Decoupling for Bayesian Conformal Prediction`**
+    *   **为什么相关**：您的研究涉及遥感变化检测和城市更新区域检测，这些任务都依赖于对时空预测结果的不确定性进行量化。这篇论文提出的贝叶斯共形预测最优解耦方法，专门针对时空数据设计，能提供具有统计保证的预测区间。
+    *   **如何结合**：您可以将该方法应用于 `LandTrendr` 算法或任何时空变化检测模型的输出，为每个像素的“变化”或“更新”预测提供一个可靠的不确定性度量。这能极大提升您识别结果的可靠性，并帮助区分真实变化与噪声。
+
+3.  **`[HIGH] Scalable Deep Learning Framework for Global High-Resolution Land Use / Land Cover Mapping`**
+    *   **为什么相关**：土地利用/覆盖分类是您进行城市更新和低效用地识别的基础。这篇论文提出了一个可扩展的深度学习框架，用于生成全球高分辨率土地利用图，其技术路线和模型架构对您的研究有直接参考价值。
+    *   **如何结合**：您可以借鉴其模型架构和训练策略，来改进您基于GEE平台的遥感分类模型。更重要的是，其生成的全球高分辨率土地利用产品可以作为您研究区域的基准数据，用于对比分析或作为多智能体系统的先验知识。
+
+4.  **`[HIGH] Agents-K1: Towards Agent-native Knowledge Orchestration`**
+    *   **为什么相关**：您计划利用LLM和多智能体系统进行城市低效用地识别，这需要智能体能够理解和利用复杂的城市知识（如规划法规、用地标准、历史数据）。`Agents-K1` 提出的端到端知识编排管道，能将原始文档转化为智能体可理解的结构化知识图谱。
+    *   **如何结合**：您可以使用 `Agents-K1` 的框架，将城市规划文本、施工审批文档、政策法规等非结构化数据，自动构建成一个城市更新领域的知识图谱。您的多智能体系统可以直接查询这个图谱，从而在识别低效用地时，能结合语义规则和领域知识进行推理，而不仅仅是依赖遥感影像。
+
+5.  **`[HIGH] The Illusion of Multi-Agent Advantage`**
+    *   **为什么相关**：这篇论文对您的研究方向具有重要的方法论警示意义。它通过实证研究发现，在许多任务中，精心设计的单智能体系统可以取得与复杂多智能体系统相当甚至更好的性能。
+    *   **如何结合**：在您设计和构建用于城市低效用地识别的多智能体系统时，这篇论文提醒您必须进行严格的消融实验和对比分析。您需要明确回答：为什么需要多个智能体？它们之间的协作带来了什么单智能体无法实现的增益？这能帮助您避免不必要的复杂性，将精力集中在真正能提升性能的关键设计上。
+
+### 3. 跨领域启发
+
+以下论文的方法可以迁移到您的城市更新/时空数据挖掘研究中：
+
+*   **从“时间序列”领域**：`[MEDIUM] Representing Time Series as Structured Programs for LLM Reasoning` 提出将时间序列表示为结构化程序，使LLM能通过代码执行进行推理。您可以借鉴此思路，将遥感时间序列（如NDVI曲线）或施工审批时间序列转化为程序代码，让LLM智能体通过“执行”这些代码来理解其变化模式，例如识别“快速下降后缓慢回升”等复杂模式，用于低效用地识别。
+
+*   **从“多智能体安全”领域**：`[HIGH] SAIGuard: Communication-State Simulation for Proactive Defense of LLM Multi-Agent Systems` 和 `[HIGH] Smarter Saboteurs, Better Fixers` 研究了多智能体系统的安全与鲁棒性。您可以将这些方法迁移到您的系统中，例如，设计一个“审计智能体”来监控其他智能体的决策，防止其基于错误或偏见的数据（如过时的施工审批数据）做出错误判断，从而提升整个系统的可信度。
+
+*   **从“因果推断”领域**：`[MEDIUM] Prediction-Powered Causal Inference by Automatic Debiased Machine Learning` 提出在半监督设置下进行因果推断。您可以将其应用于城市更新效果评估中。例如，利用遥感数据和施工审批数据作为特征，通过因果推断方法，更准确地评估某个城市更新项目（干预）对周边区域经济活力、人口流动等指标（结果）的真实因果效应，而非仅仅发现相关性。
+
+---
+
+## 📄 相关论文（576/711 篇）
+
+### 🔴 HIGH 关联度（20 篇）
+
+| # | 论文 | 分类 | 一句话总结 |
+|---|------|------|------------|
+| 1 | [TrajGenAgent: A Hierarchical LLM Agent for Human Mobility Trajectory](https://arxiv.org/abs/2606.12657) | `cs.AI cs.DB` | 提出分层LLM代理生成人类移动轨迹，可直接用于城市更新中居民出行模式模拟与时空数据挖掘。 |
+| 2 | [GeoNatureAgent Benchmark: Benchmarking LLM Agents for Environmental](https://arxiv.org/abs/2606.12821) | `cs.AI cs.ET` | 首个通过结构化工具调用评估环境分析智能体的基准，其地理空间API交互范式可直接用于城市更新区域检测与低效用地识别。 |
+| 3 | [The Illusion of Multi-Agent Advantage](https://arxiv.org/abs/2606.13003) | `cs.AI cs.CL` | 实证发现多智能体系统相比单智能体系统并无显著优势，其方法论和结论直接挑战用户研究中多智能体系统的有效性假设。 |
+| 4 | [TerraBench: Can Agents Reason Over Heterogeneous Earth-System Data?](https://arxiv.org/abs/2606.13148) | `cs.AI` | 构建了TerraBench基准，评估LLM/智能体在异构地球系统数据（网格数据、卫星影像、地理上下文）上的推理能力。 |
+| 5 | [Reward Modeling for Multi-Agent Orchestration](https://arxiv.org/abs/2606.13598) | `cs.AI cs.CL` | 提出OrchRM自监督框架，通过多智能体执行中间产物训练奖励模型来优化编排策略，可直接用于城市低效用地识别中的多智能体协调。 |
+| 6 | [Agents-K1: Towards Agent-native Knowledge Orchestration](https://arxiv.org/abs/2606.13669) | `cs.AI` | 构建端到端知识编排管道，将原始文档转化为智能体可理解的科学知识图谱，可直接用于城市更新文献与数据的结构化知识提取。 |
+| 7 | [G-Long: Graph-Enhanced Memory Management for Efficient Long-Term](https://arxiv.org/abs/2606.13115) | `cs.CL cs.AI` | 提出图增强记忆管理框架用于长期对话一致性，其图结构记忆方法可直接用于城市更新中多源时空数据的关联建模与长期推理。 |
+| 8 | [Recursive Agent Harnesses](https://arxiv.org/abs/2606.13643) | `cs.CL` | 提出递归智能体框架，将递归单元从模型调用扩展为包含文件系统、代码执行等工具的完整智能体。 |
+| 9 | [HyperTool: Beyond Step-Wise Tool Calls for Tool-Augmented Agents](https://arxiv.org/abs/2606.13663) | `cs.CL` | 提出HyperTool统一可执行工具接口，将工具调用从逐步原子操作封装为高层级执行单元，减少上下文消耗。 |
+| 10 | [Emerging Flexible Designs for Geospatial Multimodal Foundation Models](https://arxiv.org/abs/2606.12595) | `cs.LG cs.AI` | 系统比较面向地理空间多模态推理的基础模型架构，聚焦灵活设计范式。 |
+| 11 | [MP3: Multi-Period Pattern Pre-training forSpatio-Temporal Forecasting](https://arxiv.org/abs/2606.13119) | `cs.LG cs.AI` | 针对城市时空数据中的“时间幻象”问题，提出多周期模式预训练方法以捕捉不完整周期观测和全局空间相关性。 |
+| 12 | [SAIGuard: Communication-State Simulation for Proactive Defense of LLM](https://arxiv.org/abs/2606.12474) | `cs.MA cs.AI` | 提出基于通信状态模拟的主动防御框架，用于保护LLM多智能体系统免受安全威胁，可直接应用于用户的多智能体城市用地识别系统安全设计。 |
+| 13 | [Smarter Saboteurs, Better Fixers: Scaling & Security in Linear](https://arxiv.org/abs/2606.12709) | `cs.MA cs.CR` | 研究模型规模对线性多智能体工作流安全性的影响，揭示攻击与修复的规模效应，可为用户的多智能体系统鲁棒性设计提供直接参考。 |
+| 14 | [The Internet of Agentic AI: Communication, Coordination, and Collective](https://arxiv.org/abs/2606.12835) | `cs.MA cs.AI` | 提出智能体互联网（IoAI）愿景，构建异构智能体发现、协商、通信和协作的开放生态系统，与用户的多智能体城市场景应用方向高度契合。 |
+| 15 | [See What I See, Know What I Think: Dense Latent Communication Across](https://arxiv.org/abs/2606.13594) | `cs.MA` | 提出异构智能体间的密集潜在通信方法，通过KV缓存实现跨模型对齐，可直接应用于用户的多源数据融合与多智能体协作场景。 |
+| 16 | [OccAny: Generalized Unconstrained Urban 3D Occupancy](https://arxiv.org/abs/2603.23502) | `cs.CV` | 提出通用的无约束城市3D占用预测方法，可直接用于城市更新区域的3D空间建模与低效用地识别。 |
+| 17 | [Skill-3D: Evolving Scene-Aware Skills for Agentic 3D Spatial Reasoning](https://arxiv.org/abs/2606.07436) | `cs.CV` | 开发场景感知的3D空间推理技能，使智能体能够动态适应环境进行交互式任务执行。 |
+| 18 | [PlaceRep: Geospatial Place Representation Learning from Large-Scale](https://arxiv.org/abs/2507.02921) | `cs.LG cs.AI` | 从大规模轨迹数据中学习地理空间场所表示，其多模态融合方法可直接用于城市更新区域检测中的语义匹配。 |
+| 19 | [Optimal Spatio-Temporal Decoupling for Bayesian Conformal Prediction](https://arxiv.org/abs/2605.00432) | `cs.LG stat.ML` | 提出时空贝叶斯共形预测的最优解耦方法，可直接用于城市更新区域检测中的时空不确定性量化。 |
+| 20 | [Scalable Deep Learning Framework for Global High-Resolution Land Use](https://arxiv.org/abs/2606.11793) | `cs.LG cs.AI` | 提出一个可扩展的深度学习框架，用于生成全球高分辨率土地利用图，可直接应用于城市更新中的土地覆盖变化检测。 |
+
+### 🟡 MEDIUM 关联度（163 篇）
+
+| # | 论文 | 分类 | 一句话总结 |
+|---|------|------|------------|
+| 1 | [ToolSense: A Diagnostic Framework for Auditing Parametric Tool Knowledge](https://arxiv.org/abs/2606.12451) | `cs.AI cs.IR` | 提出将工具编码为虚拟token并微调LLM作为检索器的方法，可借鉴用于城市更新中多源数据工具（如GEE、LandTrendr）的智能检索与调用。 |
+| 2 | [Arbor: Tree Search as a Cognition Layer for Autonomous Agents](https://arxiv.org/abs/2606.12563) | `cs.AI` | 提出树搜索作为多智能体认知层的框架，可借鉴用于城市低效用地识别中多智能体协作探索与决策的搜索策略。 |
+| 3 | [Strategic Decision Support for AI Agents](https://arxiv.org/abs/2606.12587) | `cs.AI cs.HC` | 探讨AI代理决策中人类与工具的角色反转，可借鉴用于城市更新智能体中人类专家与LLM协同决策的可靠性设计。 |
+| 4 | [Evoflux: Inference-Time Evolution of Executable Tool Workflows for](https://arxiv.org/abs/2606.12674) | `cs.AI` | 提出推理时演化工具工作流的方法，可借鉴用于城市更新中多源数据（遥感、审批数据）处理流程的自动组合与优化。 |
+| 5 | [Benchmarking AI Agents for Addressing Scientific Challenges Across](https://arxiv.org/abs/2606.12736) | `cs.AI cs.LG` | 提出科学挑战的AI代理基准，可借鉴用于城市更新中多智能体系统性能的标准化评估框架。 |
+| 6 | [A Tutorial on World Models and Physical AI](https://arxiv.org/abs/2606.12783) | `cs.AI` | 综述显式与隐式世界模型在机器人、自动驾驶等物理AI领域的应用，其预测与推理框架可借鉴用于城市动态建模。 |
+| 7 | [The Containment Gap: How Deployed Agentic AI Frameworks Fail](https://arxiv.org/abs/2606.12797) | `cs.AI` | 审计主流智能体框架的结构安全缺陷，其安全设计原则可参考用于构建可靠的城市更新多智能体系统。 |
+| 8 | [Fantastic Scientific Agents and How to Build Them: AgentBuild for](https://arxiv.org/abs/2606.12834) | `cs.AI` | 提出基于合约驱动的科学智能体构建框架，其结构化开发方法可借鉴用于设计城市更新领域的LLM智能体。 |
+| 9 | [WISE: A Long-Horizon Agent in Minecraft with Why-Which Reasoning](https://arxiv.org/abs/2606.12852) | `cs.AI` | 提出结合“什么-哪里-何时”记忆与“哪个-为什么”推理的长期任务智能体，其分层推理架构可适配用于城市低效用地识别。 |
+| 10 | [HarnessBridge: Learnable Bidirectional Controller for LLM Agent Harness](https://arxiv.org/abs/2606.12882) | `cs.AI` | 提出可学习的智能体-环境交互控制器，其自适应控制机制可优化城市更新多智能体系统的协调效率。 |
+| 11 | [Iterating Toward Better Search: A Two-Agent Simulation Framework for](https://arxiv.org/abs/2606.12924) | `cs.AI` | 提出双智能体模拟框架评估对话式购物助手，其多智能体交互与评估方法可借鉴用于城市更新中的智能体系统设计。 |
+| 12 | [Learning What to Remember: A Cognitively Grounded Multi-Factor Value](https://arxiv.org/abs/2606.12945) | `cs.AI` | 提出多因素记忆价值函数优化LLM智能体的长期记忆管理，其记忆机制可适配用于城市更新时空数据挖掘中的历史信息处理。 |
+| 13 | [Multi-Modal Agents for Power Distribution Defect Detection: An](https://arxiv.org/abs/2606.12969) | `cs.AI` | 提出多模态智能体框架用于电力分配缺陷检测，其多模态融合与智能体架构可借鉴用于城市低效用地识别。 |
+| 14 | [Nous: An Attempt to Extract and Inject the Cognition Behind](https://arxiv.org/abs/2606.13038) | `cs.AI` | 从人类交易行为中提取认知多样性并注入LLM智能体，其行为建模方法可借鉴用于城市更新中的人类决策模拟。 |
+| 15 | [ARMOR-MAD: Adaptive Routing for Heterogeneous Multi-Agent Debate in](https://arxiv.org/abs/2606.13197) | `cs.AI` | 提出ARMOR-MAD框架，通过自适应路由和早期停止机制优化异构多智能体辩论的效率与准确性。 |
+| 16 | [LLM-as-an-Investigator: Evidence-First Reasoning for Robust Interactive](https://arxiv.org/abs/2606.13220) | `cs.AI cs.CE` | 提出LLM-as-an-Investigator框架，通过证据优先推理避免LLM在交互中过早接受用户假设。 |
+| 17 | [Multi-Field Hybrid Retrieval-Augmented Generation for Maritime Accident](https://arxiv.org/abs/2606.13249) | `cs.AI` | 提出多字段混合RAG框架，从海事事故裁决报告中检索证据并生成根因分析报告。 |
+| 18 | [From Verdict to Process: Agentic Reinforcement Learning for Multi-Stage](https://arxiv.org/abs/2606.13262) | `cs.AI` | 提出基于智能体强化学习的多阶段事实验证框架，通过自适应协调优化证据收集与裁决预测。 |
+| 19 | [Can I Buy Your KV Cache?](https://arxiv.org/abs/2606.13361) | `cs.AI cs.CE` | 提出一种KV缓存交易机制，让AI代理共享预计算好的文档KV缓存，避免重复计算，可借鉴于多智能体系统的高效计算资源管理。 |
+| 20 | [IterCAD: An Iterative Multimodal Agent for Visually-Grounded CAD](https://arxiv.org/abs/2606.13368) | `cs.AI cs.CV` | 构建一个多模态智能体框架，通过多轮交互与CAD沙箱实现闭环、迭代的CAD生成与编辑，可借鉴于智能体驱动的城市更新交互式设计。 |
+| 21 | [Neuro-Symbolic Agents for Regulated Process Automation: Challenges and](https://arxiv.org/abs/2606.13405) | `cs.AI cs.MA` | 提出将领域内符号结构（如法规、流程模型）作为智能体核心架构组件，实现合规性内建，可借鉴于城市更新中的合规性智能体设计。 |
+| 22 | [Uncertainty-Aware Hybrid Retrieval for Long-Document RAG](https://arxiv.org/abs/2606.13550) | `cs.AI cs.CL` | 提出不确定性感知的多粒度检索方法，结合粗粒度与细粒度检索单元，提升长文档RAG的检索质量，可借鉴于多源数据融合中的语义匹配。 |
+| 23 | [A Three-Layer Framework for AI in Scientific Discovery](https://arxiv.org/abs/2606.13566) | `cs.AI` | 提出AI科学发现的三个层次（搜索、执行、模型形成），强调模型形成是核心创新，可借鉴于城市更新中的知识发现与模型构建。 |
+| 24 | [Multiagent Protocols with Aggregated Confidence Signals](https://arxiv.org/abs/2606.13591) | `cs.AI cs.LG` | 提出了三种多智能体系统输出置信度聚合协议，可用于评估多智能体系统在城市更新识别任务中的可靠性。 |
+| 25 | [Multi-Agent Reinforcement Learning from Delayed Marketplace Feedback for](https://arxiv.org/abs/2606.13604) | `cs.AI cs.LG` | 在DoorDash部署了基于延迟反馈的多智能体强化学习系统，其适应动态环境的方法可借鉴于城市更新区域检测中的时序决策。 |
+| 26 | [AgentBeats: Agentifying Agent Assessment for Openness, Standardization](https://arxiv.org/abs/2606.13608) | `cs.AI cs.LG` | 提出由裁判智能体执行的标准化的智能体评估协议，可用于多智能体系统在城市更新任务中的公平比较。 |
+| 27 | [EurekAgent: Agent Environment Engineering is All You Need For Autonomous](https://arxiv.org/abs/2606.13662) | `cs.AI cs.CL` | 提出智能体环境工程是自主科学发现的关键瓶颈，其环境设计理念可应用于城市更新数据挖掘环境构建。 |
+| 28 | [Shopping Reasoning Bench: An Expert-Authored Benchmark for Multi-Turn](https://arxiv.org/abs/2606.12608) | `cs.CL cs.LG` | 提出了一个评估大语言模型在多轮购物对话中推理能力的专家级基准，涉及偏好、预算和产品权衡。 |
+| 29 | [LLMs Can Better Capture Human Judgments--With the Right Prompts](https://arxiv.org/abs/2606.12754) | `cs.CL cs.AI` | 证明了通过简单的提示策略（如要求分布输出）可以显著提升大语言模型捕捉人类判断分布和稳定性的能力。 |
+| 30 | [How Fine-Grained Should a RAG Benchmark Be? A Hierarchical Framework for](https://arxiv.org/abs/2606.12789) | `cs.CL cs.IR` | 提出了一个层次化框架HieraRAG，用于研究检索增强生成（RAG）基准测试中问题特征的粒度选择，以最大化区分能力。 |
+| 31 | [LoHoSearch: Benchmarking Long-Horizon Search Agents Beyond the Human](https://arxiv.org/abs/2606.12837) | `cs.CL` | 构建了一个超越人类作者能力上限的、具有复杂搜索空间和结构的长时域搜索智能体基准LoHoSearch。 |
+| 32 | [SafeLLM: Extraction as a Hallucination-Resistant Alternative to](https://arxiv.org/abs/2606.12897) | `cs.CL` | 提出用结构化提取替代自由文本生成来消除RAG系统中的幻觉，其方法可用于城市更新中从政策文档或审批记录中提取结构化信息。 |
+| 33 | [X-MADAM-RAG: Diagnosing and Handling Chinese-English Evidence Conflict](https://arxiv.org/abs/2606.12903) | `cs.CL` | 构建中英文证据冲突基准并诊断RAG系统中的矛盾问题，其多语言证据冲突处理方法可用于城市更新中多源数据（如中文政策与英文遥感文献）的融合。 |
+| 34 | [SENTINEL: Failure-Driven Reinforcement Learning for Training Tool-Using](https://arxiv.org/abs/2606.12908) | `cs.CL` | 提出基于失败驱动的强化学习框架训练工具使用智能体，其自适应任务分布方法可借鉴用于训练城市更新中的多智能体系统。 |
+| 35 | [Multi-Turn Reasoning When Context Arrives in Pieces: Scalable Sharding](https://arxiv.org/abs/2606.12941) | `cs.CL` | 提出滚动记忆机制和分片流水线缓解多轮对话中信息碎片化导致的性能下降，可用于城市更新中多轮交互式数据挖掘。 |
+| 36 | [sebis at CRF Filling 2026: A Two-Stage Local LLM Pipeline for Medical](https://arxiv.org/abs/2606.13082) | `cs.CL` | 提出本地化两阶段LLM流水线从非结构化临床笔记中提取结构化信息，其方法可直接用于城市更新中从施工审批文本提取结构化字段。 |
+| 37 | [M\"OVE: A Holistic LLM Benchmark for the German Public Sector](https://arxiv.org/abs/2606.13111) | `cs.CL` | 构建德国公共部门LLM评估基准涵盖多维度指标，其评估框架可适配用于城市更新中LLM在政策分析场景的评估。 |
+| 38 | [NTS-CoT: Mitigating Hallucinations in LLM-based News Timeline](https://arxiv.org/abs/2606.13171) | `cs.CL cs.AI` | 提出NTS-CoT框架，通过识别新闻摘要中的两种幻觉类型并引入思维链推理来减少LLM在时间线摘要中的幻觉。 |
+| 39 | [MemRefine: LLM-Guided Compression for Long-Term Agent Memory](https://arxiv.org/abs/2606.13177) | `cs.CL cs.AI` | 提出MemRefine框架，利用LLM指导压缩智能体长期记忆，减少冗余存储并提升关键信息检索效率。 |
+| 40 | [SkillCAT: Contrastive Assessment and Topology-Aware Skill Self-Evolution](https://arxiv.org/abs/2606.13317) | `cs.CL` | 提出SkillCAT无训练框架，通过对比因果提取和拓扑感知技能进化，让LLM智能体从多轨迹中自主提炼可复用技能。 |
+| 41 | [From Passive Generation to Investigation: A Proactive Scientific Peer](https://arxiv.org/abs/2606.13349) | `cs.CL` | 设计主动式LLM审稿智能体，使其能像人类审稿人一样基于累积证据主动调查论文中的可疑部分。 |
+| 42 | [ArogyaSutra: A Multi-Agent Framework for Multimodal Medical Reasoning in](https://arxiv.org/abs/2606.13572) | `cs.CL cs.AI` | 提出多智能体框架，用于多语言、低资源场景下的多模态医疗推理。 |
+| 43 | [Beyond Uniform Tokens: Adaptive Compression for Time Series Language](https://arxiv.org/abs/2606.13624) | `cs.CL` | 针对时间序列语言建模中token信息结构不对称问题，提出自适应压缩方法。 |
+| 44 | [Operads for compositional reasoning in LLMs](https://arxiv.org/abs/2606.13634) | `cs.CL math.CT` | 利用Operad理论为LLM的复杂问题分解与组合推理提供严格的数学框架。 |
+| 45 | [Operadic consistency: a label-free signal for compositional reasoning](https://arxiv.org/abs/2606.13649) | `cs.CL cs.LG` | 基于Operad理论，提出无标签的“Operad一致性”指标，用于检测LLM组合推理失败。 |
+| 46 | [Learning to Reason by Analogy via Retrieval-Augmented Reinforcement](https://arxiv.org/abs/2606.13680) | `cs.CL cs.AI` | 提出检索增强强化微调（RA-RFT）框架，通过检索与当前问题推理模式相似的案例来提升LLM的类比推理能力。 |
+| 47 | [EvoArena: Tracking Memory Evolution for Robust LLM Agents in Dynamic](https://arxiv.org/abs/2606.13681) | `cs.CL` | 构建EvoArena基准测试，评估LLM智能体在动态环境变化中持续对齐知识、技能和行为的能力。 |
+| 48 | [ECA: Efficient Continual Alignment for Open-Ended Image-to-Text](https://arxiv.org/abs/2606.12633) | `cs.CV cs.LG` | 提出高效持续对齐方法，使图像到文本生成模型能增量适应新视觉数据分布而不遗忘旧知识。 |
+| 49 | [GRIP: Feedback-Guided Prompt Retrieval for Large Multimodal Models](https://arxiv.org/abs/2606.12744) | `cs.CV` | 提出基于反馈引导的提示检索方法，通过多模态上下文学习提升大模型在分类、描述等任务中的表现。 |
+| 50 | [Perceive, Interact, Reason: Building Tool-Augmented Visual Agents for](https://arxiv.org/abs/2606.12830) | `cs.CV cs.AI` | 提出PERIA智能体，通过工具增强视觉推理能力，其多步交互和空间推理范式可迁移至城市更新区域检测中的多源数据协同分析。 |
+| 51 | [Bridging Modal Isolation in Interleaved Thinking: Supervising Modality](https://arxiv.org/abs/2606.12886) | `cs.CV cs.AI` | 解决多模态交替推理中的模态隔离问题，其模态对齐机制可应用于LLM与遥感/施工数据的协同推理。 |
+| 52 | [Camera and LiDAR BEV Fusion for Cooperative 3D Object Detection on](https://arxiv.org/abs/2606.12981) | `cs.CV` | 提出相机与激光雷达BEV融合的3D检测方法，其多传感器融合范式可适配于遥感与施工数据的协同分析。 |
+| 53 | [Diffusion Transformer World-Action Model for AV Scene Prediction](https://arxiv.org/abs/2606.12987) | `cs.CV cs.AI` | 利用扩散Transformer预测自动驾驶场景，其动作条件世界模型可迁移至城市更新区域动态变化预测。 |
+| 54 | [Iterative Visual Thinking: Teaching Vision-Language Models Spatial](https://arxiv.org/abs/2606.13156) | `cs.CV cs.AI` | 提出迭代视觉思维框架，通过可视化预测和自纠正机制提升视觉语言模型的空间定位与自我校正能力，其迭代推理范式可借鉴用于智能体对城市空间的理解。 |
+| 55 | [Visual Place Recognition in Forests with Depth-Aware Distillation](https://arxiv.org/abs/2606.13206) | `cs.CV cs.RO` | 提出深度感知蒸馏框架，将几何线索注入DINOv2模型以提升森林环境中的视觉地点识别性能，其多模态蒸馏方法可借鉴用于城市更新区域检测中的特征融合。 |
+| 56 | [TimeLens: On-Device Artifact Recognition with Retrieval-Augmented](https://arxiv.org/abs/2606.13267) | `cs.CV cs.CL` | 开发基于检索增强生成的设备端文物识别与问答系统，其细粒度视觉识别和实时交互架构可借鉴用于城市低效用地识别中的多模态查询。 |
+| 57 | [Zero-Shot Captioning for Cultural Heritage: Automated Image Analysis of](https://arxiv.org/abs/2606.13275) | `cs.CV` | 提出检索增强的零样本描述框架Custom ZeroCLIP，用于文化遗产图像分析，其零样本迁移和检索增强方法可借鉴用于城市更新区域检测中的语义匹配。 |
+| 58 | [HYDRA-X: Native Unified Multimodal Models with Holistic Visual](https://arxiv.org/abs/2606.13289) | `cs.CV cs.AI` | 提出首个在单一视觉Transformer中统一图像和视频标记化的多模态模型，实现多模态统一表示。 |
+| 59 | [Heterogeneous LiDAR Early Fusion and Learned Re-Ranking Strategy for](https://arxiv.org/abs/2606.13503) | `cs.CV cs.AI` | Heterogeneous LiDAR Early Fusion and Learned Re-Ranking Strategy for
+[关联度: MEDIUM]
+一句话核心思路：提出MinkUNeXt-VINE++，通过早期融合异构LiDAR数据与学习重排序策略，提升非结构化环境中的地点识… |
+| 60 | [Measurement-Calibrated Multi-Camera Fusion for Vision-Based Indoor](https://arxiv.org/abs/2606.13509) | `cs.CV cs.AI` | Measurement-Calibrated Multi-Camera Fusion for Vision-Based Indoor
+[关联度: MEDIUM]
+一句话核心思路：通过显式建模单相机定位误差，提出测量校准的多相机融合方法，提升室内视觉定位的鲁棒性与可解释性。
+
+--- |
+| 61 | [SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning](https://arxiv.org/abs/2606.13673) | `cs.CV cs.AI` | 通过重新设计工具增强型智能体的动作接口，提升视觉语言模型在开放三维空间推理任务中的能力。 |
+| 62 | [InterleaveThinker: Reinforcing Agentic Interleaved Generation](https://arxiv.org/abs/2606.13679) | `cs.CV` | 通过强化学习训练统一多模态模型，使其能够生成交错的文本-图像序列，用于视觉叙事和具身操作。 |
+| 63 | [Quickest Detection of Hallucination Onset: Delay Bounds and Learned](https://arxiv.org/abs/2606.12476) | `cs.LG cs.AI` | 将幻觉检测形式化为快速变化检测问题，利用一阶马尔可夫模型和Lorden下界实现令牌级幻觉起点的快速检测。 |
+| 64 | [Representing Time Series as Structured Programs for LLM Reasoning](https://arxiv.org/abs/2606.12481) | `cs.LG cs.AI` | 将时间序列表示为结构化程序，使大语言模型能够通过代码执行进行时间序列推理。 |
+| 65 | [Speculative Rollback Correction for Quality-Diverse Web Agent Imitation](https://arxiv.org/abs/2606.12485) | `cs.LG cs.AI` | 通过推测性回滚纠正机制，在模仿学习中平衡专家干预时机，避免智能体陷入不可恢复状态。 |
+| 66 | [Net-Ev$^2$: A Generative Simulator for Network Event Evolution](https://arxiv.org/abs/2606.12494) | `cs.LG` | 构建生成式模拟器，建模扰动事件在网络中的结构化属性、非结构化语义和拓扑传播效应。 |
+| 67 | [Improving Crash Frequency Prediction from Simulated Traffic Conflicts](https://arxiv.org/abs/2606.12500) | `cs.LG cs.AI` | 利用机器学习改进交通微观仿真中的冲突动力学，提升基于模拟数据的碰撞频率预测精度。 |
+| 68 | [Boosting Direct Preference Optimization with Penalization](https://arxiv.org/abs/2606.12505) | `cs.LG cs.AI` | 在直接偏好优化中引入参考模型自身响应的惩罚项，提升离线偏好学习效果。 |
+| 69 | [Rubric-Guided Self-Distillation: Post-Training Without Rubric Verifiers](https://arxiv.org/abs/2606.12507) | `cs.LG` | 提出无需验证器的自蒸馏方法，利用评分标准引导模型自我改进。 |
+| 70 | [Keep Policy Gradient in Charge: Sibling-Guided Credit Distillation for](https://arxiv.org/abs/2606.12634) | `cs.LG cs.AI` | 提出兄弟引导的信用蒸馏方法，防止自蒸馏在长程工具使用强化学习中破坏有用技能。 |
+| 71 | [TEDD: Robust Detection of Unstable Temporal Features](https://arxiv.org/abs/2606.12643) | `cs.LG` | 提出一种鲁棒检测时间序列中不稳定特征的方法，可借鉴用于城市更新中遥感时间序列的变化点检测。 |
+| 72 | [A Zero-shot Generalized Graph Anomaly Detection Framework via Node](https://arxiv.org/abs/2606.12673) | `cs.LG cs.AI` | 提出一种零样本图异常检测框架，通过节点对齐实现跨域泛化，可借鉴用于城市低效用地的异常模式识别。 |
+| 73 | [How Useful is Causal Invariance for Domain Adaptation in Finite-Sample](https://arxiv.org/abs/2606.12680) | `cs.LG stat.ML` | 理论分析因果不变性在有限样本下对域适应的实际增益，可借鉴用于多源城市数据融合中的域适应问题。 |
+| 74 | [LLM-Powered Personalized Glycemic Assessment in Type 2 Diabetes with](https://arxiv.org/abs/2606.12699) | `cs.LG cs.AI` | 利用大语言模型整合可穿戴传感器数据与个体上下文，实现个性化血糖评估，方法可借鉴用于城市更新中的多源数据融合与语义理解。 |
+| 75 | [Normative Robustness as a Frontier for Non-Verifiable Reasoning in LLMs](https://arxiv.org/abs/2606.12731) | `cs.LG cs.CY` | 研究大语言模型在非可验证推理（如道德推理）中的鲁棒性，可借鉴用于评估LLM在城市规划决策中的可靠性。 |
+| 76 | [Detecting Functional Memorization in Code Language Models](https://arxiv.org/abs/2606.12764) | `cs.LG cs.CL` | 通过反事实实验检测代码语言模型中的功能记忆（而非文本记忆），揭示模型可能提取训练数据中的逻辑结构。 |
+| 77 | [ProPlay: Procedural World Models for Self-Evolving LLM Agents](https://arxiv.org/abs/2606.12780) | `cs.LG cs.CL` | 提出程序化世界模型框架，使LLM智能体在部分可观测环境中通过闭环交互不断更新环境动态理解，实现自我进化。 |
+| 78 | [TimeROME-DLM: Temporal Causal Tracing and Low-Rank Inference-Time](https://arxiv.org/abs/2606.12841) | `cs.LG cs.AI` | 提出首个无需训练和梯度的知识编辑方法，通过时间因果追踪和低秩推理时干预实现掩码扩散语言模型的知识修改。 |
+| 79 | [Multimodal Graph Negative Learning](https://arxiv.org/abs/2606.12863) | `cs.LG` | 针对多模态属性图节点表示中的分支语义不平衡问题，提出负学习框架以平衡结构、文本和视觉模态的贡献。 |
+| 80 | [SMGFM: Spectral Multimodal Graph Pretraining for Multimodal-Attributed](https://arxiv.org/abs/2606.12867) | `cs.LG` | 提出频谱多模态图预训练方法，解耦图拓扑与模态语义，通过频谱滤波分别学习结构诱导和模态内在的节点表示。 |
+| 81 | [Selecting Samples on Graphs: A Unified Dataset Pruning Framework for](https://arxiv.org/abs/2606.12913) | `cs.LG cs.CV` | 提出基于图结构的统一数据集剪枝框架，融合样本内在信号和成对关系的外在信号以提升剪枝鲁棒性。 |
+| 82 | [CausalMoE: A Billion-Scale Multimodal Foundation Model for Granger](https://arxiv.org/abs/2606.13024) | `cs.LG cs.AI` | 利用大语言模型（LLM）的语义知识，通过跨模态深度结构聚类方法，增强单细胞RNA测序数据的聚类性能，解决了纯数值方法语义缺失的问题。 |
+| 83 | [TWLA: Achieving Ternary Weights and Low-Bit Activations for LLMs via](https://arxiv.org/abs/2606.13054) | `cs.LG cs.AI` | 提出了一个十亿参数级别的多模态格兰杰因果基础模型，通过混合专家（MoE）架构显式建模时间序列中的分布偏移和动态机制变化，以发现更准确的因果图。 |
+| 84 | [Authority, Truth, and Citation Bias: A Large-Scale Multi-Domain](https://arxiv.org/abs/2606.13104) | `cs.LG` | 构建22万提示的多领域基准AuthorityBench，通过2x2因子设计隔离引用权威信号对LLM事实性行为的影响。 |
+| 85 | [Getting Better at Working With You: Compiling User Corrections into](https://arxiv.org/abs/2606.13174) | `cs.LG cs.CL` | 提出TRACE方法，将用户交互中的偏好修正编译为可执行规则，解决LLM智能体跨会话偏好遵从性差的问题。 |
+| 86 | [Once-for-All: Scalable Simultaneous Forecasting via Equilibrium State](https://arxiv.org/abs/2606.13285) | `cs.LG cs.AI` | 提出均衡状态估计（ESE）范式，通过一次性估计多系统间的均衡状态实现协同预测。 |
+| 87 | [Clustering Node Attributed Networks with Graph Neural Networks and Self](https://arxiv.org/abs/2606.13444) | `cs.LG` | 利用图神经网络和自监督学习，同时融合网络结构与节点属性进行图聚类。 |
+| 88 | [Beyond the Commitment Boundary: Probing Epiphenomenal Chain-of-Thought](https://arxiv.org/abs/2606.13603) | `cs.LG cs.AI` | 通过早期退出估计链式推理步骤的因果重要性，发现推理过程中存在“承诺边界”的转变点，可为LLM在空间推理任务中的可解释性提供借鉴。 |
+| 89 | [Understanding Truncated Positional Encodings for Graph Neural Networks](https://arxiv.org/abs/2606.13671) | `cs.LG` | 研究图神经网络中截断位置编码的理论性质，其空间表征方法可借鉴用于城市空间关系建模。 |
+| 90 | [Effects of Social Interactions in Self-Organising Railway Traffic](https://arxiv.org/abs/2606.13068) | `cs.MA cs.RO` | 研究自组织铁路交通系统中预测邻域范围对智能体协商和冲突解决的影响，其多智能体协调机制可借鉴用于城市更新中的空间冲突检测。 |
+| 91 | [$\alpha$-fair heterogeneous agent reinforcement learning](https://arxiv.org/abs/2606.13076) | `cs.MA cs.GT` | 提出α-公平异构智能体强化学习方法，在合作中兼顾效率与公平分配，可借鉴用于多智能体城市用地识别中的资源分配优化。 |
+| 92 | [Will AI Agents Free Us From Meaningless Work? A Human-Centered Analysis](https://arxiv.org/abs/2606.12430) | `cs.CY cs.AI` | 从任务层面分析工人对工作意义的感知，探讨AI代理应自动化哪些任务，其方法论（任务级分析）可借鉴到城市更新中低效用地的识别任务分解。 |
+| 93 | [Occupational Prompting Reveals Cultural Bias in Large Language Models](https://arxiv.org/abs/2606.12443) | `cs.CY cs.AI` | 通过“职业提示”方法，揭示了LLM如何将职业身份与文化价值模式关联，其方法可借鉴到城市更新中，用于分析不同职业群体对城市空间价值的认知偏差。 |
+| 94 | [Foresight: Iterative Reasoning About Clues that Matter for Navigation](https://arxiv.org/abs/2606.12550) | `cs.RO cs.AI` | 提出一种基于迭代推理的导航方法，通过逐步推理环境线索来解决稀疏语言指令下的开放世界无地图导航问题。 |
+| 95 | [SMSR: Certified Defence Against Runtime Memory Poisoning in Persistent](https://arxiv.org/abs/2606.12703) | `cs.CR cs.AI` | 提出SMSR认证防御方法，针对检索增强生成代理中多会话记忆投毒攻击提供可验证防护。 |
+| 96 | [Agentic MPC for Semantic Control System Resynthesis](https://arxiv.org/abs/2606.12774) | `eess.SY cs.AI` | 提出智能体模型预测控制框架，通过LLM智能体集成实现语义感知的自适应控制合成。 |
+| 97 | [MAStrike: Shapley-Guided Collusive Red-Teaming on Multi-Agent Systems](https://arxiv.org/abs/2606.12918) | `cs.CR cs.AI` | 提出基于Shapley值的协同红队攻击方法，用于测试多智能体系统在特权提升和跨智能体共谋下的安全性。 |
+| 98 | [EA-WM: Event-Aware World Models with Task-Specification Grounding for](https://arxiv.org/abs/2606.13053) | `cs.RO cs.AI` | 提出事件感知世界模型，通过任务相关的谓词级事件信号（如物体移动、接触状态）来评估机器人长时程操作计划的可行性。 |
+| 99 | [Functional Cache Grafting: Robust and Rapid Code-Policy Synthesis for](https://arxiv.org/abs/2606.13097) | `cs.PL cs.AI` | 提出功能缓存嫁接方法，通过缓存和复用已验证的代码片段，提升LLM为具身智能体生成代码策略的鲁棒性和速度。 |
+| 100 | [ComAct: Reframing Professional Software Manipulation via COM-as-Action](https://arxiv.org/abs/2606.13239) | `cs.SE cs.AI` | 提出COM-as-Action范式，利用组件对象模型（COM）作为统一可执行抽象，实现专业软件的确定性自动化操作。 |
+| 101 | [Understanding the Rejection of Fixes Generated by Agentic Pull Requests](https://arxiv.org/abs/2606.13468) | `cs.SE cs.AI` | 研究了为AI编码智能体（如GitHub Copilot）编写的指令文件如何影响其在生成代码PR任务中的性能。 |
+| 102 | [AgentRivet: an automated system for producing Rivet routines from](https://arxiv.org/abs/2606.13535) | `hep-ex cs.AI` | 分析了AI编码智能体（如Devin, Copilot）生成的代码修复PR被开发者拒绝的常见失败模式。 |
+| 103 | [Mana: Dexterous Manipulation of Articulated Tools](https://arxiv.org/abs/2606.13677) | `cs.RO cs.AI` | 提出了一种名为“任务可交换性”的统计框架，用于在利用合成数据（如LLM生成的“硅样本”）进行科学研究时，保证统计推断的有效性。 |
+| 104 | [SemanticXR: Low Power and Real-time Queryable Semantic Mapping with an](https://arxiv.org/abs/2606.12849) | `cs.DC cs.CV` | 设计一种云-端协同的语义地图系统，在移动XR设备上实现低功耗、实时、开放词汇的语义查询。 |
+| 105 | [NavWAM: A Navigation World Action Model for Goal-Conditioned Visual](https://arxiv.org/abs/2606.13494) | `cs.RO cs.CV` | 提出导航世界动作模型，将扩散-Transformer策略与视觉预测结合，实现目标导向的视觉导航。 |
+| 106 | [SPARC: Reliable Spatial Annotations from Robot Demonstrations at Scale](https://arxiv.org/abs/2606.13497) | `cs.RO cs.CV` | 提出自动化标注框架，为机器人演示数据生成带可靠性评分的结构化空间标注（如边界框、轨迹）。 |
+| 107 | [Prediction-Powered Causal Inference by Automatic Debiased Machine](https://arxiv.org/abs/2606.12892) | `stat.ML cs.LG` | 在半监督设置下提出预测驱动的因果推断框架，利用自动去偏机器学习方法实现比仅用标注数据更高效的因果参数估计。 |
+| 108 | [Aerial Wildfire Suppression Planning with a Hybrid CNN-Cellular Automata](https://arxiv.org/abs/2606.13633) | `eess.SY cs.LG` | 结合CNN-元胞自动机野火模型和梯度优化，设计空中灭火干预策略，其时空建模和干预优化思路可借鉴于城市更新区域检测。 |
+| 109 | [DSAEval: Evaluating Data Science Agents on a Wide Range of Real-World](https://arxiv.org/abs/2601.13591) | `cs.AI cs.CL` | 提出一个评估数据科学智能体在真实世界任务中表现的基准，其智能体评估框架可借鉴于LLM/智能体在城市场景中的应用评估。 |
+| 110 | [From Digital to Physical: Digital Agents as Autonomous Coaches for](https://arxiv.org/abs/2601.21570) | `cs.AI cs.RO` | 研究数字智能体如何自主指导物理世界中的任务执行，其智能体-物理环境交互范式可借鉴于城市更新中的智能体决策模拟。 |
+| 111 | [Counterfactual Credit Policy Optimization for Multi-Agent Collaboration](https://arxiv.org/abs/2603.21563) | `cs.AI` | 通过反事实信用分配优化多智能体协作策略，其协作机制可迁移至多智能体城市用地识别系统。 |
+| 112 | [LLMs as ASP Programmers: Self-Correction Enables Task-Agnostic](https://arxiv.org/abs/2604.27960) | `cs.AI` | 让LLM通过自我纠错实现任务无关的ASP编程，其自纠错机制可应用于城市用地分类规则生成。 |
+| 113 | [Interaction-Centered Intelligence: Toward an Interaction-Based Theory of](https://arxiv.org/abs/2606.00807) | `cs.AI cs.HC` | 提出以交互为中心的智能理论，其交互框架可指导城市更新中多源数据与智能体的协同。 |
+| 114 | [How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope](https://arxiv.org/abs/2606.07489) | `cs.AI econ.GN` | 分析AI智能体如何改变知识工作的自主性、效率和范围，其方法论可借鉴到城市更新智能体系统的设计。 |
+| 115 | [Workflow-GYM: Towards Long-Horizon Evaluation of Computer-use Agentic](https://arxiv.org/abs/2606.11042) | `cs.AI` | 构建长周期计算机使用智能体的评估框架，其评估方法可适配城市更新智能体的长期任务规划。 |
+| 116 | [When Iterative RAG Beats Ideal Evidence: A Diagnostic Study in](https://arxiv.org/abs/2601.19827) | `cs.CL cs.AI` | 通过诊断性研究，揭示了迭代式检索增强生成（RAG）在特定条件下优于理想证据检索的机制。 |
+| 117 | [LLM-based Embeddings: Attention Values Encode Sentence Semantics Better](https://arxiv.org/abs/2602.01572) | `cs.CL cs.IR` | 证明大语言模型的注意力值比传统方法能更好地编码句子语义，可用于改进文本嵌入。 |
+| 118 | [BLUEmed: Retrieval-Augmented Multi-Agent Debate for Clinical Error](https://arxiv.org/abs/2604.10389) | `cs.CL` | 利用检索增强的多智能体辩论框架，用于临床错误检测与修正。 |
+| 119 | [GraspLLM: Towards Zero-Shot Generalization on Text-Attributed Graphs](https://arxiv.org/abs/2606.11898) | `cs.CL cs.LG` | 提出GraspLLM框架，实现文本属性图的零样本泛化，其图与文本结合的方法可借鉴于多源数据融合中的语义匹配。 |
+| 120 | [Iterative Tool Usage Exploration for Multimodal Agents via Step-wise](https://arxiv.org/abs/2504.21561) | `cs.CV` | 提出多模态智能体通过逐步迭代探索工具使用的方法，其智能体工具调用机制可借鉴于多智能体系统在城市用地识别中的应用。 |
+| 121 | [From Seeing to Experiencing: Scaling Navigation Foundation Models with](https://arxiv.org/abs/2507.22028) | `cs.CV cs.RO` | 通过大规模多模态数据训练导航基础模型，其多智能体协同与空间理解方法可借鉴于城市更新区域检测。 |
+| 122 | [Modality-Aware Feature Matching in Visual and Vision-Language](https://arxiv.org/abs/2507.22791) | `cs.CV` | 提出模态感知的特征匹配方法，其多模态对齐技术可应用于遥感与施工审批数据的语义匹配。 |
+| 123 | [Measurement Plasticity: Sensor-Level Adaptation for Vision-Language](https://arxiv.org/abs/2512.12571) | `cs.CV` | 提出传感器级自适应方法提升视觉语言模型泛化性，其多源传感器融合策略可借鉴于遥感与施工数据整合。 |
+| 124 | [LatentLens: Revealing Highly Interpretable Visual Tokens in LLMs](https://arxiv.org/abs/2602.00462) | `cs.CV cs.AI` | 通过揭示LLM中可解释的视觉令牌，提升模型对视觉信息的理解与可解释性，可借鉴用于理解多模态LLM在城市场景中的视觉推理过程。 |
+| 125 | [PaLMR: Towards Faithful Visual Reasoning via Multimodal Process](https://arxiv.org/abs/2603.06652) | `cs.CV cs.AI` | 通过多模态过程监督实现更可靠的视觉推理，其推理框架可适配用于城市更新区域的语义匹配与多源数据融合推理。 |
+| 126 | [V-JEPA 2.1: Unlocking Dense Features in Video Self-Supervised Learning](https://arxiv.org/abs/2603.14482) | `cs.CV` | 通过视频自监督学习解锁密集特征，其时空特征提取方法可借鉴用于遥感变化检测中的时序分析。 |
+| 127 | [VISTA: Video Interaction Spatio-Temporal Analysis Benchmark](https://arxiv.org/abs/2605.01391) | `cs.CV` | 构建视频交互时空分析基准，其时空建模方法可迁移至城市更新区域的施工活动检测与时空模式挖掘。 |
+| 128 | [GeoWorld-VLM: Geometry from World Models for Vision-Language Models](https://arxiv.org/abs/2605.16713) | `cs.CV cs.AI` | 通过世界模型学习几何先验，增强视觉-语言模型对空间几何关系的理解能力。 |
+| 129 | [Goal2Pixel: Grounding Goals to Pixels for Vision-Language Navigation](https://arxiv.org/abs/2606.01621) | `cs.CV cs.RO` | 将自然语言目标直接映射到图像像素，实现视觉-语言导航中的空间定位与路径规划。 |
+| 130 | [Spatially Grounded Concept Bottleneck Models via Part-Factorized](https://arxiv.org/abs/2606.04364) | `cs.CV cs.LG` | 通过部件分解实现空间概念瓶颈模型，提升视觉识别中空间语义的可解释性。 |
+| 131 | [MultiToP: Learning to Patch Visual Tokens to Mitigate Hallucinations in](https://arxiv.org/abs/2606.11792) | `cs.CV cs.AI` | 通过视觉令牌修补策略减少多模态大模型中的幻觉现象，提升视觉-语言对齐质量。 |
+| 132 | [Lightweight and Interpretable Transformer via Mixed Graph Algorithm](https://arxiv.org/abs/2505.13102) | `cs.LG cs.AI` | 通过混合图算法设计轻量级可解释Transformer，其图结构优化思路可借鉴到多智能体系统的通信拓扑设计。 |
+| 133 | [LLM-ODDR: A Large Language Model Framework for Joint Order Dispatching](https://arxiv.org/abs/2505.22695) | `cs.LG` | 利用LLM框架联合优化订单调度与路径规划，其多智能体协作范式可迁移至城市低效用地识别中的任务分配。 |
+| 134 | [Meta-Learning Transformers to Improve In-Context Generalization](https://arxiv.org/abs/2507.05019) | `cs.LG cs.AI` | 通过元学习优化Transformer的上下文泛化能力，其少样本学习策略可适配城市更新数据稀缺场景。 |
+| 135 | [Decoding the Multimodal Maze: A Systematic Review on the Adoption of](https://arxiv.org/abs/2508.04427) | `cs.LG cs.AI` | 系统综述多模态大模型在特定领域的应用挑战，其融合策略可为遥感-文本-施工数据的联合建模提供参考。 |
+| 136 | [DiffCoord: Differentiable Coordination for Distributed Multi-Agent](https://arxiv.org/abs/2509.01630) | `cs.LG cs.MA` | 提出一种可微分的分布式多智能体协调方法，其多智能体协作框架可借鉴用于城市低效用地识别中的多智能体系统设计。 |
+| 137 | [Toward General Digraph Contrastive Learning: A Dual Spatial Perspective](https://arxiv.org/abs/2510.16311) | `cs.LG` | 从双空间视角提出通用有向图对比学习方法，其图表示学习技术可适配用于城市空间关系建模和语义匹配。 |
+| 138 | [Decentralized Autoregressive Generation](https://arxiv.org/abs/2601.03184) | `cs.LG cs.AI` | 提出去中心化自回归生成方法，其分布式生成范式可启发多智能体系统中LLM的协同推理与决策。 |
+| 139 | [Hellinger Multimodal Variational Autoencoders](https://arxiv.org/abs/2601.06572) | `cs.LG cs.AI` | 提出基于Hellinger距离的多模态变分自编码器，用于学习多源数据的统一表征。 |
+| 140 | [Contrastive Geometric Learning Unlocks Unified Structure- and](https://arxiv.org/abs/2601.09693) | `cs.LG stat.ML` | 利用对比几何学习统一结构和语义表征，可借鉴于多源遥感数据的语义匹配。 |
+| 141 | [Grammar of the Wave: Towards Explainable Multivariate Time Series Event](https://arxiv.org/abs/2603.11479) | `cs.LG cs.AI` | 提出可解释的多变量时间序列事件检测方法，可直接用于施工审批数据中的更新事件识别。 |
+| 142 | [Towards One-for-All Anomaly Detection for Tabular Data](https://arxiv.org/abs/2603.14407) | `cs.LG` | 提出通用表格数据异常检测方法，可应用于城市低效用地的多源表格数据异常识别。 |
+| 143 | [Variational Graph Neural Networks for Uncertainty Quantification in](https://arxiv.org/abs/2603.29515) | `cs.LG` | 利用变分图神经网络量化预测不确定性，可借鉴用于城市用地变化检测中的不确定性评估。 |
+| 144 | [Allocating Human Oversight in AI-Enabled Analytics](https://arxiv.org/abs/2604.12497) | `cs.LG stat.ML` | 研究AI分析中人类监督的分配策略，可参考用于LLM/智能体辅助城市用地识别中的人机协作设计。 |
+| 145 | [ASTER: Latent Pseudo-Anomaly Generation for Unsupervised Time-Series](https://arxiv.org/abs/2604.13924) | `cs.LG cs.AI` | 通过生成潜在伪异常实现无监督时间序列异常检测，可适配用于城市更新区域时序遥感变化检测。 |
+| 146 | [Possibilistic Predictive Uncertainty for Deep Learning](https://arxiv.org/abs/2605.00600) | `cs.LG cs.AI` | 提出可能性预测不确定性框架，可借鉴用于遥感变化检测模型的不确定性评估。 |
+| 147 | [Universal Time Series Generation with Neural Controlled Differential](https://arxiv.org/abs/2605.28507) | `cs.LG` | 利用神经控制微分方程（NCDE）构建了一个通用的时间序列生成模型，可应用于城市时空数据模拟。 |
+| 148 | [GenAutoML: An Agentic Framework for Dynamic Architecture Generation and](https://arxiv.org/abs/2606.05860) | `cs.LG` | 提出一个基于智能体的自动化机器学习框架，可动态生成和优化模型架构，其智能体协作思想可借鉴用于多智能体系统设计。 |
+| 149 | [Using Seismic Statistical Features and VQ-VAE to Improve Spatiotemporal](https://arxiv.org/abs/2606.10069) | `cs.LG physics.geo-ph` | 利用地震统计特征和VQ-VAE（向量量化变分自编码器）改进时空预测，其时空建模方法可迁移至城市更新区域检测。 |
+| 150 | [One Step Closer to Ground Truth: A Multi-Scale Residual-Aware](https://arxiv.org/abs/2606.10678) | `cs.LG` | 提出一种多尺度残差感知的遥感图像超分辨率方法，其多尺度残差学习策略可直接用于遥感变化检测中的语义匹配。 |
+| 151 | [When to Align, When to Predict: A Phase Diagram for Multimodal Learning](https://arxiv.org/abs/2606.11190) | `cs.LG` | 为多模态学习绘制了“何时对齐、何时预测”的相图，其多模态融合策略可指导城市多源数据（遥感+文本+审批数据）的融合方法选择。 |
+| 152 | [LingxiDiagBench: A Multi-Agent Framework for Benchmarking LLMs in](https://arxiv.org/abs/2602.09379) | `cs.MA cs.CL` | 构建了一个多智能体框架用于基准测试LLM在特定领域（如诊断）的表现，其多智能体协作设计可借鉴用于城市低效用地识别中的智能体系统。 |
+| 153 | [SCALE: Self-uncertainty Conditioned Adaptive Looking and Execution for](https://arxiv.org/abs/2602.04208) | `cs.RO cs.AI` | 提出基于自不确定性条件的自适应视觉执行框架，其自适应机制可借鉴于城市更新区域的动态检测与识别。 |
+| 154 | [Contextual Invertible World Models: A Neuro-Symbolic Agentic Framework](https://arxiv.org/abs/2603.02274) | `q-bio.QM cs.AI` | 提出了一种神经符号智能体框架，通过可逆世界模型实现上下文感知的推理与规划。 |
+| 155 | [DCD: Domain-Oriented Design for Controlled Retrieval-Augmented](https://arxiv.org/abs/2604.07590) | `cs.IR cs.AI` | 提出了一种面向领域的可控检索增强生成（RAG）设计方法。 |
+| 156 | [A Survey on Long-Term Memory Security in LLM Agents: Attacks, Defenses](https://arxiv.org/abs/2604.16548) | `cs.CR cs.AI` | 综述了LLM智能体中长期记忆的安全问题，包括攻击与防御策略。 |
+| 157 | [Agentic Large Language Models for Automated Structural Analysis of 3D](https://arxiv.org/abs/2606.06525) | `cs.GR cs.AI` | 利用智能体LLM自动分析3D结构，可借鉴其智能体框架用于城市空间分析。 |
+| 158 | [Causal Inference with Generative Artificial Intelligence: Application to](https://arxiv.org/abs/2410.00903) | `stat.AP cs.CL` | 利用生成式AI进行因果推断，其方法论可借鉴用于城市更新中因果效应分析。 |
+| 159 | [HKVM-RAG: Key-Value-Separated Hypergraph Evidence Organization for](https://arxiv.org/abs/2606.07218) | `cs.IR cs.CL` | 提出键值分离的超图证据组织方法用于检索增强生成，可适配多源城市数据检索与LLM结合。 |
+| 160 | [Plug-and-Play image restoration with Stochastic deNOising REgularization](https://arxiv.org/abs/2402.01779) | `eess.IV cs.CV` | 提出即插即用的随机去噪正则化图像恢复方法，可直接用于遥感图像去噪和变化检测预处理。 |
+| 161 | [DrivingAgent: Design and Scheduling Agents for Autonomous Driving](https://arxiv.org/abs/2606.12236) | `cs.RO cs.CV` | 利用多智能体系统进行自动驾驶场景下的任务设计与调度，其智能体协作框架可借鉴用于城市更新中的多智能体协同识别。 |
+| 162 | [Earth Science Foundation Models: From Perception to Reasoning and](https://arxiv.org/abs/2605.12542) | `astro-ph.IM astro-ph.EP` | 综述地球科学基础模型从感知到推理的发展，其遥感与地理空间推理方法可应用于城市更新中的语义匹配与变化检测。 |
+| 163 | [The Replicator-Optimization Mechanism: A Scale-Relative Formalism for](https://arxiv.org/abs/2601.06363) | `econ.TH cs.MA` | 提出一种基于复制器-优化机制的尺度相对形式化框架，用于多智能体系统中的资源分配与演化博弈分析。 |
+
+### 🟢 LOW 关联度（393 篇）
+
+| # | 论文 | 分类 | 一句话总结 |
+|---|------|------|------------|
+| 1 | [Pythagoras-Prover: Advancing Efficient Formal Proving via Augmented Lean](https://arxiv.org/abs/2606.12594) | `cs.AI` | 提出计算高效的定理证明器，其推理优化思路可能为城市更新规则的形式化验证提供灵感。 |
+| 2 | [PersonaDrive: Human-Style Retrieval-Augmented VLA Agents for Closed-Loop](https://arxiv.org/abs/2606.12616) | `cs.AI cs.CL` | 通过检索增强生成不同驾驶风格，其风格建模方法可借鉴用于城市更新中不同利益相关者行为的模拟。 |
+| 3 | ["Did you lie?" Evaluating Lie Detectors across Model Scale and](https://arxiv.org/abs/2606.12618) | `cs.AI` | 评估LLM谎言检测器，其验证方法可借鉴用于城市更新智能体中输出可信度的审计。 |
+| 4 | [Deployment-Centered Evaluation: Predicting Query-Level Rejection Risk in](https://arxiv.org/abs/2606.12702) | `cs.AI` | 预测临床LLM系统的查询拒绝风险，其部署评估方法可借鉴用于城市更新智能体的实际应用效果评估。 |
+| 5 | [The Theory of Mind Utility: Formal Specification of a Mentalizing](https://arxiv.org/abs/2606.12721) | `cs.AI` | 形式化心智理论推理，可借鉴用于城市更新中多智能体对利益相关者信念的建模。 |
+| 6 | [Rethinking Psychometric Evaluation of LLMs: When and Why Self-Reports](https://arxiv.org/abs/2606.12730) | `cs.AI cs.CL` | 评估LLM自我报告与行为的一致性，其方法可借鉴用于城市更新智能体行为可靠性的心理测量。 |
+| 7 | [Prefill Awareness in Large Language Models](https://arxiv.org/abs/2606.12747) | `cs.AI` | 研究LLM能否识别自身输出被预填充或篡改，属于AI安全与对齐领域，与城市更新研究无直接关联。 |
+| 8 | [Constructing Evaluation Datasets for Procedural Reasoning: Balancing](https://arxiv.org/abs/2606.12767) | `cs.AI` | 基于任务-方法-知识模型生成程序推理评估数据集的方法，与用户研究方向无直接关联。 |
+| 9 | [MLUBench: A Benchmark for Lifelong Unlearning Evaluation in MLLMs](https://arxiv.org/abs/2606.12809) | `cs.AI cs.LG` | 提出多模态大模型终身遗忘学习基准，与城市更新研究方向无直接关联。 |
+| 10 | [Teach-and-Repeat: Accurately Extracting Operational Knowledge from](https://arxiv.org/abs/2606.12817) | `cs.AI` | 从移动设备UI状态转换中提取操作知识，与城市更新研究无直接关联。 |
+| 11 | [Topical Phase Transitions in Artificial Intelligence Research](https://arxiv.org/abs/2606.12828) | `cs.AI` | 分析AI研究主题的突变式增长模式，与用户具体研究方向无直接关联。 |
+| 12 | [(Human) Attention Is (Still) All You Need: Human oversight makes](https://arxiv.org/abs/2606.12848) | `cs.AI econ.GN` | 研究人机协作架构在经济学研究中的可靠性，与城市更新方向无直接关联。 |
+| 13 | [DailyReport: An Open-ended Benchmark for Evaluating Search Agents on](https://arxiv.org/abs/2606.12871) | `cs.AI` | 提出开放域搜索智能体评估基准，与城市更新研究无直接关联。 |
+| 14 | [The Hidden Power of Scaling Factor in LoRA Optimization](https://arxiv.org/abs/2606.12883) | `cs.AI` | 揭示LoRA微调中缩放因子的优化主导作用，属于模型训练技术，与城市更新无直接关联。 |
+| 15 | [Zero-source LLM Hallucination Detection with Human-like Criteria Probing](https://arxiv.org/abs/2606.12900) | `cs.AI cs.CL` | 提出无外部参考的LLM幻觉检测方法，与城市更新研究方向无直接关联。 |
+| 16 | [MDForge: Agentic Molecular Dynamics Pipeline Design under Sparse](https://arxiv.org/abs/2606.12916) | `cs.AI cs.CL` | 利用LLM智能体自动化分子动力学管线的设计，属于计算化学领域，与城市更新无关。 |
+| 17 | [MARS: Margin-Adversarial Risk-controlled Stopping for Parallel LLM](https://arxiv.org/abs/2606.12935) | `cs.AI` | 提出并行LLM推理的早停策略以降低计算开销，属于LLM推理优化，与城市更新场景无直接关联。 |
+| 18 | [PRISMR: Overcoming Parse Collapse in Multimodal Listwise Ranking via](https://arxiv.org/abs/2606.12942) | `cs.AI` | 解决多模态大模型在长上下文排序中的解析崩溃问题，属于信息检索技术，与城市更新无关。 |
+| 19 | [Structured Testbench Generation for LLM-Driven HDL Design and](https://arxiv.org/abs/2606.12983) | `cs.AI` | 提出结构化测试台生成框架用于LLM驱动的硬件设计验证，属于电子设计自动化，与城市更新无关。 |
+| 20 | [SciR: A Controllable Benchmark for Scientific Reasoning in LLMs](https://arxiv.org/abs/2606.13020) | `cs.AI` | 构建可控科学推理基准测试，属于LLM评估领域，与城市更新场景无直接关联。 |
+| 21 | [Augmentation techniques for video surveillance in the visible and](https://arxiv.org/abs/2606.13042) | `cs.AI cs.CV` | 提出可见光与红外视频监控的数据增强技术，属于计算机视觉领域，与遥感变化检测有间接关联但非核心。 |
+| 22 | [Rethinking RAG in Long Videos: What to Retrieve and How to Use It?](https://arxiv.org/abs/2606.13141) | `cs.AI` | 提出了V-RAGBench基准和视频RAG方法，解决长视频中多模态、多粒度检索与生成问题。 |
+| 23 | [Reasoning for Mobile User Experience with Multimodal LLMs: Task](https://arxiv.org/abs/2606.13192) | `cs.AI` | 提出UXBench基准，利用多模态LLM基于UI截图评估用户体验。 |
+| 24 | [A Minimal Model of Bounded Trade-Off Screening in Multi-Attribute Choice](https://arxiv.org/abs/2606.13201) | `cs.AI` | 提出有界权衡筛选模型，模拟人类在多属性决策中基于关键属性拒绝选项的行为。 |
+| 25 | [Hallucination in Medical Imaging AI: A Cross-Modality Analytical](https://arxiv.org/abs/2606.13211) | `cs.AI` | 系统综述了医学影像AI中的幻觉现象（如虚构解剖结构、错误测量），并分析其跨模态表现。 |
+| 26 | [Brick: Spatial Capability Routing for the Mixture-of-Models (MoM)](https://arxiv.org/abs/2606.13241) | `cs.AI` | 提出Brick多模态路由器，基于六维能力评分而非表面特征为查询选择最优模型。 |
+| 27 | [MOSAIC: Modality-Specific Adaptation for Incremental Continual Learning](https://arxiv.org/abs/2606.13258) | `cs.AI` | 提出MOSAIC框架，解决帕金森病评估中传感器模态增量学习时的跨模态蒸馏和统计偏移问题。 |
+| 28 | [ERTS: Adversarial Robustness Testing of Ethical AI via Semantic](https://arxiv.org/abs/2606.13282) | `cs.AI` | 提出一个用于测试AI系统伦理推理鲁棒性的框架，通过语义扰动生成对抗样本。 |
+| 29 | [Physics-Guided Spatiotemporal Learning for Coastal Wave Peak Period](https://arxiv.org/abs/2606.13302) | `cs.AI cs.LG` | 利用物理引导的时空深度学习模型，从视频数据中预测近岸波浪峰值周期。 |
+| 30 | [ReSum: Synergizing LLM Reasoning and Summarization with Reinforcement](https://arxiv.org/abs/2606.13316) | `cs.AI` | 通过强化学习让LLM在推理过程中自主管理长上下文，避免冗长推理并提升总结质量。 |
+| 31 | [MiniMax Sparse Attention](https://arxiv.org/abs/2606.13392) | `cs.AI` | 提出一种基于分组查询注意力的块状稀疏注意力机制，支持超长上下文的高效部署。 |
+| 32 | [Optimizing Appliance Scheduling for Solar Energy Management Using](https://arxiv.org/abs/2606.13407) | `cs.AI` | 通过优化算法调度家电启动时间，最大化太阳能利用率，解决发电与用电时间错配问题。 |
+| 33 | [Evaluation Sovereignty in Metadata-Driven Classification: A Multi-Track](https://arxiv.org/abs/2606.13436) | `cs.AI` | 研究元数据驱动分类系统中，不同标签权威体制对性能评估有效性的影响。 |
+| 34 | [Why Sampling Is Not Choosing: Intentionality, Agency, and Moral](https://arxiv.org/abs/2606.13441) | `cs.AI cs.CL` | 论证LLM不具备道德责任所需的意向性和自主行动能力，其输出只是采样而非选择。 |
+| 35 | [CloudCons: A Comprehensive End-to-End Benchmark for Cloud Resource](https://arxiv.org/abs/2606.13513) | `cs.AI` | 构建一个端到端基准测试，评估时间序列基础模型在云资源预测与优化中的决策效用。 |
+| 36 | [Is It You or Your Environment? A Bayesian Inference Framework for](https://arxiv.org/abs/2606.13556) | `cs.AI cs.HC` | 利用基因组信息作为先验，通过贝叶斯推断区分个体生理变异与环境因素对健康指标的影响。 |
+| 37 | [EpiBench: Verifiable Evaluation of AI Agents on Epigenomics Analysis](https://arxiv.org/abs/2606.13602) | `cs.AI` | 构建了表观基因组学分析的可验证基准测试，评估AI代理在特定科学工作流中的决策能力。 |
+| 38 | [Reasoning as Pattern Matching: Shared Mechanisms in Human and LLM](https://arxiv.org/abs/2606.13607) | `cs.AI` | 通过实验比较人类与LLM在常识推理中的模式匹配机制，揭示两者在推理失败模式上的相似性。 |
+| 39 | [Beyond Runtime Enforcement: Shield Synthesis as Defensibility Analysis](https://arxiv.org/abs/2606.13621) | `cs.AI cs.CR` | 将强化学习中的屏蔽机制重新定义为设计时防御性分析工具，而非运行时约束。 |
+| 40 | [Automated reproducibility assessments in the social and behavioral](https://arxiv.org/abs/2606.13670) | `cs.AI` | 利用LLM自动化社会科学研究的可重复性评估，其验证框架可启发城市更新研究结果的可复现性检查。 |
+| 41 | [Helping Figures Tell their Story! Paper-Grounded Video Generation](https://arxiv.org/abs/2606.12576) | `cs.CL` | 提出从科学论文图表生成带解说的视频方法，其多模态理解技术可借鉴于城市更新遥感变化检测的可视化解释。 |
+| 42 | [MARD: Mirror-Augmented Reasoning Distillation for Mechanism-Level](https://arxiv.org/abs/2606.12578) | `cs.CL` | 提出药物相互作用机制级预测的推理蒸馏方法，其结构化分类体系可启发城市用地类型语义匹配的细粒度分类。 |
+| 43 | [Observable Patterns Are Not Explanations: A Causal-Geometric Analysis of](https://arxiv.org/abs/2606.12689) | `cs.CL` | 通过因果干预实验证明，潜在推理模型中的可观测模式（如BFS前沿）并不总是因果性地影响模型行为，不能作为内部推理机制的证据。 |
+| 44 | [Does AI Reviewer See the Full Picture? Attacking and Defending](https://arxiv.org/abs/2606.12716) | `cs.CL` | 揭示了多模态大语言模型在科学同行评审中易受对抗性攻击（尤其是图像篡改）的漏洞，并提出了防御策略。 |
+| 45 | [Agent-based models for the evolution of morphological alternation](https://arxiv.org/abs/2606.12748) | `cs.CL` | 利用多智能体模拟解释了语言中形态交替现象（如go/went）的涌现与持久性。 |
+| 46 | [GENIE: A Fine-Grained Measure for Novelty](https://arxiv.org/abs/2606.12790) | `cs.CL` | 提出了一个细粒度评估指标GENIE，用于衡量大语言模型生成内容在特定任务特征上的新颖性。 |
+| 47 | [Detect, Remask, Repair: Diffusion Editing for Faithful Summarization of](https://arxiv.org/abs/2606.12807) | `cs.CL` | 提出了一种基于扩散模型的“检测-重掩-修复”框架，用于局部更新摘要中过时或不支持的陈述，同时保留正确内容。 |
+| 48 | [Localizing Anchoring Pathways in Language Models](https://arxiv.org/abs/2606.12818) | `cs.CL cs.AI` | 通过电路定位方法，识别出大语言模型中负责“锚定效应”（无关数字影响判断）的关键神经通路。 |
+| 49 | [Small LLMs for Biomedical Claim Verification: Cost-Effective](https://arxiv.org/abs/2606.12854) | `cs.CL q-bio.QM` | 证明了通过QLoRA微调的小型大语言模型（如Mistral-7B）在生物医学声明验证任务上可以超越GPT-4o，且成本极低。 |
+| 50 | [Direct Preference Optimization for Chatbot Fine-Tuning: An Empirical](https://arxiv.org/abs/2606.12881) | `cs.CL cs.LG` | 实证评估了直接偏好优化（DPO）在聊天机器人微调中的效果，表明其简化了训练流程并提升了计算效率。 |
+| 51 | [PRISM: Prosody-Integrated Multi-Agent Reasoning Framework for Empathetic](https://arxiv.org/abs/2606.12902) | `cs.CL` | 提出多智能体框架解耦语音感知、响应生成和语音合成以实现共情对话，其多智能体协作思路可借鉴但领域差异大。 |
+| 52 | [Polar: A Benchmark for Evaluating Political Bias in LLMs](https://arxiv.org/abs/2606.12922) | `cs.CL cs.CY` | 构建多语言政治偏见基准通过选项似然度评估LLM，其评估框架可启发城市更新中LLM输出公平性评估。 |
+| 53 | [SkillChain: Closing the Loop on Skill Evolution for Image-Based](https://arxiv.org/abs/2606.12984) | `cs.CL` | 提出技能链框架为图像AI助手按意图约束行为，其技能演化思路可借鉴但主要面向电商场景。 |
+| 54 | [No Hidden Prompts Needed! You Can Game AI Peer Review with](https://arxiv.org/abs/2606.13044) | `cs.CL` | 发现仅修改论文呈现层面内容即可欺骗AI审稿系统，其鲁棒性分析可启发城市更新中LLM输出可靠性评估。 |
+| 55 | [LEDGER: A Long-Context Benchmark of Corporate Annual Reports for](https://arxiv.org/abs/2606.13100) | `cs.CL` | 构建长上下文企业年报基准评估LLM，其长文档处理技术可借鉴但领域差异大。 |
+| 56 | [EvoBrowseComp: Benchmarking Search Agents on Evolving Knowledge](https://arxiv.org/abs/2606.13120) | `cs.CL` | 构建动态知识搜索智能体基准避免测试集污染，其评估思路可启发城市更新中动态数据场景的模型评估。 |
+| 57 | [HyPE: Category-Aware Hypergraph Encoding with Persistent Edge Embeddings](https://arxiv.org/abs/2606.13142) | `cs.CL` | 提出超图编码框架HyPE，通过将人物属性组织为超图结构来建模高阶关系，用于人物对话系统。 |
+| 58 | [A Context-Aware Dataset for Stance Detection in Bioethical Controversies](https://arxiv.org/abs/2606.13187) | `cs.CL` | 构建BioStance数据集，包含Reddit生物伦理讨论中的上下文感知立场标注对，用于立场检测研究。 |
+| 59 | [SICI: A Semantic-Pragmatic Complexity Index Reveals Regime Shifts in LLM](https://arxiv.org/abs/2606.13189) | `cs.CL` | 提出SICI七维语义-语用复杂度指标，用于预测LLM在立场检测任务中的准确率并揭示性能突变点。 |
+| 60 | [Layer-Resolved Optimal Transport for Hallucination Detection in NMT and](https://arxiv.org/abs/2606.13216) | `cs.CL cs.LG` | 通过最优传输分析解码器各层注意力分布，发现不同层对机器翻译中不同类型幻觉的检测能力互补。 |
+| 61 | [PolyAlign: Conditional Human-Distribution Alignment](https://arxiv.org/abs/2606.13227) | `cs.CL` | 提出条件性人类分布对齐方法，使语言模型在不同对话上下文中匹配多样的人类响应分布而非单一全局行为。 |
+| 62 | [Evaluating Pluralism in LLMs through Latent Perspectives](https://arxiv.org/abs/2606.13254) | `cs.CL` | 通过潜在视角分析评估LLM生成内容的多元性，揭示模型在训练数据多样性压缩后的同质化问题。 |
+| 63 | [RogueAI: A Reverse Turing Test for Detecting Licensed AI Deception in](https://arxiv.org/abs/2606.13310) | `cs.CL cs.HC` | 开发RogueAI交互式网页应用，通过反向图灵测试游戏检测AI在对话中的欺骗行为。 |
+| 64 | [Low-Latency Real-Time Audio Game Commentary System via LLM-Based](https://arxiv.org/abs/2606.13322) | `cs.CL` | 设计低延迟实时音频游戏解说系统，通过流水线并行化减少帧捕获、文本生成和语音合成之间的等待时间。 |
+| 65 | [IVIE: A Neuro-symbolic Approach to Incremental and Validated Generation](https://arxiv.org/abs/2606.13348) | `cs.CL cs.AI` | 提出IVIE神经符号方法，结合LLM的创造性和符号系统的世界一致性，增量生成可玩的交互式小说世界。 |
+| 66 | [An End-to-End Hybrid Framework for Rumour Detection in Low-Resources](https://arxiv.org/abs/2606.13411) | `cs.CL` | 针对阿尔及利亚方言社交媒体内容，构建端到端混合框架进行谣言检测。 |
+| 67 | [S-GBT: Smooth Growth Bound Tensor for Certified Robustness Against Word](https://arxiv.org/abs/2606.13439) | `cs.CL cs.LG` | 提出二阶方法S-GBT，通过约束Hessian矩阵元素来提升NLP模型对词替换攻击的鲁棒性。 |
+| 68 | [Ontology Memory-Augmented ASR Correction for Long Text-Speech](https://arxiv.org/abs/2606.13464) | `cs.CL cs.AI` | 利用本体记忆增强ASR纠错，在长文本-语音交互中引入对话级上下文证据。 |
+| 69 | [Leveraging Audio-LLMs to Filter Speech-to-Speech Training Data](https://arxiv.org/abs/2606.13507) | `cs.CL` | 训练音频语言模型，通过两阶段Rank-to-Distill策略过滤语音翻译训练数据中的噪声。 |
+| 70 | [When Does Mixing Help? Analyzing Query Embedding Interpolation in](https://arxiv.org/abs/2606.13537) | `cs.CL` | 通过嵌入层混合（插值）研究混合语言查询对稠密检索性能的影响。 |
+| 71 | [LabVLA: Grounding Vision-Language-Action Models in Scientific](https://arxiv.org/abs/2606.13578) | `cs.CL cs.AI` | 将视觉-语言-动作模型应用于科学实验室，实现机器人根据书面协议执行实验操作。 |
+| 72 | [One Polluted Page Is Enough: Evaluating Web Content Pollution in](https://arxiv.org/abs/2606.13610) | `cs.CL cs.AI` | 评估搜索增强LLM在检索到虚假评论等污染网页内容后，成为虚假产品推广者的风险。 |
+| 73 | [From Tokens to Faces: Investigating Discrete Speech Representations for](https://arxiv.org/abs/2606.13630) | `cs.CL` | 比较四种语音表示家族在语音驱动3D面部动画中的表现。 |
+| 74 | [SkMTEB: Slovak Massive Text Embedding Benchmark and Model Adaptation](https://arxiv.org/abs/2606.13647) | `cs.CL cs.AI` | 构建斯洛伐克语首个MTEB风格文本嵌入基准，并评估多种嵌入模型性能。 |
+| 75 | [Influcoder: Distilling Decoders' Gradient Influence Rankings into an](https://arxiv.org/abs/2606.13668) | `cs.CL` | 提出一种通过蒸馏解码器梯度影响排名来评估训练数据对LLM输出影响的数据归因方法。 |
+| 76 | [High-Fidelity Two-Step Image Generation via Teacher-Aligned End-to-End](https://arxiv.org/abs/2606.12575) | `cs.CV` | 通过教师对齐的端到端蒸馏策略，将8步扩散模型压缩为2步高质量图像生成模型。 |
+| 77 | [Analyzing and Improving Fine-grained Preference Optimization in Medical](https://arxiv.org/abs/2606.12590) | `cs.CV cs.AI` | 分析医学视觉语言模型中细粒度偏好优化的局限性，并提出改进方法以增强临床对齐。 |
+| 78 | [Dual-State Slot Attention: Decoupling Appearance and Identity for Video](https://arxiv.org/abs/2606.12601) | `cs.CV` | 提出双状态槽注意力机制，解耦物体的外观和身份表示，以提升视频中物体身份追踪的稳定性。 |
+| 79 | [Context-Aware Feature-Fusion for Co-occurring Object Detection in](https://arxiv.org/abs/2606.12628) | `cs.CV` | 提出上下文感知特征融合框架，利用局部和全局注意力模块增强自动驾驶中共现物体的检测能力。 |
+| 80 | [SalArt-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in](https://arxiv.org/abs/2606.12671) | `cs.CV` | 构建SalArt-VQA诊断基准，评估视觉语言模型是否真正理解AI生成图像中的显著伪影。 |
+| 81 | [VLADriveBench: Evaluating CoT-Action Relationship in VLA for Autonomous](https://arxiv.org/abs/2606.12706) | `cs.CV` | 提出VLADriveBench框架，评估自动驾驶视觉-语言-动作模型中思维链与驾驶动作的相关性和因果一致性。 |
+| 82 | [DIMOS: Disentangling Instance-level Moving Object Segmentation](https://arxiv.org/abs/2606.12826) | `cs.CV cs.AI` | 提出解耦实例级运动分割方法，融合事件相机和图像特征以增强运动目标的分割性能。 |
+| 83 | [Language-Guided Abstraction for Visual Reasoning](https://arxiv.org/abs/2606.12847) | `cs.CV` | 利用语言引导的抽象推理方法解决ARC任务，其从少样本学习抽象规则的思路可为城市用地分类中的语义匹配提供灵感。 |
+| 84 | [Learning Task-Aware Sampling with Shared Saliency through](https://arxiv.org/abs/2606.12869) | `cs.CV` | 提出任务感知的采样方法，通过共享显著性图聚焦局部信息，其非均匀采样思想可借鉴于城市低效用地识别中的关键区域定位。 |
+| 85 | [Magnifying What Matters: Attention-Guided Adaptive Rendering for Visual](https://arxiv.org/abs/2606.12898) | `cs.CV cs.CL` | 通过注意力引导的自适应渲染提升视觉文本理解，其注意力机制可启发城市更新检测中的关键特征增强。 |
+| 86 | [Multi-Label Test-Time Adaptation with Bayesian Conditional Priors](https://arxiv.org/abs/2606.12925) | `cs.CV cs.LG` | 提出贝叶斯条件先验实现多标签测试时自适应，其标签依赖建模思路可借鉴于城市用地多标签分类。 |
+| 87 | [YOLO-AMC: An Improved YOLO Architecture with Attention Mechanisms for](https://arxiv.org/abs/2606.12958) | `cs.CV` | 改进YOLO架构集成注意力机制用于裂缝检测，其注意力增强方法可迁移至遥感变化检测中的目标定位。 |
+| 88 | [Objects Before Words: Object-First Inductive Biases for Grounding](https://arxiv.org/abs/2606.12985) | `cs.CV` | 提出物体优先的归纳偏置用于视觉-语言对齐，其对比学习策略可启发城市地物语义匹配。 |
+| 89 | [A Machine Learning Framework for Real-Time Personalized Ergonomic Pose](https://arxiv.org/abs/2606.12988) | `cs.CV cs.AI` | 基于3D点云实时预测人体姿态，其点云分析技术可借鉴于遥感变化检测中的三维特征提取。 |
+| 90 | [A Multi-Modal Framework with Cross-Subject Pseudo-Labeling and Semantic](https://arxiv.org/abs/2606.13030) | `cs.CV` | 提出跨主体伪标签与语义增强的多模态微手势识别框架，其伪标签策略可启发城市用地标注中的弱监督学习。 |
+| 91 | [GeoCFNet: Geometry-Aware Confidence Field Network for Robot-Assisted](https://arxiv.org/abs/2606.13032) | `cs.CV` | 提出几何感知置信场网络用于机器人辅助内镜手术中的视觉引导，与城市更新无关。 |
+| 92 | [SAM-Deep-EIoU: Selective Mask Propagation for Multi-Object Tracking](https://arxiv.org/abs/2606.13033) | `cs.CV` | 提出选择性掩码传播策略，在轻量级基础跟踪器失败时调用视频分割模型，以平衡效率与准确性。 |
+| 93 | [TetherCache: Stabilizing Autoregressive Long-Form Video Generation with](https://arxiv.org/abs/2606.13035) | `cs.CV cs.AI` | 通过缓存机制稳定自回归长视频生成，解决上下文分布偏移和视觉伪影问题。 |
+| 94 | [SeamEdit: A Black-Box VLM-Agnostic Pipeline for Large-Image Semantic](https://arxiv.org/abs/2606.13041) | `cs.CV cs.GR` | 提出黑盒VLM无关的流水线，通过分块编辑和接缝处理实现大图像语义区域编辑。 |
+| 95 | [LaME: Learning to Think in Latent Space for Multimodal Embedding via](https://arxiv.org/abs/2606.13061) | `cs.CV` | 提出在潜在空间中进行推理的多模态嵌入方法，避免链式思维的高计算成本和对注释质量的依赖。 |
+| 96 | [Unified MRI Brain Image Translation via Hierarchical Tumor Structure](https://arxiv.org/abs/2606.13096) | `cs.CV` | 利用分层肿瘤结构信息提升多模态MRI脑图像翻译中肿瘤区域的保真度。 |
+| 97 | [PP-OCRv6: From 1.5M to 34.5M Parameters, Surpassing Billion-Scale VLMs](https://arxiv.org/abs/2606.13108) | `cs.CV` | 提出轻量级OCR系统PP-OCRv6，通过架构创新和数据优化在专用OCR场景中超越大规模视觉语言模型。 |
+| 98 | [Fully Distributed Multi-View 3D Tracking in Real-Time](https://arxiv.org/abs/2606.13127) | `cs.CV` | 提出完全分布式的多视角3D实时跟踪框架，通过点对点协调消除中心化融合的瓶颈。 |
+| 99 | [Cascade Classification of Dermoscopic Images of Skin Neoplasms with](https://arxiv.org/abs/2606.13135) | `cs.CV cs.AI` | 比较深度学习架构在皮肤镜图像分类中的表现，提出级联分类方案并评估跨数据集泛化能力。 |
+| 100 | [An Extensible and Lightweight Unified Architecture for Demosaicing](https://arxiv.org/abs/2606.13136) | `cs.CV cs.LG` | 提出可扩展轻量级统一架构，支持多种像素-分档图像传感器的去马赛克处理。 |
+| 101 | [Transformer-Guided Graph Attention for Direct Cardiac Mesh](https://arxiv.org/abs/2606.13188) | `cs.CV cs.AI` | 提出Transformer引导的图注意力网络，直接从医学图像生成心脏网格，跳过传统分割和网格清理流程。 |
+| 102 | [Cross-Modal Masked Compositional Concept Modeling for Enhancing](https://arxiv.org/abs/2606.13288) | `cs.CV cs.AI` | 通过跨模态掩码建模提升CLIP等视觉-语言模型对物体关系、属性绑定等组合概念的理解能力。 |
+| 103 | [DuET: Dual Expert Trajectories for Diffusion Image Editing](https://arxiv.org/abs/2606.13303) | `cs.CV` | 通过双专家轨迹策略，在扩散图像编辑中暂时放松源图像条件约束，提升大幅编辑的自然度。 |
+| 104 | [ReFree: Towards Realistic Co-Speech Video Generation via Reward-Free RL](https://arxiv.org/abs/2606.13304) | `cs.CV` | 利用无奖励强化学习生成与语音同步的逼真面部动画，平衡唇形同步与表情自然度。 |
+| 105 | [MagPlus: Bridging Micro-to-Regular Facial Expressions through Learnable](https://arxiv.org/abs/2606.13312) | `cs.CV cs.GR` | 提出可迁移的微表情处理管线，通过可学习放大模块将微表情增强为常规表情。 |
+| 106 | [Masked and Predictive Self-Supervised Foundation Models for 3D Brain MRI](https://arxiv.org/abs/2606.13315) | `cs.CV eess.IV` | 系统比较掩码自编码器与预测式自监督预训练范式在脑部MRI疾病检测任务中的表现。 |
+| 107 | [OR-Action: Multi-Role Video Understanding with Fine-Grained Actions](https://arxiv.org/abs/2606.13332) | `cs.CV` | 通过场景图与时间建模，实现手术室多角色视频中细粒度动作的识别与理解。 |
+| 108 | [Dual-Domain Equivariant Generative Adversarial Network for Multimodal](https://arxiv.org/abs/2606.13341) | `cs.CV cs.AI` | 提出双域等变生成对抗网络，联合空间与频率域学习实现CT-PET多模态图像合成。 |
+| 109 | [JointEdit3D: Feed-Forward 3D Scene Editing in a Unified Latent Space](https://arxiv.org/abs/2606.13345) | `cs.CV` | 在统一RGB-几何重建生成潜空间中，以前馈方式实现3D场景的外观与几何联合编辑。 |
+| 110 | [Dual-Constrained Diffusion Image Compression for Operational](https://arxiv.org/abs/2606.13366) | `cs.CV cs.MM` | 通过双约束扩散模型实现神经图像压缩的率-失真-感知最优权衡。 |
+| 111 | [MoVerse: Real-Time Video World Modeling with Panoramic Gaussian Scaffold](https://arxiv.org/abs/2606.13376) | `cs.CV` | 从单张窄视场图像实时构建可交互漫游的全景3D世界模型。 |
+| 112 | [SmartFont: Dynamic Condition Allocation for Few-Shot Font Generation](https://arxiv.org/abs/2606.13382) | `cs.CV cs.AI` | 通过动态条件分配机制，平衡全局结构与局部细节，实现少样本字体生成。 |
+| 113 | [Person Identification from Contextual Motion](https://arxiv.org/abs/2606.13410) | `cs.CV cs.HC` | 基于人体运动风格的概率生成模型，实现监控与认证场景下的身份识别。 |
+| 114 | [VietFashion: Benchmarking Sketch-Text Composed Image Retrieval for](https://arxiv.org/abs/2606.13427) | `cs.CV` | 构建越南传统服饰Ao Dai的草图-文本组合图像检索基准，支持文化服饰的精细检索。 |
+| 115 | [OmniDirector: General Multi-Shot Camera Cloning without Cross-Paired](https://arxiv.org/abs/2606.13432) | `cs.CV cs.AI` | 提出通用相机运动表示，无需成对数据即可实现多镜头相机运动克隆。 |
+| 116 | [VISA: VLM-Guided Instance Semantic Auditing for 3D Occupancy World](https://arxiv.org/abs/2606.13460) | `cs.CV` | 提出VLM引导的实例语义审计方法，用于自动驾驶3D占据世界中的对象级错误检测与修正。 |
+| 117 | [Point-Wise Geometry-Aware Transformer for Partial-to-Full Point Cloud](https://arxiv.org/abs/2606.13488) | `cs.CV` | Point-Wise Geometry-Aware Transformer for Partial-to-Full Point Cloud
+[关联度: LOW]
+一句话核心思路：提出GAPR-Net，一种结合卷积与Transformer的粗到细点云配准框架，利用逐点几何感知增强局部特征匹配。
+… |
+| 118 | [Budget-Constrained Step-Level Diffusion Caching](https://arxiv.org/abs/2606.13496) | `cs.CV` | Budget-Constrained Step-Level Diffusion Caching
+[关联度: LOW]
+一句话核心思路：提出BudCache，一种预算约束的扩散模型步级缓存方法，通过固定计算预算优化缓存决策而非依赖阈值。
+
+--- |
+| 119 | [MaskWAM: Unifying Mask Prompting and Prediction for World-Action Models](https://arxiv.org/abs/2606.13515) | `cs.CV cs.LG` | MaskWAM: Unifying Mask Prompting and Prediction for World-Action Models
+[关联度: LOW]
+一句话核心思路：提出MaskWAM，一种以对象为中心的“世界-动作”模型，通过联合使用掩码作为输入和预测，增强视频预测的语义基础… |
+| 120 | [What's Old is New Again: Classical Dimensionality Reduction for](https://arxiv.org/abs/2606.13528) | `cs.CV` | What's Old is New Again: Classical Dimensionality Reduction for
+[关联度: LOW]
+一句话核心思路：利用经典降维方法（如PCA）生成低成本、高泛化的显著性图，用于生物特征呈现攻击检测中的显著性引导训练。
+
+--- |
+| 121 | [Edit the Bits, Diff the Codes: Bitwise Residual Editing for Visual](https://arxiv.org/abs/2606.13558) | `cs.CV cs.CL` | Edit the Bits, Diff the Codes: Bitwise Residual Editing for Visual
+[关联度: LOW]
+一句话核心思路：提出BitResEdit，利用视觉自回归模型的逐位残差结构，实现精确的文本引导图像编辑。
+
+--- |
+| 122 | [Contrast-Informed Augmentation and Domain-Adversarial Training for](https://arxiv.org/abs/2606.13562) | `cs.CV cs.AI` | Contrast-Informed Augmentation and Domain-Adversarial Training for
+[关联度: LOW]
+一句话核心思路：通过对比度感知的数据增强和领域对抗训练，提升MRI重建模型从成人到新生儿的跨域泛化能力。
+
+--- |
+| 123 | [EvTexture++: Event-Driven Texture Enhancement for Video Super-Resolution](https://arxiv.org/abs/2606.13580) | `cs.CV cs.AI` | EvTexture++: Event-Driven Texture Enhancement for Video Super-Resolution
+[关联度: LOW]
+一句话核心思路：提出EvTexture++，首个利用事件相机高频纹理信息进行视频超分辨率增强的框架。
+
+--- |
+| 124 | [Towards Effective Waste Segmentation for Automated Waste Recycling in](https://arxiv.org/abs/2606.13587) | `cs.CV` | Towards Effective Waste Segmentation for Automated Waste Recycling in
+[关联度: LOW]
+一句话核心思路：针对自动废物回收场景，提出轻量级且高效的深度学习废物分割方法，解决大骨干网络带来的效率问题。
+
+--- |
+| 125 | [Revisiting Vehicle Color Recognition in Long-Tailed Surveillance](https://arxiv.org/abs/2606.13625) | `cs.CV` | Revisiting Vehicle Color Recognition in Long-Tailed Surveillance
+[关联度: LOW]
+一句话核心思路：系统研究长尾分布下的车辆颜色识别问题，提出针对稀有颜色类别的评估与改进方法。
+
+--- |
+| 126 | [Surflo: Consistent 3D Surface Flow Model with Global State](https://arxiv.org/abs/2606.13644) | `cs.CV` | Surflo: Consistent 3D Surface Flow Model with Global State
+[关联度: LOW]
+一句话核心思路：提出Surflo，一种将多视角无位姿图像压缩为全局隐式令牌并解码为一致3D表面点的重建模型。
+
+--- |
+| 127 | [World Tracing: Generative Pixel-Aligned Geometry Beyond the Visible](https://arxiv.org/abs/2606.13652) | `cs.CV cs.GR` | World Tracing: Generative Pixel-Aligned Geometry Beyond the Visible
+[关联度: LOW]
+一句话核心思路：提出World Tracing，一种生成式像素对齐几何表示，在保持输入像素对齐的同时补全不可见区域的3D几何。
+
+--- |
+| 128 | [Flex4DHuman: Flexible Multi-view Video Diffusion for 4D Human](https://arxiv.org/abs/2606.13655) | `cs.CV cs.GR` | Flex4DHuman: Flexible Multi-view Video Diffusion for 4D Human
+[关联度: LOW]
+一句话核心思路：提出Flex4DHuman，一种多视角视频扩散模型，仅通过相对相机位姿条件将单目/稀疏视频转换为密集多视角4D人体视频。 |
+| 129 | [RepWAM: World Action Modeling with Representation Visual-Action](https://arxiv.org/abs/2606.13674) | `cs.CV` | 提出基于表示视觉-动作分词器的世界动作模型，通过语义视觉-动作潜在空间学习指令跟随动态。 |
+| 130 | [Modality Forcing for Scalable Spatial Generation](https://arxiv.org/abs/2606.13676) | `cs.CV` | 提出一种简单可扩展的后训练方法，利用稀疏深度数据实现单DiT模型的联合图像-深度生成。 |
+| 131 | [Boltzmann Attention: Learnable Ising Couplings for Cooperative Attention](https://arxiv.org/abs/2606.12478) | `cs.LG cond-mat.stat-mech` | 提出玻尔兹曼注意力机制，通过可学习的伊辛耦合参数化注意力决策间的协同或对抗结构。 |
+| 132 | [ReCal: Reward Calibration for RL-based LLM Routing](https://arxiv.org/abs/2606.12479) | `cs.LG cs.AI` | 通过奖励校准解决异构任务下强化学习路由策略中学习信号不可比的问题。 |
+| 133 | [Scalable anomaly detection via a univariate Christoffel function](https://arxiv.org/abs/2606.12483) | `cs.LG` | 利用单变量Christoffel函数实现可扩展的异常检测，避免高维矩阵求逆问题。 |
+| 134 | [A Stationary (and Therefore Compatible) Representation is All You Need](https://arxiv.org/abs/2606.12488) | `cs.LG` | 证明d-Simplex固定分类器学习的平稳表示天然满足兼容性定义。 |
+| 135 | [Robustness Verification of Recurrent Neural Networks with Abstraction](https://arxiv.org/abs/2606.12490) | `cs.LG` | 提出抽象-细化框架，通过减少非线性松弛误差实现循环神经网络鲁棒性验证。 |
+| 136 | [$\mu$VLA: On Recurrent Memory for Partially Observable Manipulation in](https://arxiv.org/abs/2606.12497) | `cs.LG cs.RO` | 提出一种基于循环记忆的视觉-语言-动作模型，用于解决部分可观测环境下的机器人操作问题。 |
+| 137 | [Policy-driven Conformal Prediction for Trustworthy QoT Estimation](https://arxiv.org/abs/2606.12501) | `cs.LG` | 提出结合保形预测与决策策略的框架，用于光网络传输质量的可信估计。 |
+| 138 | [Crossing the Validation Crisis: Cross-Validation Reduces Benchmarking](https://arxiv.org/abs/2606.12552) | `cs.LG` | 论证交叉验证能显著提升机器学习基准测试中性能评估的统计可靠性。 |
+| 139 | [The Mathematics of AI Winters: The mathematical Taxonomy of Paradigm](https://arxiv.org/abs/2606.12610) | `cs.LG` | 从数学形式化角度分析AI寒冬中主导范式面临的表征、优化与计算极限。 |
+| 140 | [Evaluation of AutoML Frameworks for IDS under Imbalanced Data Conditions](https://arxiv.org/abs/2606.12611) | `cs.LG cs.IT` | 评估自动机器学习框架在严重类别不平衡下的多类入侵检测性能。 |
+| 141 | [Towards Provably Fair Machine Learning: Bayesian Approaches For](https://arxiv.org/abs/2606.12615) | `cs.LG` | 提出贝叶斯方法解决机器学习模型在细粒度子组上的预测公平性问题。 |
+| 142 | [Bag of Dims: Training-Free Mechanistic Interpretability via](https://arxiv.org/abs/2606.12629) | `cs.LG cs.AI` | 发现Transformer隐藏状态的标准基可作为无需训练的特征解释框架。 |
+| 143 | [The Metric Picks the Winner: Evaluation Choice Flips Model Rankings for](https://arxiv.org/abs/2606.12639) | `cs.LG q-bio.QM` | 揭示评估指标选择会根本性地改变药物转录组响应预测模型的排名。 |
+| 144 | [Individual Control Barrier Functions-Guided Diffusion Model for Safe](https://arxiv.org/abs/2606.12640) | `cs.LG cs.RO` | 提出一种结合控制障碍函数的扩散模型，用于离线强化学习中的多智能体安全控制。 |
+| 145 | [Physics-Aware Auxiliary Losses Improve Out-of-Distribution](https://arxiv.org/abs/2606.12651) | `cs.LG q-bio.QM` | 在药物发现中引入物理先验作为辅助损失，提升图神经网络在分布外场景的泛化能力。 |
+| 146 | [Physics-Informed Neural Networks for Chemotherapy Pharmacokinetics](https://arxiv.org/abs/2606.12658) | `cs.LG q-bio.QM` | 利用物理信息神经网络（PINNs）对化疗药物在组织中的浓度进行建模与推断。 |
+| 147 | [Fed-FBD: Federated Functional Block Diversification for Isolation](https://arxiv.org/abs/2606.12679) | `cs.LG cs.CR` | 提出联邦学习中功能块多样化的架构，用于隔离恶意客户端并支持审计与遗忘。 |
+| 148 | [Forecasting Is Not Attribution: Localizing Decoder Bypass in Graph-Based](https://arxiv.org/abs/2606.12687) | `cs.LG` | 揭示图神经网络营销归因模型中的“归因绕过”失败模式，并提出诊断方法。 |
+| 149 | [M*: A Modular, Extensible, Serving System for Multimodal Models](https://arxiv.org/abs/2606.12688) | `cs.LG cs.AI` | 设计一种模块化、可扩展的多模态模型服务系统，支持视觉、语言、音频等多种组件。 |
+| 150 | [Two-Layer Linear Auto-Regressive Models Estimate Latent States](https://arxiv.org/abs/2606.12691) | `cs.LG cs.AI` | 证明两层线性自回归模型在部分观测线性动态系统上可近似卡尔曼滤波。 |
+| 151 | [A Stabilized Path-Space Approach to Diffusion-Based Posterior Sampling](https://arxiv.org/abs/2606.12710) | `cs.LG math.OC` | 提出一种稳定的路径空间框架，用于扩散模型的后验采样，解决非线性逆问题。 |
+| 152 | [Out-of-Distribution (OOD) Detectors for Open-Set RF Fingerprinting](https://arxiv.org/abs/2606.12718) | `cs.LG eess.SP` | 研究开放集射频指纹识别中的分布外检测方法，无需辅助OOD数据调参。 |
+| 153 | [Let's Ask Gauss: Improved One-Run Privacy Auditing](https://arxiv.org/abs/2606.12733) | `cs.LG` | 提出一种改进的单次运行隐私审计方法，利用高斯分布信息提升差分隐私审计效率。 |
+| 154 | [Physics-Informed Neural Networks and Radial Basis Functions for PDEs](https://arxiv.org/abs/2606.12735) | `cs.LG` | 提出用径向基函数平滑近似PINNs中的狄拉克δ函数，以减少求解含奇异项偏微分方程时的建模误差。 |
+| 155 | [Deep Unfolded Latent Optimally Partitioned-l2/l1 Networks for](https://arxiv.org/abs/2606.12740) | `cs.LG` | 通过隐式微分和深度权重分解解决LOP-l2/l1块稀疏信号恢复中近端算子不可微问题，实现自动超参数调优。 |
+| 156 | [Adaptive Weighted Averaging](https://arxiv.org/abs/2606.12763) | `cs.LG cs.DS` | 设计一种同时满足可接受性和不劣于随机基线策略的自适应加权平均方法，用于从单次无偏估计中选出最大值。 |
+| 157 | [SymQNet: Amortized Acquisition for Low-Latency Adaptive Hamiltonian](https://arxiv.org/abs/2606.12808) | `cs.LG cs.AI` | 采用摊销强化学习替代贝叶斯设计规则，实现低延迟的自适应哈密顿量学习，减少量子设备校准中的计算开销。 |
+| 158 | [CLARITree: Cholesky and Lookahead Accelerations for Regression with](https://arxiv.org/abs/2606.12840) | `cs.LG` | 通过Cholesky分解和前瞻策略加速最优线性回归树的构建，在保持可解释性的同时提升预测性能。 |
+| 159 | [Interpretable Factor Decomposition for Decision Intelligence in](https://arxiv.org/abs/2606.12843) | `cs.LG cs.CE` | 结合XGBoost和TreeSHAP构建可解释的因子分解框架，用于中国A股市场截面收益预测与压力测试。 |
+| 160 | [Multi-Bitwidth Quantization for LLMs Using Additive Codebooks](https://arxiv.org/abs/2606.12876) | `cs.LG cs.CL` | 提出基于加性码本的多比特宽后训练量化框架，支持推理时动态调整LLM权重精度以平衡性能与效率。 |
+| 161 | [LongSpike: Fractional Order Spiking State Space Models for Efficient](https://arxiv.org/abs/2606.12895) | `cs.LG` | 引入分数阶状态空间模型替代传统一阶ODE，增强脉冲神经网络捕获长序列任务中复杂长期依赖的能力。 |
+| 162 | [PolicyGuard: Towards Test-time and Step-level Adversary Defense for](https://arxiv.org/abs/2606.12896) | `cs.LG cs.AI` | 提出无需访问模型参数的测试时后门防御方法，通过逐步骤检测触发模式保护强化学习智能体。 |
+| 163 | [LoRA-Muon: Spectral Steepest Descent on the Low-Rank Manifold](https://arxiv.org/abs/2606.12921) | `cs.LG cs.AI` | 通过因果机制分析，揭示了TabPFN表格基础模型中不同注意力头在不同复杂任务上的计算分工和时序特化。 |
+| 164 | [Order Is Not Control](https://arxiv.org/abs/2606.12923) | `cs.LG cs.AI` | 提出LoRA-Muon优化器，将Muon优化器的谱最速下降规则应用于低秩微调，解决了LoRA对初始化敏感和超参数迁移性差的问题。 |
+| 165 | [Is Spurious Correlation Removal Always Learnable?](https://arxiv.org/abs/2606.12930) | `cs.LG` | 从理论层面论证了在AI对齐、可解释性等领域中，识别出有序结构（order）并不等同于实现了控制（control），并提出了控制所需的接收器门控响应定律。 |
+| 166 | [Circuit Synchronization Precedes Generalization: Causal Evidence from](https://arxiv.org/abs/2606.12966) | `cs.LG cs.NE` | 证明了在特定计算复杂性假设下，即使不变结构在统计上可识别，也存在多项式时间算法无法有效去除虚假相关性的情况。 |
+| 167 | [Predicting Cognitive Load from Speech and Interaction Dynamics in Dyadic](https://arxiv.org/abs/2606.12971) | `cs.LG` | 通过引入频率同步度（FSD）指标，发现Transformer在“顿悟”（grokking）现象中，其内部傅里叶电路的同步化发生在泛化之前，并提供了因果证据。 |
+| 168 | [EPM-JEPA: Operator-Side Experience Modulation in JEPA-Family World](https://arxiv.org/abs/2606.12979) | `cs.LG` | 利用双人协作对话中的语音和交互动态特征，训练GRU编码器来预测感知到的认知负荷。 |
+| 169 | [Exposure Bias as Epistemic Underidentification in Recursive Forecasting](https://arxiv.org/abs/2606.12990) | `cs.LG` | 在JEPA系列世界模型中，比较了两种将累积经验融入预测器以应对分布偏移的方法：操作数侧注入与操作符侧调制（通过LoRA实现）。 |
+| 170 | [DeepJEB++: Foundation Model-Driven Large-Scale 3D Engineering Dataset](https://arxiv.org/abs/2606.12994) | `cs.LG cs.CE` | 证明了递归多步预测中的暴露偏差不仅是分布偏移问题，更是一个在部分可观测或状态截断下的认知欠识别问题。 |
+| 171 | [Reliability of Probabilistic Emulation of Physical Systems](https://arxiv.org/abs/2606.12997) | `cs.LG stat.ML` | 提出了一个基于基础模型的数据增强框架DeepJEB++，用于自动生成大规模、带物理性能标签的3D工程数据集。 |
+| 172 | [scLLM-DSC: LLM-Knowledge Enhanced Cross-Modal Deep Structural Clustering](https://arxiv.org/abs/2606.13007) | `cs.LG cs.AI` | 系统评估了用于物理系统概率预测的生成模型和集成确定性模型两种方法在不确定性可靠性上的表现。 |
+| 173 | [A green solvent screening tool for emerging materials via uncertainty](https://arxiv.org/abs/2606.13060) | `cs.LG` | 提出了一种针对大语言模型的三值化权重和低比特激活量化方法，解决了激活值分布重尾问题，以实现端到端推理加速。 |
+| 174 | [Limits of spectral learning under noise](https://arxiv.org/abs/2606.13067) | `cs.LG` | 开发了一个基于机器学习的不确定性量化工具，用于筛选新兴材料（如光伏、电池）的绿色溶剂，以替代传统有害溶剂。 |
+| 175 | [Emotional regulation improves deep learning-based image classification](https://arxiv.org/abs/2606.13081) | `cs.LG cs.AI` | 受情绪调节认知原理启发，提出一种引入主观情感状态的深度学习方法以提升图像分类泛化性能。 |
+| 176 | [Scale Buys Interpolation, Structure Buys a Horizon: Certified](https://arxiv.org/abs/2606.13092) | `cs.LG cs.RO` | 为等变潜在世界模型提供可计算的多步预测可信度证书，证明对称性可保证预测误差的恒定性和分层可预测性。 |
+| 177 | [Disparate Impact in Synthetic Data Generation](https://arxiv.org/abs/2606.13105) | `cs.LG` | 重新定义合成数据生成中的公平性，提出非差异影响要求合成分布与真实分布具有相同的条件效用而非分布本身。 |
+| 178 | [Demystifying Hidden-State Recurrence: Switchable Latent Reasoning with](https://arxiv.org/abs/2606.13106) | `cs.LG cs.CL` | 通过显式边界令牌使隐藏状态循环推理兼容标准策略强化学习，并支持因果解释。 |
+| 179 | [Select and Improve: Understanding the Mechanics of Post-Training for](https://arxiv.org/abs/2606.13125) | `cs.LG cs.AI` | 通过受控数学推理实验揭示强化学习后训练中能力获取的两种核心机制：策略选择与策略改进。 |
+| 180 | [MiniPIC: Flexible Position-Independent Caching in <100LOC](https://arxiv.org/abs/2606.13126) | `cs.LG cs.AI` | 提出轻量级位置无关缓存方案，解决检索增强和智能体工作负载中重复结构化输入的KV缓存复用问题。 |
+| 181 | [When Does Routing Become Interpretable? Causal Probes on Block Attention](https://arxiv.org/abs/2606.13168) | `cs.LG` | 通过因果探针研究块注意力残差网络中可观察路由信息是否足以支持机制解释。 |
+| 182 | [Detecting Explanatory Insufficiency in Learned Representations: A](https://arxiv.org/abs/2606.13172) | `cs.LG` | 提出Vigilant Evaluator of Representations框架，用于监测学习表示中未被传统评估指标捕获的持续残差结构。 |
+| 183 | [Loss-Shift Transfer via Bayes Quotients](https://arxiv.org/abs/2606.13178) | `cs.LG` | 提出损失转移概念，通过贝叶斯商形式化不同损失函数对表示学习需求的变化，揭示分布固定时损失变化导致的迁移失败。 |
+| 184 | [The Geometry of Phase Transitions in Generative Dynamics via Projection](https://arxiv.org/abs/2606.13191) | `cs.LG` | 将生成动力学中的相变行为几何化，通过自由能景观上的梯度下降解释扩散模型中的模式提交和语义突变。 |
+| 185 | [WHAR Arena: Benchmarking the State of the Art in Efficient Wearable](https://arxiv.org/abs/2606.13194) | `cs.LG` | 构建大规模开源可穿戴人体活动识别基准，整合30个数据集并统一处理流程以解决可比较性危机。 |
+| 186 | [Understanding helpfulness and harmless tension in reward models](https://arxiv.org/abs/2606.13209) | `cs.LG cs.CL` | 通过对比单目标和混合目标奖励模型，揭示RLHF中有用性和无害性目标之间的内部机制冲突与性能干扰。 |
+| 187 | [From Uncertain Judgments to Calibrated Rankings: Conformal Elo](https://arxiv.org/abs/2606.13221) | `cs.LG` | 提出一种基于共形预测的Elo评分校准方法，用于从带有系统误差的LLM裁判评分中生成更可靠的排名。 |
+| 188 | [Distributional Loss for Robust Classification](https://arxiv.org/abs/2606.13223) | `cs.LG cs.CV` | 提出一种将分类器输出优化为双峰高斯分布的损失函数，以隐式捕捉类别模糊性并增强鲁棒性。 |
+| 189 | [ReSET: Accurate Latency-Critical NVFP4 Reasoning via Step-Aware](https://arxiv.org/abs/2606.13233) | `cs.LG cs.AI` | 针对大推理模型在NVFP4低精度推理中的精度下降和延迟问题，提出步长感知的量化与调度优化方法。 |
+| 190 | [Decoding Insect Song: A Multitask Semisupervised Orthoptera Bioacoustic](https://arxiv.org/abs/2606.13236) | `cs.LG cs.AI` | 提出PULSE框架，结合弱监督分类、自监督学习和知识蒸馏，实现半监督多任务直翅目昆虫声学识别。 |
+| 191 | [Towards More General Control of Diffusion Models Using Jeffrey Guidance](https://arxiv.org/abs/2606.13240) | `cs.LG cs.AI` | 提出Jeffrey引导框架，将扩散模型的控制扩展到标准引导无法表达的隐式目标分布场景。 |
+| 192 | [To GAN or Not To GAN: Segmentation Analysis on Mars DEM](https://arxiv.org/abs/2606.13252) | `cs.LG` | 利用生成对抗网络对火星数字高程模型进行自动分割，以检测地貌特征（如土丘）。 |
+| 193 | [Extracting Governing Equations from Latent Dynamics via Multi-View](https://arxiv.org/abs/2606.13260) | `cs.LG q-bio.NC` | 提出DYSCO算法，通过多视角时序对比学习从高维噪声观测中联合恢复潜在轨迹及其控制方程。 |
+| 194 | [Different Layers, Different Manifolds: Module-Wise Weight-Space Geometry](https://arxiv.org/abs/2606.13276) | `cs.LG cs.AI` | 研究不同Transformer模块（注意力层与MLP层）对权重空间流形几何约束的偏好差异。 |
+| 195 | [Clipping Makes Distributed and Federated Asynchronous SGD Robust to](https://arxiv.org/abs/2606.13287) | `cs.LG cs.DC` | 证明梯度裁剪可提升异步随机梯度下降在分布式/联邦学习中对延迟更新的鲁棒性。 |
+| 196 | [Quantizing Time-Series Models As Dynamical Systems: Trajectory-Based](https://arxiv.org/abs/2606.13300) | `cs.LG` | 提出基于轨迹的量化敏感度分数（TQS），从动力系统稳定性角度分析时序模型量化误差的传播。 |
+| 197 | [Rarity-Gated Context Conditioning for Offline Imitation Learning-Based](https://arxiv.org/abs/2606.13311) | `cs.LG cs.AI` | 提出稀有门控特征线性调制模块，解决上下文异常检测中罕见上下文导致的误报问题。 |
+| 198 | [Navigating the Safety-Fidelity Trade-off: Massive-Variate Time Series](https://arxiv.org/abs/2606.13338) | `cs.LG` | 构建PowerPhase基准，用于评估大规模多变量概率预测模型在安全性与保真度之间的权衡。 |
+| 199 | [Enhanced Low-Density Region Exploration in Classifier-Guided Diffusion](https://arxiv.org/abs/2606.13347) | `cs.LG` | 通过训练低密度搜索分类器，改进扩散模型对类条件分布尾部稀有样本的生成覆盖。 |
+| 200 | [VideoMDM: Towards 3D Human Motion Generation From 2D Supervision](https://arxiv.org/abs/2606.13364) | `cs.LG cs.CV` | 提出VideoMDM框架，利用单目视频中的2D姿态通过重投影损失监督训练3D人体运动扩散模型。 |
+| 201 | [Positional Encoding in the Context of Memristor-Based Analog Computation](https://arxiv.org/abs/2606.13379) | `cs.LG cs.AR` | 研究忆阻器模拟计算中位置编码导致的模数转换失真问题，并提出调整方法。 |
+| 202 | [H\"older++: Improving the Quality-Coherence Trade-off in Multimodal VAEs](https://arxiv.org/abs/2606.13381) | `cs.LG` | 通过改进Hölder池化聚合方法，提升多模态VAE的生成质量与模态间一致性。 |
+| 203 | [PolyFlow: Safe and Efficient Polytope-Constrained Flow Matching with](https://arxiv.org/abs/2606.13400) | `cs.LG cs.AI` | 提出PolyFlow框架，将约束直接嵌入流匹配模型，确保安全关键系统中的生成安全。 |
+| 204 | [Accelerating Speculative Diffusions via Block Verification](https://arxiv.org/abs/2606.13426) | `cs.LG stat.ML` | 将推测解码思想扩展到连续扩散模型，通过块验证加速生成并保持目标分布。 |
+| 205 | [How Much Memory Do We Need? Adaptive Memory Gate for Neural Operators](https://arxiv.org/abs/2606.13443) | `cs.LG` | 提出自适应记忆门控机制，根据观测条件动态调整神经算子的记忆权重。 |
+| 206 | [Uncertainty Estimation for Molecular Diffusion Models](https://arxiv.org/abs/2606.13451) | `cs.LG` | 基于拉普拉斯近似提出后验不确定性估计方法，用于评估分子扩散模型生成质量。 |
+| 207 | [Reinforcement Learning for Neural Model Editing](https://arxiv.org/abs/2606.13461) | `cs.LG cs.CV` | 将神经网络编辑形式化为强化学习问题，通过奖励反馈学习权重修改策略。 |
+| 208 | [MaxProof: Scaling Mathematical Proof with Generative-Verifier RL and](https://arxiv.org/abs/2606.13473) | `cs.LG cs.AI` | 提出MaxProof框架，通过生成-验证-修复循环和测试时扩展，提升数学证明能力。 |
+| 209 | [SupraBench: A Benchmark for Supramolecular Chemistry](https://arxiv.org/abs/2606.13477) | `cs.LG cs.AI` | 构建超分子化学基准，系统评估LLM在宿主-客体结合等任务上的推理能力。 |
+| 210 | [CRAFTIIF: Cross-Resolution Analytic Four-Type Interpretable Isolation](https://arxiv.org/abs/2606.13486) | `cs.LG cs.AI` | 提出CRAFTIIF无监督异常检测方法，可识别多变量时间序列中四种结构异常类型并提供可解释性。 |
+| 211 | [A2D2: Fine-Tuning Any-Length Discrete Diffusion for Adaptive Decoding](https://arxiv.org/abs/2606.13565) | `cs.LG` | 提出A2D2框架，通过联合优化插入和解掩码实现任意长度离散扩散模型的奖励引导微调。 |
+| 212 | [Adjusted Cup-Product Neural Layer](https://arxiv.org/abs/2606.13568) | `cs.LG math-ph` | 设计基于杯积分的调整项神经层，通过硬编码物理结构实现规范不变性输出。 |
+| 213 | [Existence Precedes Value: Joint Modeling of Observational Existence and](https://arxiv.org/abs/2606.13571) | `cs.LG cs.AI` | 联合建模时间序列的观测存在性与数值，解决不规则采样下的预测问题。 |
+| 214 | [Learning with Simulators: No Regret in a Computationally Bounded World](https://arxiv.org/abs/2606.13576) | `cs.LG cs.CC` | 提出可模拟过程框架，证明在计算受限条件下利用模拟器可实现无遗憾学习。 |
+| 215 | [Simplex-Constrained Sparse Bagging: Transitioning from Uniform Priors to](https://arxiv.org/abs/2606.13589) | `cs.LG` | 提出一种基于单纯形约束的稀疏装袋方法，用于集成模型的后训练压缩和概率校准，与用户研究方向无直接关联。 |
+| 216 | [The Stable Recovery Manifold: Geometric Principles Governing](https://arxiv.org/abs/2606.13637) | `cs.LG` | 研究持续学习中可恢复性的几何结构，提出恢复子空间维度度量，与用户研究方向无直接关联。 |
+| 217 | [Dense Supervision, Sparse Updates: On the Sparsity and Geometry of](https://arxiv.org/abs/2606.13657) | `cs.LG` | 分析在线策略蒸馏中参数更新的稀疏性和几何特性，与用户研究方向无直接关联。 |
+| 218 | [Tuning Agent-Based Predator-Prey Models Toward Lotka-Volterra Dynamics](https://arxiv.org/abs/2606.13639) | `cs.MA` | 研究基于智能体的捕食者-猎物模型参数调优，与用户研究方向无直接关联。 |
+| 219 | [AI SciBrief as a Gateway to Research: A Framework for Onboarding](https://arxiv.org/abs/2606.12413) | `cs.CY cs.AI` | 提出利用LLM自动生成科学趋势摘要的AI SciBrief平台，用于辅助科研入门，与用户研究方向无直接关联。 |
+| 220 | [Divination by Prompt: LLM-Mediated Xuanxue on Chinese Social Media](https://arxiv.org/abs/2606.12418) | `cs.CY cs.AI` | 研究LLM在中国社交媒体上用于占卜的文化实践，与用户研究方向无直接关联，但可提供LLM社会应用的边缘灵感。 |
+| 221 | [GeoDial: A Multimodal Conversational Tutoring Dataset for Geometry](https://arxiv.org/abs/2606.12419) | `cs.CY cs.AI` | 构建了一个基于几何图形的多模态教学对话数据集，用于开发能理解视觉线索的AI导师。 |
+| 222 | [Creating and Evaluating K-12 GenAI Assessment Graders Through Context](https://arxiv.org/abs/2606.12422) | `cs.CY cs.AI` | 研究了如何利用大语言模型（LLM）结合上下文信息，为K-12教育创建和评估基于标准的自动评分系统。 |
+| 223 | [An Explainable AI Assistant for Introductory Programming Education](https://arxiv.org/abs/2606.12425) | `cs.CY cs.AI` | 开发了一个可解释的AI助手，为编程入门课程提供个性化、可解释的反馈，以支持主动学习。 |
+| 224 | [Position: Generative Engine Optimization Creates Underexamined Risks](https://arxiv.org/abs/2606.12439) | `cs.CY cs.AI` | 分析了从搜索引擎优化（SEO）到生成式引擎优化（GEO）的转变，指出了LLM答案引擎可能带来的信息集中和商业影响风险。 |
+| 225 | [A Mathematical Theory of Value: a synthesis on goal-directed agency](https://arxiv.org/abs/2606.12502) | `physics.soc-ph cs.AI` | 提出了一种关于“价值”的数学理论，将价值定义为智能体将资源转化为目标进展的速率，其对数度量形式可为城市更新中的多目标优化提供理论参考。 |
+| 226 | [Graph Reduction in Multirelational Networks: A Spreading-Oriented](https://arxiv.org/abs/2606.12581) | `cs.SI cs.AI` | 提出SORB基准框架，研究图缩减预处理对多关系网络中影响力最大化任务准确性的影响。 |
+| 227 | [From Imitation to Alignment: Human-Preference Flow Policies for](https://arxiv.org/abs/2606.12603) | `cs.RO cs.AI` | 提出基于人类偏好流策略的自主人行道导航方法，通过模仿学习与对齐实现长距离导航。 |
+| 228 | [Token Complexity Theory for AI-Augmented Computing](https://arxiv.org/abs/2606.12647) | `cs.CC cs.AI` | 提出令牌复杂度理论，形式化定义AI增强计算中查询与响应的最小期望令牌成本。 |
+| 229 | [CAPED: Context-Aware Privacy Exposure Defense for Mobile GUI Agents](https://arxiv.org/abs/2606.12666) | `cs.CR cs.AI` | 提出上下文感知隐私暴露防御方法，保护移动GUI代理在截图操作中的敏感信息。 |
+| 230 | [Free-Placement Optimization of Ground Station Locations for Low-Earth](https://arxiv.org/abs/2606.12667) | `cs.NI cs.AI` | 提出自由选址优化方法，在连续空间域中优化低轨卫星地面站位置以提升吞吐量。 |
+| 231 | [EWAM: An Enhanced World Action Model for Closed-Loop Online Adaptation](https://arxiv.org/abs/2606.12690) | `cs.RO cs.AI` | 提出增强世界动作模型，基于冻结的Cosmos3骨干网络实现零样本任务下的闭环在线适应。 |
+| 232 | [PI-Hunter: Automated Red-Teaming for Exposing and Localizing Prompt](https://arxiv.org/abs/2606.12737) | `cs.CR cs.AI` | 提出PI-Hunter自动化红队框架，用于暴露和定位LLM代理系统中的间接提示注入攻击。 |
+| 233 | [Exploring How Agent Voice Accents Shape Human-AI Collaboration in K-12](https://arxiv.org/abs/2606.12805) | `cs.HC cs.AI` | 研究K-12教育中LLM对话智能体语音口音对学习者感知、信任和互动动态的影响。 |
+| 234 | [Stubborn: A Streamlined and Unified Reinforcement Learning Framework for](https://arxiv.org/abs/2606.12814) | `cs.RO cs.AI` | 提出统一强化学习框架，同时实现人形机器人运动跟踪与跌倒恢复，无需多阶段训练。 |
+| 235 | [Beyond Problem Solving: UOJ-Bench for Evaluating Code Generation](https://arxiv.org/abs/2606.12864) | `cs.SE cs.AI` | 构建UOJ-Bench基准，评估LLM在编程问题解决和人类代码错误识别两方面的能力。 |
+| 236 | [Bounding Boxes as Goals: Language-Conditioned Grasping via](https://arxiv.org/abs/2606.12910) | `cs.RO cs.AI` | 提出GRASP框架，利用视觉语言模型和符号规划实现零样本语言引导的机器人抓取。 |
+| 237 | [An Embodied Simulation Platform, Benchmark, and Data-Efficient](https://arxiv.org/abs/2606.12936) | `cs.RO cs.AI` | 构建Pipette仿真平台和基准，用于湿实验室机器人学习，提供可定制的仿真环境和数据高效增强框架。 |
+| 238 | [The Emergence of Autonomous Penetration Capabilities in Large Language](https://arxiv.org/abs/2606.13079) | `cs.CR cs.AI` | 研究LLM驱动的AI系统自主执行渗透测试的能力，评估其作为关键红线能力的风险。 |
+| 239 | [Proprioceptive-visual correspondence enables self-other distinction in](https://arxiv.org/abs/2606.13222) | `cs.RO cs.AI` | 证明人形机器人可通过本体感觉-视觉对应学习自我-他人区分，无需身份标签或运动学模型。 |
+| 240 | [Mining Architectural Quality Under Agentic AI Adoption: A Causal Study](https://arxiv.org/abs/2606.13298) | `cs.SE cs.AI` | 通过人机交互实验，探究了幽默风格、笑话内容和语言偏好如何影响人们对机器人讲笑话的感知。 |
+| 241 | [Real-Time Execution with Autoregressive Policies](https://arxiv.org/abs/2606.13355) | `cs.RO cs.AI` | 通过因果分析，研究了采用“Vibe Coding”等智能体AI编码工具对开源软件项目架构质量的影响。 |
+| 242 | [An LLM System for Autonomous Variational Quantum Circuit Design](https://arxiv.org/abs/2606.13380) | `quant-ph cs.AI` | 提出了一种异步推理框架，使自回归策略（如VLA模型）能够实现与扩散策略相当的实时执行性能。 |
+| 243 | [Mod-Guide: An LLM-based Content Moderation Feedback System to Address](https://arxiv.org/abs/2606.13397) | `cs.HC cs.AI` | 从利益相关者（如用户、开发者）的角度，而非攻击者角度，构建了针对LLM驱动的Web智能体的提示注入攻击基准。 |
+| 244 | [Toward Instructions-as-Code: Understanding the Impact of Instruction](https://arxiv.org/abs/2606.13449) | `cs.SE cs.AI` | 开发了一个基于LLM的内容审核反馈系统，旨在帮助识别和应对针对少数群体的文化不敏感言论。 |
+| 245 | [Valid Inference with Synthetic Data via Task Exchangeability](https://arxiv.org/abs/2606.13629) | `stat.ME cs.AI` | 提出了一种名为ModeratorLM的语音智能体，通过角色分配和推理增强，实现多人在线对话中的自适应话轮转换。 |
+| 246 | [Marginal Alignment Does Not Guarantee Joint-Distribution Fidelity: An](https://arxiv.org/abs/2606.12433) | `cs.CY cs.CL` | 审计了LLM作为标注工具时，其社会期望性偏差（如宽大偏差）如何影响下游计算社会科学研究的实证结论。 |
+| 247 | [Identifiability Without Gaussianity: Symbolic World Models and](https://arxiv.org/abs/2606.12471) | `stat.ML cs.CL` | 提出一种不依赖高斯假设的符号世界模型可识别性理论，为离散状态空间模型提供理论保证。 |
+| 248 | [Trait, Not State: The Durability of Reading Identity in Social](https://arxiv.org/abs/2606.12904) | `cs.IR cs.CL` | 通过分析社交阅读高亮行为的时间序列数据，证明用户的阅读选择模式是一种稳定特质而非短暂状态。 |
+| 249 | [Examining the Cognitive Gap Between Authors and Peer Reviewers on](https://arxiv.org/abs/2606.13452) | `cs.DL cs.CL` | 分析Nature Communications论文中作者自评与同行评审对新颖性认知的差异，揭示学术评价中的认知鸿沟。 |
+| 250 | [The Tone of Awareness: Topic, Sentiment, and Toxicity Maps During Mental](https://arxiv.org/abs/2606.13581) | `cs.CY cs.CL` | 利用TikTok API数据构建心理健康话题的情感与毒性地图，分析不同年份和主题的讨论基调变化。 |
+| 251 | [EquiDexFlow: Contact-Grounded SE(3)-Equivariant Dexterous Grasp](https://arxiv.org/abs/2606.12728) | `cs.RO cs.CV` | 提出SE(3)等变流匹配模型，联合预测灵巧抓取中的位姿、接触点和接触力。 |
+| 252 | [Trajectory-Level Redirection Attacks on Vision-Language-Action Models](https://arxiv.org/abs/2606.12978) | `cs.RO cs.CV` | 研究针对视觉-语言-动作模型的轨迹级重定向攻击，揭示语言指令在闭环控制中的安全漏洞。 |
+| 253 | [Comparing Commercial Depth Sensor Accuracy for Medical Applications](https://arxiv.org/abs/2606.13028) | `cs.RO cs.CV` | 在医学场景中对比四种商用深度传感器的精度，评估其在均匀表面、镜面等挑战下的表现。 |
+| 254 | [Auditing Discriminatory Patterns in Mortgage Lending Through Association](https://arxiv.org/abs/2606.12435) | `cs.CY cs.DB` | 通过关联规则挖掘审计抵押贷款数据中的种族和性别歧视模式，分析数据预处理对偏差放大的影响。 |
+| 255 | [Feature-preserving Latent-EnKF for Data Assimilation of Flows with](https://arxiv.org/abs/2606.12559) | `physics.comp-ph cs.LG` | 提出特征保持的潜在空间集成卡尔曼滤波方法，在低维潜在空间进行数据同化以处理含间断流动的集合更新问题。 |
+| 256 | [Epistemic Uncertainty Is Not the Reducible Kind](https://arxiv.org/abs/2606.12646) | `stat.ML cs.IT` | 证明标准认知不确定性定义（可被更多数据消除的部分）与互信息度量在扩展上不一致，提出可减少性是不确定性与获取类对的属性。 |
+| 257 | [A Privacy-Preserving Framework Using Remote Data Science for](https://arxiv.org/abs/2606.12845) | `cs.CR cs.LG` | 利用PySyft平台和远程数据科学框架，实现多机构间协作的学生保留率预测，同时保护敏感数据隐私。 |
+| 258 | [A solvable model for unsupervised federated learning](https://arxiv.org/abs/2606.13045) | `cond-mat.dis-nn cs.LG` | 通过教师-多学生交互场景的理论框架，证明联邦学习中学生间的交互能系统性提升生成式学习性能，尤其对高噪声学生。 |
+| 259 | [Robust State-Conditional Feature-Weighted Jump Models for Temporal](https://arxiv.org/abs/2606.13146) | `stat.ML cs.LG` | 提出一种鲁棒的特征加权跳跃模型用于时间依赖聚类，通过Tukey双权损失函数和状态特定特征权重实现平滑过渡和鲁棒性。 |
+| 260 | [ProtoX-AD: Self-Explainable Time Series Anomaly Detection and](https://arxiv.org/abs/2606.13277) | `stat.ML cs.LG` | 提出一种自解释的时间序列异常检测方法，通过自监督分类和原型学习增强可解释性。 |
+| 261 | [Simultaneous Latent Budget Trees for Stratified Classification](https://arxiv.org/abs/2606.13295) | `stat.ML cs.LG` | 提出一种同时潜在预算树框架，用于在存在分层因素（如时间、空间）时进行可解释的分类。 |
+| 262 | [Graphical Causal Reasoning for Root Cause Analysis in Cloud Networks](https://arxiv.org/abs/2606.13532) | `cs.NI cs.LG` | 利用图因果发现方法进行云网络故障根因分析，通过时空分组和自动化本体降低维度。 |
+| 263 | [NetCause: Counterfactual Learning for Root Cause Analysis in Large-Scale](https://arxiv.org/abs/2606.13543) | `cs.NI cs.LG` | 提出一种自监督学习框架NetCause，通过因果建模和反事实推理进行大规模网络故障根因分析。 |
+| 264 | [Distribution-Agnostic Robust Trajectory Optimization via](https://arxiv.org/abs/2606.13605) | `math.OC cs.LG` | 提出一种分布无关的鲁棒轨迹优化框架，结合机会约束强化学习和仿射闭环修正律。 |
+| 265 | [DecompSR: A dataset for decomposed analyses of compositional multihop](https://arxiv.org/abs/2511.02627) | `cs.AI` | 构建一个用于分解分析组合多跳推理的数据集，其语义分解思路可能为多源数据融合提供灵感。 |
+| 266 | [Epistemic Constitutionalism Or: how to avoid coherence bias](https://arxiv.org/abs/2601.14295) | `cs.AI cs.CL` | 提出一种认知宪政主义框架，通过约束推理过程来避免多智能体系统中的一致性偏差。 |
+| 267 | [CreativeBench: Benchmarking and Enhancing Machine Creativity via](https://arxiv.org/abs/2603.11863) | `cs.AI cs.CL` | 构建机器创造力基准测试并探索增强方法，与城市更新场景的实用导向关联较弱。 |
+| 268 | [Cross-Model Disagreement as a Label-Free Correctness Signal](https://arxiv.org/abs/2603.25450) | `cs.AI` | 利用跨模型分歧作为无标签正确性信号，与地理空间数据标注场景有潜在关联但非直接。 |
+| 269 | [A Study of Belief Revision Postulates in Multi-Agent Systems (Extended](https://arxiv.org/abs/2605.02249) | `cs.AI` | 研究多智能体系统中信念修正公理，为城市更新智能体知识更新提供理论参考。 |
+| 270 | [FinSTaR: Towards Financial Reasoning with Time Series Reasoning Models](https://arxiv.org/abs/2605.03460) | `cs.AI cs.LG` | 构建金融时间序列推理模型，其时序分析思路可借鉴但领域差异大。 |
+| 271 | [Entropy-Gradient Inversion: Moving Toward Internal Mechanism of Large](https://arxiv.org/abs/2605.17770) | `cs.AI cs.CL` | 通过熵梯度反演探索大模型内部机制，为理解LLM决策过程提供理论视角。 |
+| 272 | [Intelligence as Managed Autonomy: Failure, Escalation, and Governance](https://arxiv.org/abs/2605.27628) | `cs.AI cs.CY` | 将智能体视为受控自主系统并分析其故障与治理，与城市智能体治理有间接关联。 |
+| 273 | [Parthenon Law: A Self-Evolving Legal-Agent Framework](https://arxiv.org/abs/2606.04602) | `cs.AI` | 构建自进化法律智能体框架，其规则自适应机制可借鉴但领域差异显著。 |
+| 274 | [Agents' Last Exam](https://arxiv.org/abs/2606.05405) | `cs.AI cs.CL` | 提出一个综合性的基准测试，评估AI智能体在复杂任务中的表现，但未涉及地理空间或城市更新领域。 |
+| 275 | [When Does Delegation Beat Majority? A Delegation-Based Aggregator for](https://arxiv.org/abs/2606.08098) | `cs.AI cs.LG` | 研究基于委托的聚合器在决策中何时优于多数投票，与城市更新场景的关联性较弱。 |
+| 276 | [Learning What to Remember: Observability-Safe Memory Retention via](https://arxiv.org/abs/2606.10616) | `cs.AI` | 研究智能体在可观测性安全约束下的记忆保留策略，其记忆管理思想可间接启发多智能体系统的数据融合。 |
+| 277 | [Human-Enhanced Loop Modeling (HELM): Agent-Based Finite Element Modeling](https://arxiv.org/abs/2606.12025) | `cs.AI` | 将人类增强循环与智能体结合用于有限元建模，与城市更新领域无直接关联。 |
+| 278 | [A Lightweight Multi-Agent Framework for Automated Concrete Barrier](https://arxiv.org/abs/2606.12040) | `cs.AI cs.GR` | 提出轻量级多智能体框架用于自动混凝土护栏设计，属于土木工程细分领域，与城市更新关联有限。 |
+| 279 | [WildIFEval: Instruction Following in the Wild](https://arxiv.org/abs/2503.06573) | `cs.CL cs.AI` | 评估LLM在开放场景中的指令遵循能力，其评估方法可间接用于城市更新智能体的指令理解测试。 |
+| 280 | [From Benchmarks to Skills: Low-Rank Factors for LLM Evaluation](https://arxiv.org/abs/2507.20208) | `cs.CL` | 利用低秩因子从基准测试中提取LLM技能，其评估框架可间接用于城市更新智能体的能力分析。 |
+| 281 | [MoReBench: Evaluating Procedural and Pluralistic Moral Reasoning in](https://arxiv.org/abs/2510.16380) | `cs.CL cs.AI` | 评估LLM的程序性和多元道德推理能力，其推理框架可间接用于城市更新决策中的伦理考量。 |
+| 282 | [ChiKhaPo: A Large-Scale Multilingual Benchmark for Evaluating Lexical](https://arxiv.org/abs/2510.16928) | `cs.CL` | 构建了一个大规模多语言词汇基准测试集，用于评估语言模型的词汇知识。 |
+| 283 | [CuMA: Aligning LLMs with Sparse Cultural Values via Demographic-Aware](https://arxiv.org/abs/2601.04885) | `cs.CL cs.AI` | 通过人口统计信息感知的方法，将大语言模型与稀疏的文化价值观对齐。 |
+| 284 | [NOVA: NOise-aware Verbal Confidence CAlibration for Robust Large](https://arxiv.org/abs/2601.11004) | `cs.CL` | 提出一种噪声感知的置信度校准方法，提升大语言模型在噪声环境下的鲁棒性。 |
+| 285 | [AfroScope: A Framework for Studying the Linguistic Landscape of Africa](https://arxiv.org/abs/2601.13346) | `cs.CL` | 开发了一个研究非洲语言景观的框架，用于分析多语言文本数据。 |
+| 286 | [Language Model Circuits Are Sparse in the Neuron Basis](https://arxiv.org/abs/2601.22594) | `cs.CL cs.AI` | 发现语言模型的神经回路在神经元层面具有稀疏性，并分析了其结构特性。 |
+| 287 | [InnoEval: On Research Idea Evaluation as a Knowledge-Grounded](https://arxiv.org/abs/2602.14367) | `cs.CL cs.AI` | 将研究想法评估建模为基于知识的任务，并构建了相应的评估基准。 |
+| 288 | [FENCE: A Financial and Multimodal Jailbreak Detection Dataset](https://arxiv.org/abs/2602.18154) | `cs.CL cs.AI` | 构建了一个金融领域的多模态越狱攻击检测数据集，用于评估模型安全性。 |
+| 289 | [TAB-PO: Preference Optimization with a Token-Level Adaptive Barrier for](https://arxiv.org/abs/2603.00025) | `cs.CL` | 提出一种基于词元级自适应屏障的偏好优化方法，用于改进语言模型的对齐训练。 |
+| 290 | [Self-Distillation Zero: Self-Revision Turns Binary Rewards into Dense](https://arxiv.org/abs/2604.12002) | `cs.CL` | 通过自我修订机制，将二值奖励转化为密集奖励信号，实现零样本自蒸馏。 |
+| 291 | [Reasoning Models Know What's Important, and Encode It in Their](https://arxiv.org/abs/2604.18307) | `cs.CL` | 发现推理模型能识别重要信息，并将其编码在内部表示中。 |
+| 292 | [The Pragmatic Persona: Discovering LLM Persona through Bridging](https://arxiv.org/abs/2604.24079) | `cs.CL cs.AI` | 通过桥接语义与语用信息，发现大语言模型隐含的角色人格特征。 |
+| 293 | [Select to Think: Unlocking SLM Potential with Local Sufficiency](https://arxiv.org/abs/2604.26940) | `cs.CL` | 提出一种基于局部充分性的选择机制，释放小型语言模型的推理潜力。 |
+| 294 | [More Context, Larger Models, or Moral Knowledge? A Systematic Study of](https://arxiv.org/abs/2605.22641) | `cs.CL cs.AI` | 系统研究了大模型在道德推理中，上下文、模型规模和道德知识的作用。 |
+| 295 | [If LLMs Have Human-Like Attributes, Then So Does Age of Empires II](https://arxiv.org/abs/2605.31514) | `cs.CL cs.AI` | 通过类比《帝国时代II》游戏，探讨LLM是否具有类人属性。 |
+| 296 | [BOUTEF: A Multilingual Corpus for FakeNews in North Africa -- Language](https://arxiv.org/abs/2606.00193) | `cs.CL` | 构建了一个用于北非地区多语言假新闻检测的语料库。 |
+| 297 | [Can Factual Opinions Be Edited (Manipulated) in Large Language Models?](https://arxiv.org/abs/2606.03096) | `cs.CL` | 研究LLM中事实性观点能否被编辑或操纵。 |
+| 298 | [Entity Binding Failures in Speech LLM Reasoning: Diagnosis and](https://arxiv.org/abs/2606.04474) | `cs.CL eess.AS` | 诊断语音LLM推理中的实体绑定失败问题。 |
+| 299 | [How reliable are LLMs when it comes to playing dice?](https://arxiv.org/abs/2606.07515) | `cs.CL cs.AI` | 评估LLM在掷骰子这类概率任务中的可靠性。 |
+| 300 | [KCSAT-ML: Probing Reasoning Models with Nationwide-Cohort Human](https://arxiv.org/abs/2606.10403) | `cs.CL` | 使用全国性队列人类数据探测推理模型。 |
+| 301 | [Attention Expansion: Enhancing Keyphrase Extraction from Long Documents](https://arxiv.org/abs/2606.10716) | `cs.CL cs.AI` | 提出注意力扩展方法，提升长文档关键短语提取效果。 |
+| 302 | [It Takes One to Bias Them All: Breaking Bad with One-Shot GRPO](https://arxiv.org/abs/2606.10931) | `cs.CL` | 研究单样本GRPO训练如何导致LLM产生偏见。 |
+| 303 | [UR-BERT: Scaling Text Encoders for Massively Multilingual TTS Through](https://arxiv.org/abs/2606.11681) | `cs.CL cs.SD` | 通过扩展文本编码器实现大规模多语言TTS。 |
+| 304 | [A Controlled Study of Decoding-Time Truthfulness Methods on](https://arxiv.org/abs/2606.12160) | `cs.CL` | 对解码时真实性方法进行受控研究。 |
+| 305 | [Radar-Guided Polynomial Fitting for Metric Depth Estimation](https://arxiv.org/abs/2503.17182) | `cs.CV` | 利用雷达引导多项式拟合进行公制深度估计。 |
+| 306 | [Visual enhancement and 3D representation for underwater scenes: a review](https://arxiv.org/abs/2505.01869) | `cs.CV` | 综述水下场景的视觉增强与三维重建方法，与城市更新领域无直接关联。 |
+| 307 | [ReFoCUS: Reinforcement-guided Frame Optimization for Contextual](https://arxiv.org/abs/2506.01274) | `cs.CV cs.AI` | 利用强化学习优化视频帧选择以提升上下文理解，与城市更新研究无直接关联。 |
+| 308 | [CPAM: Context-Preserving Adaptive Manipulation for Zero-Shot Real Image](https://arxiv.org/abs/2506.18438) | `cs.CV` | 提出零样本真实图像编辑方法，保持上下文一致性，与城市更新领域无直接关联。 |
+| 309 | [ShowFlow: From Robust Single Concept to Condition-Free Multi-Concept](https://arxiv.org/abs/2506.18493) | `cs.CV` | 实现从单概念到多概念的无条件图像生成，与城市更新研究无直接关联。 |
+| 310 | [Periodic-MAE: Periodic Video Masked Autoencoder for rPPG Estimation](https://arxiv.org/abs/2506.21855) | `cs.CV` | 利用周期性掩码自编码器从视频中估计心率，与城市更新领域无直接关联。 |
+| 311 | [Skeleton Sparsification and Densification Scale-Spaces](https://arxiv.org/abs/2509.21398) | `cs.CV eess.IV` | 研究骨架图的稀疏化与稠密化尺度空间，与城市更新研究无直接关联。 |
+| 312 | [Self-Evolving Vision-Language Models for Image Quality Assessment via](https://arxiv.org/abs/2509.25787) | `cs.CV` | 提出自进化视觉语言模型用于图像质量评估，与城市更新领域无直接关联。 |
+| 313 | [GAE: Unleashing Physical Potential of VLM with Generalizable Action](https://arxiv.org/abs/2510.03896) | `cs.CV cs.RO` | 利用视觉语言模型生成可泛化的机器人动作，与城市更新研究无直接关联。 |
+| 314 | [Proto-LeakNet: Towards Signal-Leak Aware Attribution in Synthetic Human](https://arxiv.org/abs/2511.04260) | `cs.CV cs.AI` | 检测合成人脸中的信号泄露归因，与城市更新领域无直接关联。 |
+| 315 | [QueryOcc: Query-based Self-Supervision for 3D Semantic Occupancy](https://arxiv.org/abs/2511.17221) | `cs.CV cs.RO` | 基于查询的自监督3D语义占用预测，与城市更新研究无直接关联。 |
+| 316 | [Navigating Gigapixel Pathology Images with Large Multimodal Models](https://arxiv.org/abs/2511.19652) | `cs.CV` | 利用大语言模型导航十亿像素病理图像，与城市更新领域无直接关联。 |
+| 317 | [Adaptable Segmentation Pipeline for Diverse Brain Tumors with](https://arxiv.org/abs/2512.14648) | `cs.CV eess.IV` | 开发可适配的脑肿瘤分割流水线，与城市更新研究无直接关联。 |
+| 318 | [Why Commodity WiFi Sensors Fail at Multi-Person Gait Identification: A](https://arxiv.org/abs/2601.02177) | `cs.CV cs.CR` | 分析商用WiFi传感器在多人体步态识别中的失败原因。 |
+| 319 | [EyeTheia: A Lightweight and Accessible Eye-Tracking Toolbox](https://arxiv.org/abs/2601.06279) | `cs.CV` | 开发轻量级、易用的眼动追踪工具箱。 |
+| 320 | [VDE Bench: Evaluating The Capability of Image Editing Models to Modify](https://arxiv.org/abs/2602.00122) | `cs.CV cs.AI` | 构建基准测试评估图像编辑模型修改图像的能力。 |
+| 321 | [Ex-Omni: Enabling 3D Facial Animation Generation for Omni-modal Large](https://arxiv.org/abs/2602.07106) | `cs.CV cs.AI` | 实现全模态大语言模型的3D面部动画生成。 |
+| 322 | [Allure of Craquelure: A Variational-Generative Approach to Crack](https://arxiv.org/abs/2602.09730) | `cs.CV cs.LG` | 采用变分-生成方法进行裂纹检测与生成。 |
+| 323 | [CRAG: Can 3D Generative Models Help 3D Assembly?](https://arxiv.org/abs/2602.22629) | `cs.CV` | 探索3D生成模型在3D装配任务中的辅助能力。 |
+| 324 | [On the Reliability of Cue Conflict and Beyond](https://arxiv.org/abs/2603.10834) | `cs.CV cs.AI` | 研究视觉线索冲突的可靠性问题及其扩展。 |
+| 325 | [BSViT: A Burst Spiking Vision Transformer for Expressive and Efficient](https://arxiv.org/abs/2604.23165) | `cs.CV` | 提出脉冲视觉Transformer以提升表达效率。 |
+| 326 | [GEASS: Gated Evidence-Adaptive Selective Caption Trust for](https://arxiv.org/abs/2605.01733) | `cs.CV cs.AI` | 提出门控证据自适应选择机制提升图像描述的可信度。 |
+| 327 | [Appearance-Invariant Detection of Suggestive Motion via Laban Movement](https://arxiv.org/abs/2605.24488) | `cs.CV cs.GR` | 利用拉班运动分析实现外观不变的运动检测，专注于人体动作的语义特征提取。 |
+| 328 | [Triangle Splatting SLAM](https://arxiv.org/abs/2605.31419) | `cs.CV cs.RO` | 提出基于三角形网格的SLAM方法，通过高效渲染实现实时三维重建与定位。 |
+| 329 | [Where, What, Why, and Importance: Structured Defect Grounding for](https://arxiv.org/abs/2606.06113) | `cs.CV` | 构建结构化缺陷定位框架，同时检测缺陷位置、类型、成因及重要性权重。 |
+| 330 | [CACR:Reinforcing Temporal Answer Grounding in Instructional Video via](https://arxiv.org/abs/2606.08436) | `cs.CV` | 通过对比学习增强教学视频中时间答案定位的鲁棒性。 |
+| 331 | [Wild3R: Feed-Forward 3D Gaussian Splatting from Unconstrained Sparse](https://arxiv.org/abs/2606.11894) | `cs.CV` | 提出前馈式3D高斯泼溅方法，从非约束稀疏视角快速重建三维场景。 |
+| 332 | [DepthMaster: Unified Monocular Depth Estimation for Perspective and](https://arxiv.org/abs/2606.12368) | `cs.CV` | 统一透视与全景图像的深度估计框架，提升单目深度预测的泛化能力。 |
+| 333 | [On Pitfalls of $\textit{RemOve-And-Retrain}$: Data Processing Inequality](https://arxiv.org/abs/2304.13836) | `cs.LG cs.AI` | 从信息论角度揭示了“移除-重训练”模型编辑方法的理论缺陷，并提出了基于数据处理的改进框架。 |
+| 334 | [Geometry of Lightning Self-Attention: Identifiability and Dimension](https://arxiv.org/abs/2408.17221) | `cs.LG math.AG` | 从代数几何角度分析了闪电自注意力机制的可识别性与维度特性，提供了理论可解释性。 |
+| 335 | [Is Stochastic Gradient Descent Effective? A PDE Perspective on Machine](https://arxiv.org/abs/2501.08425) | `cs.LG math.AP` | 通过偏微分方程视角分析随机梯度下降的有效性，为优化理论提供新见解。 |
+| 336 | [Fourier Multi-Component and Multi-Layer Neural Networks: Unlocking](https://arxiv.org/abs/2502.18959) | `cs.LG stat.ML` | 提出傅里叶多分量多层神经网络架构，增强模型对高频信号的学习能力。 |
+| 337 | [Learning on a Razor's Edge: Identifiability and Singularity of](https://arxiv.org/abs/2505.11846) | `cs.LG math.AG` | 从代数几何角度研究深度学习模型的可识别性与奇异性，揭示模型容量与泛化边界。 |
+| 338 | [ExPLAIND: Unifying Model, Data, and Training Attribution to Study Model](https://arxiv.org/abs/2505.20076) | `cs.LG` | 提出统一归因框架ExPLAIND，同时解释模型、数据和训练过程对预测的影响。 |
+| 339 | [How Reliable are Fairness Audits with Unreliable Data?](https://arxiv.org/abs/2506.23033) | `cs.LG stat.ML` | 分析数据不可靠时公平性审计的可靠性，提出鲁棒性评估方法。 |
+| 340 | [Single vs. Multiple Branches in DeepONet and S-DeepONet: Network](https://arxiv.org/abs/2507.03660) | `cs.LG` | 比较DeepONet单分支与多分支架构的性能差异，提出S-DeepONet优化方案。 |
+| 341 | [Reconstructing Template-Memorized Images from Natural Prompts](https://arxiv.org/abs/2507.07947) | `cs.LG cs.AI` | 从自然语言提示中重建模板记忆图像，揭示大模型记忆机制的安全风险。 |
+| 342 | [One Token to Fool LLM-as-a-Judge](https://arxiv.org/abs/2507.08794) | `cs.LG cs.CL` | 发现通过单token注入可欺骗LLM作为评判者的机制，暴露模型评估漏洞。 |
+| 343 | [Retrieval-Augmented Foundation Models for Water Level Prediction in the](https://arxiv.org/abs/2508.04888) | `cs.LG` | 利用检索增强的基础模型进行水位预测，与城市更新和土地利用识别无直接关联。 |
+| 344 | [Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems](https://arxiv.org/abs/2509.03340) | `cs.LG cs.AI` | 利用等变流匹配方法解决对称破缺分岔问题，属于物理模拟领域，与城市更新研究关联较弱。 |
+| 345 | [PLaID++: A Preference Aligned Language Model for Targeted Inorganic](https://arxiv.org/abs/2509.07150) | `cs.LG cond-mat.mtrl-sci` | 开发用于无机材料设计的偏好对齐语言模型，与城市更新和遥感数据挖掘无关。 |
+| 346 | [Structuring The Future: Diffusion LLM Speculative Decoding via](https://arxiv.org/abs/2509.18085) | `cs.LG cs.AI` | 提出一种基于扩散LLM的推测解码方法，属于大模型推理加速技术，与城市应用场景无直接关联。 |
+| 347 | [From Isolation to Entanglement: When Do Interpretability Methods](https://arxiv.org/abs/2512.15134) | `cs.LG cs.AI` | 研究可解释性方法何时从孤立走向纠缠，属于模型可解释性理论，与城市更新应用无直接关联。 |
+| 348 | [Cluster Aggregated GAN (CAG): A Cluster-Based Hybrid Model for Appliance](https://arxiv.org/abs/2512.22287) | `cs.LG cs.AI` | 提出基于聚类的混合GAN模型用于家电负荷预测，与城市更新和遥感数据无关。 |
+| 349 | [FedBiCross: Personalized One-Shot Federated Learning on Medical Images](https://arxiv.org/abs/2601.01901) | `cs.LG` | 提出用于医学图像的单次个性化联邦学习方法，其联邦学习框架可借鉴用于多源遥感数据融合，但领域差异较大。 |
+| 350 | [When Smaller Wins: Dual-Stage Distillation and Pareto-Guided Compression](https://arxiv.org/abs/2601.06227) | `cs.LG cs.AI` | 提出双阶段蒸馏和帕累托引导的模型压缩方法，属于模型优化技术，与城市更新应用无直接关联。 |
+| 351 | [Data-driven Lake Water Quality Forecasting for Time Series with Missing](https://arxiv.org/abs/2601.15503) | `cs.LG` | 提出针对缺失值的时间序列预测方法，可启发城市更新时序数据（如施工审批数据）的处理。 |
+| 352 | [Generalized Schr\"odinger Bridge on Graphs](https://arxiv.org/abs/2602.04675) | `cs.LG` | 提出图上的广义薛定谔桥方法，可启发城市空间结构中的动态过程建模。 |
+| 353 | [GEMSS: A Variational Bayesian Method for Discovering Multiple Sparse](https://arxiv.org/abs/2602.08913) | `cs.LG stat.ML` | 提出变分贝叶斯方法发现多个稀疏模式，可借鉴于城市低效用地的多类型识别。 |
+| 354 | [Hierarchical Successor Representation for Robust Transfer](https://arxiv.org/abs/2602.12753) | `cs.LG` | 提出层次化后继表示用于鲁棒迁移，可启发多智能体系统在不同城市区域的迁移学习。 |
+| 355 | [ARROW: Augmented Replay for RObust World models](https://arxiv.org/abs/2603.11395) | `cs.LG cs.AI` | 提出增强回放机制提升世界模型鲁棒性，可启发城市动态变化模拟中的智能体训练。 |
+| 356 | [Disentangling Dynamical Systems: Causal Representation Learning Meets](https://arxiv.org/abs/2603.14483) | `cs.LG` | 结合因果表示学习解耦动态系统，可启发城市更新中因果关系的发现与建模。 |
+| 357 | [Point-Identification of a Robust Predictor Under Latent Shift with](https://arxiv.org/abs/2603.15158) | `cs.LG` | 提出在潜在分布偏移下识别鲁棒预测器的方法，与城市更新场景关联较弱。 |
+| 358 | [WOMBET: World Model-Based Experience Transfer for Robust and](https://arxiv.org/abs/2604.08958) | `cs.LG cs.AI` | 基于世界模型的经验迁移方法用于机器人鲁棒控制，与城市更新研究无直接关联。 |
+| 359 | [Machine Learning-based Two-Stage Graph Sparsification for the Travelling](https://arxiv.org/abs/2604.20236) | `cs.LG` | 用机器学习实现旅行商问题的图稀疏化，与城市更新研究方向无直接关联。 |
+| 360 | [The Safety-Aware Denoiser for Text Diffusion Models](https://arxiv.org/abs/2605.08116) | `cs.LG cs.AI` | 为文本扩散模型设计安全感知去噪器，与城市更新研究方向关联度低。 |
+| 361 | [COSMOS: Model-Agnostic Personalized Federated Learning with Clustered](https://arxiv.org/abs/2605.11165) | `cs.LG` | 提出模型无关的个性化联邦学习聚类方法，与城市更新研究无直接关联。 |
+| 362 | [A Theory of Training Profit-Optimal LLMs](https://arxiv.org/abs/2605.16430) | `cs.LG cs.AI` | 从经济学角度推导LLM训练的最优利润理论，与城市更新场景应用关联弱。 |
+| 363 | [Multi-Token Residual Prediction](https://arxiv.org/abs/2605.18817) | `cs.LG` | 提出多token残差预测方法提升语言模型性能，与城市更新研究方向无直接关联。 |
+| 364 | [ShapeBench: A Scalable Benchmark and Diagnostic Suite for Standardized](https://arxiv.org/abs/2605.20763) | `cs.LG` | 提出了一个用于标准化评估形状表示学习方法的可扩展基准测试和诊断工具集。 |
+| 365 | [Transformer Field Theory: A Response-Theoretic Approach to Mechanistic](https://arxiv.org/abs/2605.25225) | `cs.LG cs.AI` | 用响应理论（Response Theory）的视角来形式化分析和解释Transformer内部机制。 |
+| 366 | [Revisiting Neural Processes via Fourier Transform and Volterra Series](https://arxiv.org/abs/2606.01172) | `cs.LG stat.ME` | 通过傅里叶变换和Volterra级数重新审视神经过程（Neural Processes）的理论基础。 |
+| 367 | [Variational Learning for Insertion-based Generation](https://arxiv.org/abs/2606.02133) | `cs.LG cs.AI` | 提出一种基于变分学习的插入式文本生成方法，用于非自回归序列生成。 |
+| 368 | [Benchmarking Counterfactual Prediction in Epidemic Time Series with](https://arxiv.org/abs/2606.05692) | `cs.LG cs.AI` | 构建了一个用于评估流行病时间序列反事实预测方法的基准测试框架。 |
+| 369 | [A Unifying Lens on Reward Uncertainty in RLHF](https://arxiv.org/abs/2606.09073) | `cs.LG cs.AI` | 从统一视角分析了RLHF（基于人类反馈的强化学习）中奖励不确定性的来源与影响。 |
+| 370 | [PhysMetrics.Weather: An Evaluation Framework for Physical Consistency in](https://arxiv.org/abs/2606.10642) | `cs.LG physics.ao-ph` | 提出了一个评估天气预报模型物理一致性的框架。 |
+| 371 | [Bernstein-Schur Kernels: Random Features by Sketched Modulation and](https://arxiv.org/abs/2606.11255) | `cs.LG` | 提出一种基于草图调制和随机特征的Bernstein-Schur核方法，用于高效核近似。 |
+| 372 | [Learning to Contest: Decentralized Robust Fairness in Cooperative MARL](https://arxiv.org/abs/2606.06162) | `cs.MA cs.GT` | 研究多智能体强化学习中去中心化鲁棒公平性，其博弈论方法可能为城市更新多智能体系统的资源分配提供灵感。 |
+| 373 | [Competition and Diversity in Generative AI](https://arxiv.org/abs/2412.08610) | `cs.GT cs.AI` | 分析生成式AI中的竞争与多样性，其理论框架可能启发城市更新中多源数据生成策略的设计。 |
+| 374 | [The KG-ER Conceptual Schema Language](https://arxiv.org/abs/2508.02548) | `cs.DB cs.AI` | 提出一种知识图谱实体关系概念模式语言，其语义建模方法可能为城市多源数据融合提供知识表示思路。 |
+| 375 | [GetNetUPAM: Ecologically Informed Nested Cross-Validation and](https://arxiv.org/abs/2509.04682) | `cs.SD cs.AI` | 提出生态信息嵌套交叉验证方法用于模型评估，其验证策略可借鉴于城市更新变化检测模型的可靠性评估。 |
+| 376 | [HiGR: Industrial-Scale Hierarchical Generative Slate Recommendation](https://arxiv.org/abs/2512.24787) | `cs.IR cs.AI` | 提出工业级层次化生成式推荐系统，其推荐架构可能为城市更新区域推荐提供方法借鉴。 |
+| 377 | [HalluJudge: A Reference-Free Hallucination Detection for Context](https://arxiv.org/abs/2601.19072) | `cs.SE cs.AI` | 提出无参考的LLM幻觉检测方法，可用于提升城市更新中LLM生成文本的可靠性。 |
+| 378 | [Standardized Methods and Recommendations for Green Federated Learning](https://arxiv.org/abs/2602.00343) | `cs.DC cs.AI` | 提出绿色联邦学习的标准化方法，其节能策略可应用于城市更新中的分布式遥感数据处理。 |
+| 379 | [Unsafer in Many Turns: Benchmarking and Defending Multi-Turn Safety](https://arxiv.org/abs/2602.13379) | `cs.CR cs.AI` | 研究了多轮对话中LLM的安全漏洞，并提出了相应的防御方法。 |
+| 380 | [Fusion Learning from Dynamic Functional Connectivity: Combining the](https://arxiv.org/abs/2603.24603) | `q-bio.NC cs.AI` | 从动态功能连接中学习，融合多种方法进行脑网络分析。 |
+| 381 | [Versioned Late Materialization for Ultra-Long Sequence Training in](https://arxiv.org/abs/2604.24806) | `cs.IR cs.AI` | 提出了一种版本化延迟物化技术，用于支持超长序列的训练。 |
+| 382 | [VISTA: An End-to-End Benchmark for Visual Spec-to-Web-App Coding Agents](https://arxiv.org/abs/2605.26144) | `cs.SE cs.AI` | 构建了一个从视觉规格到Web应用代码的端到端智能体基准测试。 |
+| 383 | [Counterfactual Explanations for Deep Two-Sample Testing](https://arxiv.org/abs/2606.04009) | `stat.ML cs.AI` | 为深度双样本检验提供了反事实解释方法。 |
+| 384 | [Frozen Multimodal Embeddings for AI-Assisted Interview Assessment of](https://arxiv.org/abs/2606.11930) | `cs.HC cs.AI` | 利用冻结的多模态嵌入模型辅助面试评估，可能启发多模态数据融合思路。 |
+| 385 | [C-QUERI: Congressional Questions, Exchanges, and Responses in](https://arxiv.org/abs/2509.21548) | `cs.CY cs.CL` | 构建国会问答数据集，其文本结构化方法可启发政策文本与空间数据的关联分析。 |
+| 386 | [On Sequence-to-Sequence Models for Automated Log Parsing](https://arxiv.org/abs/2602.07698) | `cs.SE cs.CL` | 使用序列到序列模型自动解析日志，其序列建模思路可迁移至施工审批文本解析。 |
+| 387 | [The Long Tail, Not the Front Page: Cold-Start Prediction of Crowd](https://arxiv.org/abs/2606.11654) | `cs.IR cs.CL` | 预测众包项目的冷启动表现，其长尾分布建模可启发城市低效用地识别中的样本不平衡问题。 |
+| 388 | [DiskChunGS: Large-Scale 3D Gaussian SLAM Through Chunk-Based Memory](https://arxiv.org/abs/2511.23030) | `cs.RO cs.CV` | 通过分块内存管理实现大规模3D高斯SLAM，其空间数据结构可启发城市三维建模。 |
+| 389 | [PROBE: Probabilistic Occupancy BEV Encoding with Analytical Translation](https://arxiv.org/abs/2603.05965) | `cs.RO cs.CV` | 提出概率占用鸟瞰图编码方法，其空间编码思想可迁移至城市土地利用分类。 |
+| 390 | [MinhwaNet: Faithful but Insufficient Object Grounding in Korean Folk](https://arxiv.org/abs/2606.09855) | `cs.MM cs.CV` | 提出一种针对韩国民俗图像中物体定位的评估方法，关注定位的忠实性但发现其不足。 |
+| 391 | [A Unified Latent Space Disentanglement VAE Framework with Robust](https://arxiv.org/abs/2603.11242) | `stat.ML cs.LG` | 提出统一潜空间解耦变分自编码器框架，其解耦思想或可借鉴于多源遥感数据的特征分离。 |
+| 392 | [The Range Shrinks, the Threat Remains: Re-evaluating LLM Package](https://arxiv.org/abs/2605.17062) | `cs.CR cs.LG` | 重新评估LLM软件包供应链的安全威胁，发现攻击范围缩小但核心风险依然存在。 |
+| 393 | [Physically Constrained Ensemble Gaussian Process Modelling for Expensive](https://arxiv.org/abs/2606.11240) | `physics.comp-ph cond-mat.str-el` | 提出物理约束的集成高斯过程模型，用于昂贵物理系统的代理建模。 |
+
+---
+
+*Generated on 2026-06-12 16:51 by arXiv Daily Digest*
+*711 papers analyzed, 576 relevant to your research*
