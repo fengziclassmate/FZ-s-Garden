@@ -11,14 +11,14 @@ export default async function JournalPage() {
       <section className="max-w-3xl">
         <p className="text-xs font-bold uppercase tracking-[0.28em] text-clay">Journal</p>
         <h1 className="mt-4 font-display text-5xl font-bold leading-tight text-ink md:text-6xl">
-          Pick a way to keep today
+          Moment and Whispers
         </h1>
         <p className="mt-5 text-lg leading-8 text-muted-ink">
-          Journal 现在分成三种入口：Moment 放日常图文，Whisper 放短句碎念，Blogs 放完整长记录。
+          长一点的记录继续放在 Journal 里，短一点的日常和碎念拆成两个更轻的入口。
         </p>
       </section>
 
-      <section className="mt-10 grid gap-4 md:grid-cols-3">
+      <section className="mt-10 grid gap-4 md:grid-cols-2">
         {journalModules.map((module) => (
           <Link
             key={module.href}
@@ -42,8 +42,8 @@ export default async function JournalPage() {
       <section className="mt-12">
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-clay">Blogs</p>
-            <h2 className="mt-2 font-display text-3xl font-bold text-ink">Long Journal Notes</h2>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-clay">Long notes</p>
+            <h2 className="mt-2 font-display text-3xl font-bold text-ink">Recent Journal</h2>
           </div>
           <Link href="/blogs?type=journal" className="text-sm font-semibold text-muted-ink transition hover:text-ink">
             View all
@@ -68,7 +68,7 @@ export default async function JournalPage() {
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed border-line bg-white/42 p-8 text-center text-muted-ink">
-            还没有公开的长篇 Journal。
+            Journal 还没有公开长记录。
           </div>
         )}
       </section>
