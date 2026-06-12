@@ -152,7 +152,7 @@ export default function BlogsClient({ sections }: Props) {
       >
         <div className="px-5">
           <div className="mb-6 flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#a6a097]">Blogs</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#a6a097]">Journal</span>
             <button
               type="button"
               onClick={() => setSidebarOpen(false)}
@@ -162,20 +162,27 @@ export default function BlogsClient({ sections }: Props) {
               ◀
             </button>
           </div>
-          <div className="mb-5 grid grid-cols-2 gap-2">
+          <div className="mb-5 grid grid-cols-3 gap-2">
             <Link
               href="/journal/moment"
-              className="rounded-xl border border-[#ece9e1] bg-white/55 px-3 py-3 text-sm text-[#5f6f58] transition hover:bg-[#f5f2ec] hover:text-[#2d2a24]"
+              className="rounded-xl border border-[#ece9e1] bg-white/55 px-2.5 py-3 text-sm text-[#5f6f58] transition hover:bg-[#f5f2ec] hover:text-[#2d2a24]"
             >
               <span className="block font-semibold">Moment</span>
-              <span className="mt-1 block text-[11px] text-[#a6a097]">日常片段</span>
+              <span className="mt-1 block text-[11px] text-[#a6a097]">日常</span>
             </Link>
             <Link
-              href="/journal/whispers"
-              className="rounded-xl border border-[#ece9e1] bg-white/55 px-3 py-3 text-sm text-[#5f6f58] transition hover:bg-[#f5f2ec] hover:text-[#2d2a24]"
+              href="/journal/whisper"
+              className="rounded-xl border border-[#ece9e1] bg-white/55 px-2.5 py-3 text-sm text-[#5f6f58] transition hover:bg-[#f5f2ec] hover:text-[#2d2a24]"
             >
-              <span className="block font-semibold">Whispers</span>
-              <span className="mt-1 block text-[11px] text-[#a6a097]">碎片低语</span>
+              <span className="block font-semibold">Whisper</span>
+              <span className="mt-1 block text-[11px] text-[#a6a097]">碎念</span>
+            </Link>
+            <Link
+              href="/blogs?type=journal"
+              className="rounded-xl border border-[#ece9e1] bg-white/55 px-2.5 py-3 text-sm text-[#5f6f58] transition hover:bg-[#f5f2ec] hover:text-[#2d2a24]"
+            >
+              <span className="block font-semibold">Blogs</span>
+              <span className="mt-1 block text-[11px] text-[#a6a097]">长文</span>
             </Link>
           </div>
           <div className="space-y-0.5">

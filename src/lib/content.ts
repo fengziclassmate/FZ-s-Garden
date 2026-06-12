@@ -9,11 +9,11 @@ import type { ContentType, GardenContent } from "@/lib/types";
 const contentRoot = path.join(process.cwd(), "content");
 
 export const contentTypeLabels: Record<ContentType, string> = {
-  journal: "手账",
-  research: "科研日志",
-  reading: "阅读",
-  project: "项目",
-  behind: "幕后",
+  journal: "Journal",
+  research: "Research",
+  reading: "Reading",
+  project: "Portfolio",
+  behind: "Behind",
 };
 
 export const contentTypeFolders: Record<ContentType, string> = {
@@ -91,12 +91,8 @@ export async function getPinnedContent(limit = 4) {
   return items.filter((item) => item.pinned).slice(0, limit);
 }
 
-/** blogs 页面聚合的类型（不含 project / behind） */
 export const blogContentTypes: ContentType[] = ["journal", "research", "reading"];
 
-/**
- * 获取 blogs 聚合内容，可选按 type 或 tag 筛选
- */
 export async function getBlogContent(options?: { type?: ContentType; tag?: string }) {
   const groups = await Promise.all(blogContentTypes.map((type) => getContentByType(type)));
   let items = sortByDateDesc(groups.flat());
