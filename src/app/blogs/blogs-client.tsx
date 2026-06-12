@@ -1,6 +1,7 @@
 "use client";
 
 import type { ContentType, GardenContent } from "@/lib/types";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import GiscusComments from "@/components/content/giscus-comments";
@@ -160,6 +161,22 @@ export default function BlogsClient({ sections }: Props) {
             >
               ◀
             </button>
+          </div>
+          <div className="mb-5 grid grid-cols-2 gap-2">
+            <Link
+              href="/journal/moment"
+              className="rounded-xl border border-[#ece9e1] bg-white/55 px-3 py-3 text-sm text-[#5f6f58] transition hover:bg-[#f5f2ec] hover:text-[#2d2a24]"
+            >
+              <span className="block font-semibold">Moment</span>
+              <span className="mt-1 block text-[11px] text-[#a6a097]">日常片段</span>
+            </Link>
+            <Link
+              href="/journal/whispers"
+              className="rounded-xl border border-[#ece9e1] bg-white/55 px-3 py-3 text-sm text-[#5f6f58] transition hover:bg-[#f5f2ec] hover:text-[#2d2a24]"
+            >
+              <span className="block font-semibold">Whispers</span>
+              <span className="mt-1 block text-[11px] text-[#a6a097]">碎片低语</span>
+            </Link>
           </div>
           <div className="space-y-0.5">
             {sections.map((sec) => {
