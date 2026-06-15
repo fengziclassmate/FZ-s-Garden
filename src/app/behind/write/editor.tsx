@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import type { ChangeEvent } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 const ALLOWED_TYPES = [
@@ -26,6 +27,107 @@ const PROJECT_TYPES = [
   { value: "writing", label: "写作" },
   { value: "website", label: "网站" },
 ];
+
+type FrontmatterValue = string | string[] | boolean;
+type FrontmatterData = Record<string, FrontmatterValue>;
+
+const allowedTypeValues = new Set(ALLOWED_TYPES.map((item) => item.value));
+const allowedProjectTypes = new Set(PROJECT_TYPES.map((item) => item.value));
+const allowedProjectStatus = new Set(PROJECT_STATUS.map((item) => item.value));
+
+function stripQuotes(value: string) {
+  const trimmed = value.trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+function parseInlineFrontmatterValue(value: string): FrontmatterValue {
+  const trimmed = value.trim();
+
+  if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+    try {
+      const parsed = JSON.parse(trimmed.replace(/'/g, '"'));
+      if (Array.isArray(parsed)) return parsed.map(String);
+    } catch {
+      return trimmed
+        .slice(1, -1)
+        .split(",")
+        .map(stripQuotes)
+        .filter(Boolean);
+    }
+  }
+
+  if (trimmed === "true") return true;
+  if (trimmed === "false") return false;
+  return stripQuotes(trimmed);
+}
+
+function parseMarkdownFile(source: string): { data: FrontmatterData; body: string } {
+  const normalized = source.replace(/^\uFEFF/, "");
+  const match = normalized.match(/^---\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n)?([\s\S]*)$/);
+
+  if (!match) {
+    return { data: {}, body: normalized };
+  }
+
+  const data: FrontmatterData = {};
+  const lines = match[1].split(/\r?\n/);
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    if (!line.trim() || line.trim().startsWith("#")) continue;
+
+    const keyMatch = line.match(/^([A-Za-z][\w-]*):\s*(.*)$/);
+    if (!keyMatch) continue;
+
+    const [, key, rawValue] = keyMatch;
+    if (rawValue.trim()) {
+      data[key] = parseInlineFrontmatterValue(rawValue);
+      continue;
+    }
+
+    const list: string[] = [];
+    while (i + 1 < lines.length && /^\s+-\s+/.test(lines[i + 1])) {
+      i += 1;
+      list.push(stripQuotes(lines[i].replace(/^\s+-\s+/, "")));
+    }
+    data[key] = list;
+  }
+
+  return { data, body: match[2] };
+}
+
+function frontmatterString(data: FrontmatterData, key: string) {
+  const value = data[key];
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function frontmatterTags(value: FrontmatterValue | undefined) {
+  if (Array.isArray(value)) return value.map(String).filter(Boolean).join(", ");
+  if (typeof value === "string") {
+    return value
+      .split(/[,，]/)
+      .map((tag) => tag.trim())
+      .filter(Boolean)
+      .join(", ");
+  }
+  return "";
+}
+
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/\.[^.]+$/, "")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .trim();
+}
 
 export default function WriteEditor() {
   const searchParams = useSearchParams();
@@ -107,6 +209,59 @@ export default function WriteEditor() {
       );
     }
   }, [isEditing]);
+
+  const importMarkdownFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+
+    if (!/\.(md|mdx)$/i.test(file.name)) {
+      setResult({ ok: false, msg: "请选择 .md 或 .mdx 文件" });
+      return;
+    }
+
+    try {
+      const source = await file.text();
+      const parsed = parseMarkdownFile(source);
+      const importedTitle = frontmatterString(parsed.data, "title");
+      const importedSlug = frontmatterString(parsed.data, "slug");
+      const importedSummary =
+        frontmatterString(parsed.data, "summary") || frontmatterString(parsed.data, "description");
+      const importedType = frontmatterString(parsed.data, "type");
+      const headingTitle = parsed.body.match(/^#\s+(.+)$/m)?.[1]?.trim() || "";
+      const fallbackTitle = importedTitle || headingTitle;
+      const fallbackSlug = slugify(file.name) || `post-${Date.now()}`;
+
+      if (fallbackTitle) setTitle(fallbackTitle);
+      if (!isEditing) {
+        setSlug(importedSlug || slugify(fallbackTitle) || fallbackSlug);
+      }
+      if (importedType && allowedTypeValues.has(importedType)) {
+        setType(importedType);
+      }
+      setSummary(importedSummary);
+      setTags(frontmatterTags(parsed.data.tags));
+      setContent(parsed.body.trimStart());
+
+      const importedProjectType = frontmatterString(parsed.data, "projectType");
+      const importedStatus = frontmatterString(parsed.data, "status");
+      if (importedProjectType && allowedProjectTypes.has(importedProjectType)) {
+        setProjectType(importedProjectType);
+      }
+      if (importedStatus && allowedProjectStatus.has(importedStatus)) {
+        setProjectStatus(importedStatus);
+      }
+      setLinkDemo(frontmatterString(parsed.data, "linkDemo"));
+      setLinkGithub(frontmatterString(parsed.data, "linkGithub"));
+
+      setResult({
+        ok: true,
+        msg: parsed.data.title ? "已导入 Markdown 和 frontmatter" : "已导入 Markdown 正文",
+      });
+    } catch {
+      setResult({ ok: false, msg: "读取 Markdown 文件失败" });
+    }
+  };
 
   // 实时预览
   useEffect(() => {
@@ -233,6 +388,16 @@ export default function WriteEditor() {
             <option key={t.value} value={t.value}>{t.label}</option>
           ))}
         </select>
+
+        <label className="cursor-pointer rounded-lg border border-[#e2dfd6] bg-white px-4 py-2 text-sm text-[#2d2a24] transition-colors hover:bg-[#f5f2ec]">
+          导入 Markdown
+          <input
+            type="file"
+            accept=".md,.mdx,text/markdown,text/plain"
+            onChange={importMarkdownFile}
+            className="sr-only"
+          />
+        </label>
 
         <button
           onClick={handlePublish}
