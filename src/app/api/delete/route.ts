@@ -1,7 +1,11 @@
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth";
+import { deleteDbContent } from "@/lib/db";
+import type { ContentType } from "@/lib/types";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const OWNER = "fengziclassmate";
@@ -31,6 +35,24 @@ export async function POST(request: Request) {
   const folder = folderMap[type];
   if (!folder) {
     return NextResponse.json({ error: "invalid type" }, { status: 400 });
+  }
+
+  try {
+    const deleted = await deleteDbContent(type as ContentType, slug);
+    if (deleted) {
+      const urlType = type === "project" ? "portfolio" : type;
+      revalidatePath(`/${urlType}`);
+      revalidatePath(`/${urlType}/${slug}`);
+      revalidatePath("/blogs");
+      revalidatePath("/behind");
+      return NextResponse.json({
+        success: true,
+        message: "文章已删除",
+        storage: "database",
+      });
+    }
+  } catch (error) {
+    console.warn("Database delete unavailable; falling back to GitHub.", error);
   }
 
   const filePath = `content/${folder}/${slug}.mdx`;

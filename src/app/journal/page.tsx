@@ -3,6 +3,9 @@ import { journalModules } from "@/data/journal-modules";
 import { getContentByType } from "@/lib/content";
 import { formatDate } from "@/lib/dates";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function JournalPage() {
   const posts = await getContentByType("journal");
 

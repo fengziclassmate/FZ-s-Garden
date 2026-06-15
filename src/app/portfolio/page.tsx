@@ -3,6 +3,9 @@ import { getContentByType } from "@/lib/content";
 import type { ProjectContent } from "@/lib/types";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const statusOrder = ["building", "finished", "paused", "idea"];
 
 const statusLabels: Record<string, string> = {

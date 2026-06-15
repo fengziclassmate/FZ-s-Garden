@@ -5,6 +5,7 @@ import readingTime from "reading-time";
 import { markdownToHtml } from "@/lib/mdx";
 import { sortByDateDesc } from "@/lib/dates";
 import type { ContentType, GardenContent } from "@/lib/types";
+import { getDbContentBySlug, getDbContentByType, type DbContentRow } from "@/lib/db";
 
 const contentRoot = path.join(process.cwd(), "content");
 
@@ -43,32 +44,72 @@ function normalizeTags(tags: unknown): string[] {
   return Array.isArray(tags) ? tags.map(String) : [];
 }
 
-export async function getContentByType(type: ContentType): Promise<GardenContent[]> {
-  const items = await Promise.all(
-    getFilesByType(type).map(async (file) => {
-      const slug = file.replace(/\.mdx?$/, "");
-      const fullPath = path.join(contentRoot, contentTypeFolders[type], file);
-      const source = fs.readFileSync(fullPath, "utf8");
-      const { data, content } = matter(source);
-      const html = await markdownToHtml(content);
-      const item = {
-        ...data,
-        slug,
-        type,
-        title: String(data.title ?? slug),
-        date: String(data.date ?? "1970-01-01"),
-        summary: String(data.summary ?? ""),
-        tags: normalizeTags(data.tags),
-        pinned: Boolean(data.pinned),
-        draft: Boolean(data.draft),
-        readingMinutes: Math.max(1, Math.round(readingTime(content).minutes)),
-        html,
-      } as GardenContent;
-      return item;
-    }),
-  );
+async function contentItemFromFile(type: ContentType, file: string): Promise<GardenContent> {
+  const slug = file.replace(/\.mdx?$/, "");
+  const fullPath = path.join(contentRoot, contentTypeFolders[type], file);
+  const source = fs.readFileSync(fullPath, "utf8");
+  const { data, content } = matter(source);
+  const html = await markdownToHtml(content);
+  return {
+    ...data,
+    slug,
+    type,
+    title: String(data.title ?? slug),
+    date: String(data.date ?? "1970-01-01"),
+    summary: String(data.summary ?? ""),
+    tags: normalizeTags(data.tags),
+    pinned: Boolean(data.pinned),
+    draft: Boolean(data.draft),
+    readingMinutes: Math.max(1, Math.round(readingTime(content).minutes)),
+    html,
+  } as GardenContent;
+}
 
-  return sortByDateDesc(items.filter((item) => !item.draft));
+async function contentItemFromDb(row: DbContentRow): Promise<GardenContent> {
+  const html = await markdownToHtml(row.body);
+  return {
+    ...row.extra,
+    slug: row.slug,
+    type: row.type,
+    title: row.title,
+    date: row.date,
+    summary: row.summary,
+    tags: row.tags,
+    pinned: row.pinned,
+    draft: row.draft,
+    readingMinutes: Math.max(1, Math.round(readingTime(row.body).minutes)),
+    html,
+  } as GardenContent;
+}
+
+async function getFileContentByType(type: ContentType): Promise<GardenContent[]> {
+  return Promise.all(getFilesByType(type).map((file) => contentItemFromFile(type, file)));
+}
+
+async function getDatabaseContentByType(type: ContentType): Promise<GardenContent[]> {
+  try {
+    const rows = await getDbContentByType(type);
+    return Promise.all(rows.map(contentItemFromDb));
+  } catch (error) {
+    console.warn("Database content unavailable; falling back to files.", error);
+    return [];
+  }
+}
+
+function mergeContentItems(fileItems: GardenContent[], databaseItems: GardenContent[]) {
+  const merged = new Map<string, GardenContent>();
+  for (const item of fileItems) merged.set(item.slug, item);
+  for (const item of databaseItems) merged.set(item.slug, item);
+  return sortByDateDesc(Array.from(merged.values()).filter((item) => !item.draft));
+}
+
+export async function getContentByType(type: ContentType): Promise<GardenContent[]> {
+  const [fileItems, databaseItems] = await Promise.all([
+    getFileContentByType(type),
+    getDatabaseContentByType(type),
+  ]);
+
+  return mergeContentItems(fileItems, databaseItems);
 }
 
 export async function getAllContent(): Promise<GardenContent[]> {
@@ -77,8 +118,57 @@ export async function getAllContent(): Promise<GardenContent[]> {
 }
 
 export async function getContentBySlug(type: ContentType, slug: string) {
-  const items = await getContentByType(type);
-  return items.find((item) => item.slug === slug) ?? null;
+  try {
+    const row = await getDbContentBySlug(type, slug);
+    if (row && !row.draft) return contentItemFromDb(row);
+  } catch (error) {
+    console.warn("Database content lookup unavailable; falling back to files.", error);
+  }
+
+  const file = getFilesByType(type).find((item) => item.replace(/\.mdx?$/, "") === slug);
+  if (!file) return null;
+  const item = await contentItemFromFile(type, file);
+  return item.draft ? null : item;
+}
+
+export async function getEditableContentBySlug(type: ContentType, slug: string) {
+  try {
+    const row = await getDbContentBySlug(type, slug);
+    if (row) {
+      return {
+        raw: row.body,
+        slug: row.slug,
+        type: row.type,
+        title: row.title,
+        summary: row.summary,
+        tags: row.tags,
+        extra: {
+          ...row.extra,
+          date: row.date,
+          draft: row.draft,
+          pinned: row.pinned,
+        },
+      };
+    }
+  } catch (error) {
+    console.warn("Database content lookup unavailable; falling back to files.", error);
+  }
+
+  const file = getFilesByType(type).find((item) => item.replace(/\.mdx?$/, "") === slug);
+  if (!file) return null;
+
+  const fullPath = path.join(contentRoot, contentTypeFolders[type], file);
+  const source = fs.readFileSync(fullPath, "utf8");
+  const { data: frontmatter, content: raw } = matter(source);
+  return {
+    raw,
+    slug,
+    type,
+    title: frontmatter.title || slug,
+    summary: frontmatter.summary || "",
+    tags: frontmatter.tags || [],
+    extra: frontmatter,
+  };
 }
 
 export async function getRecentContent(limit = 8) {

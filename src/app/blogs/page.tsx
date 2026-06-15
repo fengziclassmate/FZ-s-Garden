@@ -3,6 +3,9 @@ import type { GardenContent } from "@/lib/types";
 import { getContentByType } from "@/lib/content";
 import BlogsClient from "./blogs-client";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 async function BlogsContent() {
   const [journalAll, researchAll, readingAll] = await Promise.all([
     getContentByType("journal"),

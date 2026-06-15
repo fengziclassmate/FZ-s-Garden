@@ -5,7 +5,7 @@ import { getSession } from "@/lib/auth";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { contentTypeFolders } from "@/lib/content";
+import { contentTypeFolders, getEditableContentBySlug } from "@/lib/content";
 import type { ContentType } from "@/lib/types";
 
 const contentRoot = path.join(process.cwd(), "content");
@@ -27,6 +27,11 @@ export async function GET(request: Request) {
   const folder = contentTypeFolders[type];
   if (!folder) {
     return NextResponse.json({ error: "invalid type" }, { status: 400 });
+  }
+
+  const databasePost = await getEditableContentBySlug(type, slug);
+  if (databasePost) {
+    return NextResponse.json({ post: databasePost });
   }
 
   const filePath = path.join(contentRoot, folder, `${slug}.mdx`);

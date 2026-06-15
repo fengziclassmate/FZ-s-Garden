@@ -1,7 +1,27 @@
 import { createPool } from "@vercel/postgres";
 import type { VercelPool } from "@vercel/postgres";
+import type { ContentType } from "@/lib/types";
+
+export type DbContentInput = {
+  type: ContentType;
+  slug: string;
+  title: string;
+  date: string;
+  summary: string;
+  tags: string[];
+  body: string;
+  extra?: Record<string, unknown>;
+  draft?: boolean;
+  pinned?: boolean;
+};
+
+export type DbContentRow = DbContentInput & {
+  created_at: Date;
+  updated_at: Date;
+};
 
 let pool: VercelPool | null = null;
+let initPromise: Promise<void> | null = null;
 
 function getPool(): VercelPool {
   if (!pool) {
@@ -22,7 +42,7 @@ async function getClient() {
 /**
  * 初始化数据库表（幂等）
  */
-export async function initDb(): Promise<void> {
+async function runInitDb(): Promise<void> {
   const client = await getClient();
   try {
     await client.sql`
@@ -44,9 +64,40 @@ export async function initDb(): Promise<void> {
       VALUES (1, 0)
       ON CONFLICT (id) DO NOTHING;
     `;
+    await client.sql`
+      CREATE TABLE IF NOT EXISTS site_content (
+        type TEXT NOT NULL,
+        slug TEXT NOT NULL,
+        title TEXT NOT NULL,
+        date TEXT NOT NULL,
+        summary TEXT NOT NULL DEFAULT '',
+        tags JSONB NOT NULL DEFAULT '[]'::jsonb,
+        body TEXT NOT NULL,
+        extra JSONB NOT NULL DEFAULT '{}'::jsonb,
+        draft BOOLEAN NOT NULL DEFAULT false,
+        pinned BOOLEAN NOT NULL DEFAULT false,
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW(),
+        PRIMARY KEY (type, slug)
+      );
+    `;
+    await client.sql`
+      CREATE INDEX IF NOT EXISTS site_content_type_date_idx
+      ON site_content (type, date DESC, updated_at DESC);
+    `;
   } finally {
     client.release();
   }
+}
+
+export async function initDb(): Promise<void> {
+  if (!initPromise) {
+    initPromise = runInitDb().catch((error) => {
+      initPromise = null;
+      throw error;
+    });
+  }
+  return initPromise;
 }
 
 /**
@@ -111,6 +162,112 @@ export async function incrementPostLikes(slug: string): Promise<number> {
       RETURNING count;
     `;
     return rows.length > 0 ? rows[0].count : 0;
+  } finally {
+    client.release();
+  }
+}
+
+function normalizeContentRow(row: Record<string, unknown>): DbContentRow {
+  return {
+    type: String(row.type) as ContentType,
+    slug: String(row.slug),
+    title: String(row.title),
+    date: String(row.date),
+    summary: String(row.summary ?? ""),
+    tags: Array.isArray(row.tags) ? row.tags.map(String) : [],
+    body: String(row.body ?? ""),
+    extra: row.extra && typeof row.extra === "object" ? (row.extra as Record<string, unknown>) : {},
+    draft: Boolean(row.draft),
+    pinned: Boolean(row.pinned),
+    created_at: row.created_at as Date,
+    updated_at: row.updated_at as Date,
+  };
+}
+
+/**
+ * 新增或更新一篇数据库内容。
+ */
+export async function upsertContent(input: DbContentInput): Promise<DbContentRow> {
+  await initDb();
+  const client = await getClient();
+  const tagsJson = JSON.stringify(input.tags);
+  const extraJson = JSON.stringify(input.extra ?? {});
+  try {
+    const { rows } = await client.sql`
+      INSERT INTO site_content (
+        type, slug, title, date, summary, tags, body, extra, draft, pinned, updated_at
+      )
+      VALUES (
+        ${input.type},
+        ${input.slug},
+        ${input.title},
+        ${input.date},
+        ${input.summary},
+        ${tagsJson}::jsonb,
+        ${input.body},
+        ${extraJson}::jsonb,
+        ${Boolean(input.draft)},
+        ${Boolean(input.pinned)},
+        NOW()
+      )
+      ON CONFLICT (type, slug)
+      DO UPDATE SET
+        title = EXCLUDED.title,
+        date = EXCLUDED.date,
+        summary = EXCLUDED.summary,
+        tags = EXCLUDED.tags,
+        body = EXCLUDED.body,
+        extra = EXCLUDED.extra,
+        draft = EXCLUDED.draft,
+        pinned = EXCLUDED.pinned,
+        updated_at = NOW()
+      RETURNING *;
+    `;
+    return normalizeContentRow(rows[0]);
+  } finally {
+    client.release();
+  }
+}
+
+export async function getDbContentByType(type: ContentType): Promise<DbContentRow[]> {
+  const client = await getClient();
+  try {
+    const { rows } = await client.sql`
+      SELECT *
+      FROM site_content
+      WHERE type = ${type}
+      ORDER BY date DESC, updated_at DESC;
+    `;
+    return rows.map(normalizeContentRow);
+  } finally {
+    client.release();
+  }
+}
+
+export async function getDbContentBySlug(type: ContentType, slug: string): Promise<DbContentRow | null> {
+  const client = await getClient();
+  try {
+    const { rows } = await client.sql`
+      SELECT *
+      FROM site_content
+      WHERE type = ${type} AND slug = ${slug}
+      LIMIT 1;
+    `;
+    return rows[0] ? normalizeContentRow(rows[0]) : null;
+  } finally {
+    client.release();
+  }
+}
+
+export async function deleteDbContent(type: ContentType, slug: string): Promise<boolean> {
+  await initDb();
+  const client = await getClient();
+  try {
+    const { rowCount } = await client.sql`
+      DELETE FROM site_content
+      WHERE type = ${type} AND slug = ${slug};
+    `;
+    return (rowCount ?? 0) > 0;
   } finally {
     client.release();
   }

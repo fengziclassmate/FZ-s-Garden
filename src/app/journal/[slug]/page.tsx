@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleLayout } from "@/components/content/article-layout";
-import { getContentBySlug, getContentByType } from "@/lib/content";
+import { getContentBySlug } from "@/lib/content";
 import CommentsSection from "@/components/content/comments-section";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
-
-export async function generateStaticParams() {
-  const items = await getContentByType("journal");
-  return items.map((item) => ({ slug: item.slug }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
